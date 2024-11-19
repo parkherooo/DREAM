@@ -12,7 +12,7 @@ public class DreamController {
     }
 
     @GetMapping("/app/data")
-    public String data() {
+    public String test() {
         return "Hello Dream Backend";
     }
 }
