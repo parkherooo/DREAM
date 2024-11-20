@@ -13,7 +13,6 @@ import lombok.ToString;
 @Table(name = "user")
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userId;
 
     @Column(length = 50, nullable = false) //컬럼 속성 지정 길이와 널값을 혀용하는지 false -> 널값 비허용
@@ -34,7 +33,8 @@ public class UserEntity {
     @Column(length = 50)
     private String loginPlatform;
 
-    private int manger;
+    @Column(nullable = false)
+    private int manger = 0;
 
     private int shoes;
 }

@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import static com.dita.dreambackend.user.service.UserService.*;
+
 @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 
 @RestController
@@ -26,6 +28,7 @@ public class UserController {
     @PostMapping("/SignUp")
     public String getUser(@RequestBody UserDTO userDTO) {
         System.out.println("UserDTO: " + userDTO);
-        return "index";
+        userService.SignUp(userDTO); // Service 에 React에서 받은값 전달 -> SignUp 함수 호출
+        return "Sign up successful";
     }
 }
