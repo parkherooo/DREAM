@@ -7,7 +7,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import static com.dita.dreambackend.user.service.UserService.*;
 
 @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 
@@ -24,8 +28,20 @@ public class UserController {
     })
 
     @PostMapping("/SignUp")
-    public String getUser(@RequestBody UserDTO userDTO) {
-        System.out.println("UserDTO: " + userDTO);
-        return "index";
+    public ResponseEntity<String> getUser(@RequestBody UserDTO userDTO) {
+        boolean result =  userService.SignUp(userDTO); // Service 에 React에서 받은값 전달 -> SignUp 함수 호출
+        if(!result) {
+           return ResponseEntity.badRequest().body("아이디가 존재합니다.");
+        }
+        return ResponseEntity.ok("회원가입 성공");
+    }
+
+    @PostMapping("/Login")
+    public String SignUp(@RequestBody UserDTO userDTO) {
+        boolean success = userService.Login(userDTO.getUserId(),userDTO.getPwd()); //DTO에서 아이디와 패스워드를 받아와 서비스에있는 Login을 호출
+        if(!success) {
+            return "로그인 실패";
+        }
+        return "로그인 성공";
     }
 }

@@ -1,0 +1,46 @@
+.header-top {
+    margin-right: 18%;
+    font-size: 14px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px;
+}
+.header-top .user-links a {
+    margin-right: 15px;
+    text-decoration: none;
+    font-size: 12px;
+    color: black;
+}
+
+.logo {
+    text-decoration: none;
+    color: black;
+}
+.logo h2{
+    margin: 0;
+    font-size: 28px;
+    font-style: oblique;
+    font-weight: 900;
+}
+.headers{
+    margin-left: 18%;
+}
+/* 메뉴바 스타일 */
+.menu-bar {
+    display: flex;
+    margin-top: 35px;
+}
+
+.menu-bar a {
+    margin-right:20px;
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+
+    padding-bottom: 5px;
+}
+
+.menu-bar a.active {
+    border-bottom: 2px solid black; /* 클릭된 메뉴에 밑줄 추가 */
+    font-weight: bold;
+}

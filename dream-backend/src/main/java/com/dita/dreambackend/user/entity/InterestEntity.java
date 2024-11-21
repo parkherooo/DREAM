@@ -3,7 +3,7 @@ package com.dita.dreambackend.user.entity;
 import com.dita.dreambackend.product.entity.ProductEntity;
 import com.dita.dreambackend.style.entity.StyleEntity;
 import jakarta.persistence.*;
-        import lombok.Getter;
+import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
