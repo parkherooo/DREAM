@@ -1,4 +1,4 @@
-package com.dita.dreambackend.payment.dto;
+package com.dita.dreambackend.transaction.dto;
 
 import lombok.*;
 

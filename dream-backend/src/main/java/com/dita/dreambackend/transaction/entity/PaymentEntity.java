@@ -1,4 +1,4 @@
-package com.dita.dreambackend.payment.entity;
+package com.dita.dreambackend.transaction.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -16,11 +16,13 @@ public class PaymentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private int pmNum;
 
-    @Column(length = 50, nullable = false)
-    private String bUserId;
+    @ManyToOne
+    @JoinColumn(name = "bUserId", referencedColumnName = "bUserId", nullable = false)
+    private BuyEntity buy;
 
-    @Column(nullable = false)
-    private int tNum;
+    @ManyToOne
+    @JoinColumn(name = "tNum", referencedColumnName = "tNum", nullable = false)
+    private TransactionEntity transaction;
 
     private int pmPrice;
 
