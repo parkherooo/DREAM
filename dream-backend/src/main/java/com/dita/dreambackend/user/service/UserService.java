@@ -8,13 +8,16 @@ import org.springframework.stereotype.Service;
 
 //DTO->Entity 나
 //Entity->DTO 변환 작업
-
+//Mgr 느낌
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
 
-    public void SignUp(UserDTO userDTO) { //받은 값들을 Entity -> 테이블과 컬럼값 set 자바 bean과 같음
+    public boolean SignUp(UserDTO userDTO) { //받은 값들을 Entity -> 테이블과 컬럼값 set 자바 bean과 같음
+        if (userRepository.findById(userDTO.getUserId()).isPresent()) {
+            return false;
+        }
         UserEntity userEntity = new UserEntity();
         userEntity.setUserId(userDTO.getUserId());
         userEntity.setName(userDTO.getName());
@@ -26,5 +29,12 @@ public class UserService {
         userEntity.setShoes(userDTO.getShoes());
         userRepository.save(userEntity); //레퍼짓토리의 JPA이 제공하는 save 를 가져와서  DB에 저장
 
+        return true;
+    }
+
+    public boolean Login(String UserId, String pwd) {
+        UserEntity userEntity = userRepository.findById(UserId).orElseThrow(()->new RuntimeException("아이디가 존재하지 않습니다."));
+
+        return userEntity.getPwd().equals(pwd);
     }
 }
