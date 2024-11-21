@@ -1,5 +1,6 @@
 package com.dita.dreambackend.transaction.entity;
 
+import com.dita.dreambackend.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,8 +18,8 @@ public class PaymentEntity {
     private int pmNum;
 
     @ManyToOne
-    @JoinColumn(name = "bUserId", referencedColumnName = "bUserId", nullable = false)
-    private BuyEntity buy;
+    @JoinColumn(name = "bUserId", referencedColumnName = "userId", nullable = false)
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "tNum", referencedColumnName = "tNum", nullable = false)

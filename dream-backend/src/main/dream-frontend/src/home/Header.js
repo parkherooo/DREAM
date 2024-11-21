@@ -23,6 +23,7 @@ const Header = () => {
                 </div>
             </div>
             <div className="headers">
+
                 <div className="header_logo">
                     <Link to="/" className="logo">
                         <h2>DREAM</h2>
