@@ -1,5 +1,6 @@
 package com.dita.dreambackend.transaction.entity;
 
+import com.dita.dreambackend.product.entity.ProductEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

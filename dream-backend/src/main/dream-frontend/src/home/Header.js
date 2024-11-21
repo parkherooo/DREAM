@@ -4,7 +4,7 @@ import "./Header.css";
 
 const Header = () => {
     const location = useLocation(); // 현재 URL 경로를 가져옴
-    const [activeMenu, setActiveMenu] = useState('recommend'); // 기본값을 'recommend'로 설정
+    const [activeMenu, setActiveMenu] = useState('home'); // 기본값을 'home'으로 설정
 
     // 메뉴 클릭 시 활성화 상태 업데이트
     const handleMenuClick = (menu) => {
@@ -23,51 +23,30 @@ const Header = () => {
                 </div>
             </div>
             <div className="headers">
-                {/* 로고 */}
-                <Link to="/" className="logo">
-                    <h2>DREAM</h2>
-                </Link>
-                <div>
-                    <Link to="/" className="">
-                        <h3>HOME</h3>
+                <div className="header_logo">
+                    <Link to="/" className="logo">
+                        <h2>DREAM</h2>
                     </Link>
-                    <Link to="/" className="">
-                        <h3>STYLE</h3>
-                    </Link>
-                    <Link to="/" className="">
-                        <h3>SHOP</h3>
-                    </Link>
-                </div>
-                {/* 메뉴바 */}
-                <div className="menu-bar">
-                    <Link
-                        to="/recommend"
-                        className={activeMenu === 'recommend' || location.pathname === '/recommend' ? 'active' : ''}
-                        onClick={() => handleMenuClick('recommend')}
-                    >
-                        추천
-                    </Link>
-                    <Link
-                        to="/ranking"
-                        className={activeMenu === 'ranking' || location.pathname === '/ranking' ? 'active' : ''}
-                        onClick={() => handleMenuClick('ranking')}
-                    >
-                        랭킹
-                    </Link>
-                    <Link
-                        to="/men"
-                        className={activeMenu === 'men' || location.pathname === '/men' ? 'active' : ''}
-                        onClick={() => handleMenuClick('men')}
-                    >
-                        남성
-                    </Link>
-                    <Link
-                        to="/women"
-                        className={activeMenu === 'women' || location.pathname === '/women' ? 'active' : ''}
-                        onClick={() => handleMenuClick('women')}
-                    >
-                        여성
-                    </Link>
+                    <div className="header_menu">
+                        <Link
+                            to="/"
+                            className={activeMenu === 'home' || location.pathname === '/' ? 'active' : ''}
+                            onClick={() => handleMenuClick('home')}>
+                            HOME
+                        </Link>
+                        <Link
+                            to="/style"
+                            className={activeMenu === 'style' || location.pathname === '/style' ? 'active' : ''}
+                            onClick={() => handleMenuClick('style')}>
+                            STYLE
+                        </Link>
+                        <Link
+                            to="/shop"
+                            className={activeMenu === 'shop' || location.pathname === '/shop' ? 'active' : ''}
+                            onClick={() => handleMenuClick('shop')}>
+                            SHOP
+                        </Link>
+                    </div>
                 </div>
             </div>
         </header>
