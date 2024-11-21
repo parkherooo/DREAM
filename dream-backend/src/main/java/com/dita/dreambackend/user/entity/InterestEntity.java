@@ -1,10 +1,9 @@
 package com.dita.dreambackend.user.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.Getter;
+import com.dita.dreambackend.product.entity.ProductEntity;
+import com.dita.dreambackend.style.entity.StyleEntity;
+import jakarta.persistence.*;
+        import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -14,19 +13,23 @@ import lombok.ToString;
 @ToString
 @Table(name = "interest")
 public class InterestEntity {
+
+    // 기본 키: userId
     @Id
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
     @ToString.Exclude // 순환 참조 방지
     private UserEntity user;
 
-/*    @ManyToOne
+    // pNum: Product 테이블의 FK
+    @ManyToOne
     @JoinColumn(name = "pNum", referencedColumnName = "pNum", nullable = false)
     @ToString.Exclude // 순환 참조 방지
-    private ProductEntity product;*/
+    private ProductEntity product;
 
-   /* @ManyToOne
-    @JoinColumn(name = "stNum", referencedColumnName = "stNum" nullable = false) // style 테이블의 PK 컬럼 이름을 지정
+    // stNum: Style 테이블의 FK
+    @ManyToOne
+    @JoinColumn(name = "stNum", referencedColumnName = "stNum", nullable = false)
     @ToString.Exclude // 순환 참조 방지
-    private StyleEntity style;*/
+    private StyleEntity style;
 }
