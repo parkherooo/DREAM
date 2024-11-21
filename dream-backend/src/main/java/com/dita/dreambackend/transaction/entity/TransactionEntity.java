@@ -1,6 +1,7 @@
 package com.dita.dreambackend.transaction.entity;
 
 import com.dita.dreambackend.product.entity.ProductEntity;
+import com.dita.dreambackend.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,12 +23,12 @@ public class TransactionEntity {
     private ProductEntity product;
 
     @ManyToOne
-    @JoinColumn(name = "bUserId", referencedColumnName = "bUserId", nullable = false) // 크기 지정과 널값 허용하는지 여부
-    private BuyEntity buy;
+    @JoinColumn(name = "bUserId", referencedColumnName = "userId", nullable = false) // 크기 지정과 널값 허용하는지 여부
+    private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "sUserId", referencedColumnName = "sUserId", nullable = false)
-    private SaleEntity sale;
+    @JoinColumn(name = "sUserId", referencedColumnName = "userId", nullable = false)
+    private UserEntity user1;
 
     private int tPrice;
 

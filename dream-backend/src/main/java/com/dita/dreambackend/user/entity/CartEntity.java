@@ -16,7 +16,6 @@ public class CartEntity {
     @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
     private UserEntity user;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "pNum", referencedColumnName = "pNum", nullable = false)
     private ProductEntity product;

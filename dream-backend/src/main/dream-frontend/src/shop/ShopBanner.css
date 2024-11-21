@@ -1,0 +1,40 @@
+/* SHOP 배너 스타일 */
+.shop-banner {
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    align-items: center; /* 가운데 정렬 */
+    padding: 20px 18%; /* 헤더와 동일한 여백 */
+}
+
+/* SHOP 제목 */
+.shop-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px; /* 카테고리와 간격 */
+    text-align: center;
+}
+
+/* 카테고리 메뉴 스타일 */
+.shop-categories {
+    width: 100%; /* 전체 너비 */
+    display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+}
+
+.menu-bar {
+    display: flex;
+    gap: 20px; /* 카테고리 간격 */
+}
+
+.menu-bar a {
+    margin-right: 20px;
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    padding-bottom: 5px;
+}
+
+.menu-bar a.active {
+    border-bottom: 2px solid black; /* 활성화된 카테고리 밑줄 */
+    font-weight: bold;
+}
