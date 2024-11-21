@@ -1,35 +1,36 @@
 package com.dita.dreambackend.user.entity;
 
 import com.dita.dreambackend.product.entity.ProductEntity;
-import com.dita.dreambackend.style.entity.StyleEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @ToString
-@Table(name = "interest")
-public class InterestEntity {
-
-    // 기본 키: userId
+@Table(name = "recent")
+public class RecentEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long rcNum;
+
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
     @ToString.Exclude // 순환 참조 방지
     private UserEntity user;
 
-    // pNum: Product 테이블의 FK
+
     @ManyToOne
-    @JoinColumn(name = "pNum", referencedColumnName = "pNum", nullable = false)
+    @JoinColumn(name = "pNum", referencedColumnName = "pNum", nullable = false) // null 허용
     @ToString.Exclude // 순환 참조 방지
     private ProductEntity product;
 
-    // stNum: Style 테이블의 FK
-    @ManyToOne
-    @JoinColumn(name = "stNum", referencedColumnName = "stNum", nullable = false)
-    @ToString.Exclude // 순환 참조 방지
-    private StyleEntity style;
+    @CreationTimestamp
+    @Column(updatable = false, nullable = false)
+    private LocalDateTime rcDate;
 }

@@ -17,13 +17,13 @@ import java.time.LocalDateTime;
 public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cmNum;
+    private Long cmNum;
 
     // stNum: style 테이블의 PK를 참조하는 FK
-   /* @ManyToOne
-    @JoinColumn(name = "stNum", referencedColumnName = "stNum" nullable = false) // style 테이블의 PK 컬럼 이름을 지정
+    @ManyToOne
+    @JoinColumn(name = "stNum", referencedColumnName = "stNum", nullable = false) // style 테이블의 PK 컬럼 이름을 지정
     @ToString.Exclude // 순환 참조 방지
-    private StyleEntity style;*/
+    private StyleEntity style;
 
     // userId: user 테이블의 PK를 참조하는 FK
     @ManyToOne
