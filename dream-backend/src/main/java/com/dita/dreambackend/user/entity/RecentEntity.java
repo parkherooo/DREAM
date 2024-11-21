@@ -1,5 +1,6 @@
 package com.dita.dreambackend.user.entity;
 
+import com.dita.dreambackend.product.entity.ProductEntity;
 import jakarta.persistence.*;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;

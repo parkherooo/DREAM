@@ -17,7 +17,7 @@ public class HeartEntity {
     private Long hrNum;
 
     @ManyToOne
-    @JoinColumn(name = "stNum", referencedColumnName = "stNum" nullable = false) // style 테이블의 PK 컬럼 이름을 지정
+    @JoinColumn(name = "stNum", referencedColumnName = "stNum", nullable = false) // style 테이블의 PK 컬럼 이름을 지정
     @ToString.Exclude // 순환 참조 방지
     private StyleEntity style;
 
