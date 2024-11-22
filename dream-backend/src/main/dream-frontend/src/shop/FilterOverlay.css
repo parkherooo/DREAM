@@ -1,0 +1,150 @@
+/* 전체 오버레이 컨테이너 */
+.overlay-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+/* 어두운 배경 */
+.overlay-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* 어두운 반투명 배경 */
+    z-index: 1;
+}
+
+/* 필터 창 */
+.filter-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 2; /* 배경보다 위에 위치 */
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+/* 필터 창 내부 콘텐츠 */
+.filter-overlay-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 닫기 버튼 */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* 필터 섹션 */
+.filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter-section h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.filter-section button {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.filter-section button:hover {
+    background: #f0f0f0;
+}
+
+/* 사이즈 필터 섹션 */
+.size-group {
+    margin-bottom: 20px;
+}
+
+.size-group h4 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.size-options {
+    display: flex;
+    flex-wrap: wrap; /* 여러 줄로 정렬 */
+    gap: 10px; /* 버튼 간 간격 */
+}
+
+.size-option {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    cursor: pointer;
+    border-radius: 20px; /* 버튼 둥글게 */
+    font-size: 14px;
+    color: #333;
+    min-width: 40px; /* 버튼 최소 너비 */
+    text-align: center;
+}
+
+.size-option:hover {
+    background: #f0f0f0;
+    border-color: #aaa;
+}
+
+.size-option:focus {
+    outline: none;
+    border-color: black; /* 선택된 버튼 강조 */
+    background: #e0e0e0;
+}
+
+
+/* 초기화와 확인 버튼 */
+.filter-actions {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.reset-button {
+    background: #ddd;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+}
+
+.apply-button {
+    background: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    flex: 2;
+    text-align: center;
+}

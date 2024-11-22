@@ -26,13 +26,6 @@ const ShopBanner = () => {
                         전체
                     </Link>
                     <Link
-                        to="/shop/shoes"
-                        className={activeCategory === "shoes" || location.pathname === "/shop/shoes" ? "active" : ""}
-                        onClick={() => handleCategoryClick("shoes")}
-                    >
-                        신발
-                    </Link>
-                    <Link
                         to="/shop/tops"
                         className={activeCategory === "tops" || location.pathname === "/shop/tops" ? "active" : ""}
                         onClick={() => handleCategoryClick("tops")}
@@ -45,6 +38,13 @@ const ShopBanner = () => {
                         onClick={() => handleCategoryClick("bottoms")}
                     >
                         하의
+                    </Link>
+                    <Link
+                        to="/shop/shoes"
+                        className={activeCategory === "shoes" || location.pathname === "/shop/shoes" ? "active" : ""}
+                        onClick={() => handleCategoryClick("shoes")}
+                    >
+                        신발
                     </Link>
                     <Link
                         to="/shop/bags"
