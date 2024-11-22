@@ -11,5 +11,5 @@ import lombok.*;
 public class CategoryDTO {
     private Long cNum;
     private String cName;
-    private String high_c_name;
+    private String high_cName;
 }

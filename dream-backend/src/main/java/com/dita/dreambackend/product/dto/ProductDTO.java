@@ -10,7 +10,7 @@ import lombok.*;
 
 public class ProductDTO {
     private Long pNum;
-    private Long high_c_name;
+    private Long high_cName;
     private String pName;
     private String brand;
     private String size;

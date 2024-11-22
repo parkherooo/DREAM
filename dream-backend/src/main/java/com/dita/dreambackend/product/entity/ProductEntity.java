@@ -16,11 +16,12 @@ public class ProductEntity {
     private Long pNum;
 
     @ManyToOne
-    @JoinColumn(name = "high_c_name", referencedColumnName = "high_c_name", nullable = false)
+    @JoinColumn(name = "cNum", referencedColumnName = "cNum", nullable = false)
     private CategoryEntity category;
 
     @Column(length = 50)
     private String pName;
+
 
     @Column(length = 50)
     private String brand;
