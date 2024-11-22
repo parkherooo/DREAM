@@ -1,0 +1,80 @@
+.container {
+    margin-top: 20px;
+    padding-top: 20px;
+    background-color: #eaeaea;
+    height: 760px;
+    display: flex; /* Flex 컨테이너로 설정 */
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-content: center;
+
+}
+.signup-box{
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+    width: 480px;
+    height: 700px;
+}
+
+.signup-box h2 {
+    font-weight: 900;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 900;
+    color: black;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 95%;
+    padding: 10px;
+    font-size: 14px;
+    border: none;
+    outline: none; /* 포커스 시 기본 outline 제거 */
+    border-bottom: 1px solid #d0d0d0; /* 기본적으로 회색 밑줄 */
+
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.submit-btn button {
+    width: 100%;
+    margin-top: 300px;
+    height: 52px;
+    background-color: #333;
+    color: white;
+    font-size: 14px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.submit-btn button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.additional-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.additional-links a {
+    margin: 0 10px;
+    color: #333;
+    text-decoration: none;
+}

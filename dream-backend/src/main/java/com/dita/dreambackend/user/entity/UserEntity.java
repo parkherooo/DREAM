@@ -15,7 +15,7 @@ public class UserEntity {
     @Id
     private String userId;
 
-    @Column(length = 50, nullable = false) //컬럼 속성 지정 길이와 널값을 혀용하는지 false -> 널값 비허용
+    @Column(length = 50) //컬럼 속성 지정 길이와 널값을 혀용하는지 false -> 널값 비허용
     private String name;
 
     @Column(length = 50, nullable = false)
@@ -29,6 +29,9 @@ public class UserEntity {
 
     @Column(length = 50)
     private String address;
+
+    @Column(length = 50)
+    private String gender;
 
     @Column(length = 50)
     private String loginPlatform;
