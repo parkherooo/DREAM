@@ -42,7 +42,7 @@ const Header = () => {
                             STYLE
                         </Link>
                         <Link
-                            to="/shop"
+                            to="/shop/all"
                             className={activeMenu === 'shop' || location.pathname === '/shop' ? 'active' : ''}
                             onClick={() => handleMenuClick('shop')}>
                             SHOP

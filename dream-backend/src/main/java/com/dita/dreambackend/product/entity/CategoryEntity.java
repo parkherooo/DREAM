@@ -16,8 +16,8 @@ public class CategoryEntity {
     private Long cNum;
 
     @Column(length = 50, nullable = false)
-    private String sName;
+    private String cName;
 
-    @Column(length = 50, nullable = false)
-    private String high_cNum;
+    @Column(unique = true, length = 50, nullable = false)
+    private String high_c_name;
 }
