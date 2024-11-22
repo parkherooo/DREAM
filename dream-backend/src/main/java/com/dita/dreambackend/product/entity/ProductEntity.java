@@ -12,10 +12,11 @@ import lombok.ToString;
 @Table(name = "product")
 public class ProductEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pNum;
 
     @ManyToOne
-    @JoinColumn(name = "cgNum", referencedColumnName = "cNum", nullable = false)
+    @JoinColumn(name = "high_c_name", referencedColumnName = "high_c_name", nullable = false)
     private CategoryEntity category;
 
     @Column(length = 50)
