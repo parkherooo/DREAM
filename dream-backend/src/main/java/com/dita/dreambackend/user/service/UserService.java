@@ -25,6 +25,7 @@ public class UserService {
         userEntity.setBirth(userDTO.getBirth());
         userEntity.setAddress(userDTO.getAddress());
         userEntity.setPhone(userDTO.getPhone());
+        userEntity.setGender(userDTO.getGender());
         userEntity.setLoginPlatform(userDTO.getLoginPlatform());
         userEntity.setShoes(userDTO.getShoes());
         userRepository.save(userEntity); //레퍼짓토리의 JPA이 제공하는 save 를 가져와서  DB에 저장

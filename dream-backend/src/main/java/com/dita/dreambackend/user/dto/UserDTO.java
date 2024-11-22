@@ -15,6 +15,7 @@ public class UserDTO {
     private String birth;
     private String phone;
     private String address;
+    private String gender;
     private String loginPlatform;
     private int manger;
     private int shoes;

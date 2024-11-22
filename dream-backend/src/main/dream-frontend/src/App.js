@@ -6,6 +6,7 @@ import CategoryList from "./home/CategoryList"; // 카테고리 목록
 import ShopBanner from "./shop/ShopBanner"; // 샵 배너 추가
 import ShopCategory from "./shop/ShopCategory"; // 샵 카테고리별 내용
 import "./App.css";
+import SignUp from "./user/SignUp";
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                             }
                         />
                         <Route path="/login" element={<Login />} /> {/* 로그인 페이지 */}
+                        <Route path="/SignUp" element={<SignUp />} /> {/* 로그인 페이지 */}
                         <Route path="/my-page" element={<div>My Page</div>} /> {/* 마이페이지 */}
                         <Route path="/interests" element={<div>관심 페이지</div>} /> {/* 관심 페이지 */}
                         <Route path="/notifications" element={<div>알림 페이지</div>} /> {/* 알림 페이지 */}
