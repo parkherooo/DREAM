@@ -18,6 +18,6 @@ public class CategoryEntity {
     @Column(length = 50, nullable = false)
     private String cName;
 
-    @Column(unique = true, length = 50, nullable = false)
-    private String high_c_name;
+    @Column(length = 50, nullable = false)
+    private String high_cName;
 }
