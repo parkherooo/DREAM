@@ -10,16 +10,16 @@ import lombok.*;
 
 public class SaleDTO {
 
-    private Long sNum;
+    private Long s_num;
 
-    private Long pNum;
+    private Long p_num;
 
-    private String sUserId;
+    private String s_user_id;
 
-    private int sPrice;
+    private int s_price;
 
-    private String sDate;
+    private String s_date;
 
-    private int sState;
+    private byte s_state;
 
 }

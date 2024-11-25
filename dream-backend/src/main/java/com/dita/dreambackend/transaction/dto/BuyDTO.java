@@ -9,10 +9,10 @@ import lombok.*;
 @AllArgsConstructor //모든 필드를 매개변수로 하는 생성자
 public class BuyDTO {
 
-    private Long bNum;
-    private Long pNum;
-    private String bUserId;
-    private int bPrice;
-    private String bDate;
-    private int bState;
+    private Long b_num;
+    private Long p_num;
+    private String b_user_id;
+    private int b_price;
+    private String b_date;
+    private byte b_state;
 }

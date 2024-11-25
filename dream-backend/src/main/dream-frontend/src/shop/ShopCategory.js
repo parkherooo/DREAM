@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import FilterMenu from "./FilterMenu"; // 필터 메뉴
 import CategoryItems from "./CategoryItems"; // 카테고리 아이템 컴포넌트
+import ProductGrid from "./ProductGrid"; // 상품 그리드
 import "./ShopCategory.css";
 
 // 각 페이지에 전달할 카테고리 데이터를 정의
@@ -58,6 +59,7 @@ function ShopCategory() {
                         <>
                             <CategoryItems categories={categoriesData.all} /> {/* 전체 */}
                             <FilterMenu />
+                            <ProductGrid />
                         </>
                     }
                 />
@@ -67,6 +69,7 @@ function ShopCategory() {
                         <>
                             <CategoryItems categories={categoriesData.tops} /> {/* 상의 */}
                             <FilterMenu />
+                            <ProductGrid />
                         </>
                     }
                 />
@@ -76,6 +79,7 @@ function ShopCategory() {
                         <>
                             <CategoryItems categories={categoriesData.bottoms} /> {/* 하의 */}
                             <FilterMenu />
+                            <ProductGrid />
                         </>
                     }
                 />
@@ -85,6 +89,7 @@ function ShopCategory() {
                         <>
                             <CategoryItems categories={categoriesData.shoes} /> {/* 신발 */}
                             <FilterMenu />
+                            <ProductGrid />
                         </>
                     }
                 />
@@ -94,6 +99,7 @@ function ShopCategory() {
                         <>
                             <CategoryItems categories={categoriesData.bags} /> {/* 가방 */}
                             <FilterMenu />
+                            <ProductGrid />
                         </>
                     }
                 />
@@ -103,6 +109,7 @@ function ShopCategory() {
                         <>
                             <CategoryItems categories={categoriesData.accessories} /> {/* 패션잡화 */}
                             <FilterMenu />
+                            <ProductGrid />
                         </>
                     }
                 />

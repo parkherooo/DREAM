@@ -16,20 +16,20 @@ import java.time.LocalDateTime;
 public class AlarmEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long alNum;
+    private Long al_num;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     @ToString.Exclude // 순환 참조 방지
     private UserEntity user;
 
     @Column
-    private String alContent;
+    private String al_content;
 
     @CreationTimestamp
     @Column(updatable = false, nullable = false)
-    private LocalDateTime alDate;
+    private LocalDateTime al_date;
 
     @Column (length = 1, nullable = false)
-    private byte alCheck;
+    private byte al_check;
 }

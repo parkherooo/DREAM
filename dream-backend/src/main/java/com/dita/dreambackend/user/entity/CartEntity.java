@@ -13,12 +13,12 @@ import lombok.Setter;
 public class CartEntity {
     @Id // pk 컬럼 지정
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "pNum", referencedColumnName = "pNum", nullable = false)
+    @JoinColumn(name = "p_num", referencedColumnName = "p_num", nullable = false)
     private ProductEntity product;
 
-    private int pCount;
+    private int p_count;
 }

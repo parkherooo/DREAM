@@ -9,14 +9,14 @@ import lombok.*;
 @NoArgsConstructor //기본 생성자
 @AllArgsConstructor //모든 필드를 매개변수로 하는 생성자
 public class UserDTO {
-    private String userId;
+    private String user_id;
     private String name;
     private String pwd;
     private String birth;
     private String phone;
     private String address;
     private String gender;
-    private String loginPlatform;
+    private String login_platform;
     private int manger;
     private int shoes;
 }
