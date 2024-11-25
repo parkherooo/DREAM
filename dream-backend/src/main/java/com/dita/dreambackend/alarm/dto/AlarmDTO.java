@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlarmDTO {
-    private Long alNum;
-    private String userId;
-    private String alContent;
-    private LocalDateTime alDate;
-    private byte alCheck;
+    private Long al_num;
+    private String user_id;
+    private String al_content;
+    private LocalDateTime al_date;
+    private byte al_check;
 }

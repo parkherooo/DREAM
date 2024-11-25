@@ -13,15 +13,14 @@ import lombok.ToString;
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long pNum;
+    private Long p_num;
 
     @ManyToOne
-    @JoinColumn(name = "cNum", referencedColumnName = "cNum", nullable = false)
+    @JoinColumn(name = "c_num", referencedColumnName = "c_num", nullable = false)
     private CategoryEntity category;
 
     @Column(length = 50)
-    private String pName;
-
+    private String p_name;
 
     @Column(length = 50)
     private String brand;
@@ -34,9 +33,9 @@ public class ProductEntity {
     private int stock_quantity;
 
     @Column(length = 255)
-    private String pImg;
+    private String p_img;
 
     @Column(length = 500)
-    private String pDetails;
+    private String p_details;
 
 }

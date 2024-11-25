@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentDTO {
-    private Long cmNum;
-    private Long stNum;
-    private String userId;
-    private String cmContent;
-    private LocalDateTime cmDate;
+    private Long cm_num;
+    private Long st_num;
+    private String user_id;
+    private String cm_content;
+    private LocalDateTime cm_date;
 }

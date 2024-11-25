@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InterestDTO {
-    private String userId;
-    private int pNum;
-    private int stNum;
+    private String user_id;
+    private int p_num;
+    private int st_num;
 }

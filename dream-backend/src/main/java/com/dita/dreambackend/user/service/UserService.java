@@ -15,18 +15,18 @@ public class UserService {
     private final UserRepository userRepository;
 
     public boolean SignUp(UserDTO userDTO) { //받은 값들을 Entity -> 테이블과 컬럼값 set 자바 bean과 같음
-        if (userRepository.findById(userDTO.getUserId()).isPresent()) {
+        if (userRepository.findById(userDTO.getUser_id()).isPresent()) {
             return false;
         }
         UserEntity userEntity = new UserEntity();
-        userEntity.setUserId(userDTO.getUserId());
+        userEntity.setUser_id(userDTO.getUser_id());
         userEntity.setName(userDTO.getName());
         userEntity.setPwd(userDTO.getPwd());
         userEntity.setBirth(userDTO.getBirth());
         userEntity.setAddress(userDTO.getAddress());
         userEntity.setPhone(userDTO.getPhone());
         userEntity.setGender(userDTO.getGender());
-        userEntity.setLoginPlatform(userDTO.getLoginPlatform());
+        userEntity.setLogin_platform(userDTO.getLogin_platform());
         userEntity.setShoes(userDTO.getShoes());
         userRepository.save(userEntity); //레퍼짓토리의 JPA이 제공하는 save 를 가져와서  DB에 저장
 

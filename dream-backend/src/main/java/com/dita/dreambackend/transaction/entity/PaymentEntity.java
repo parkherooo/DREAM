@@ -15,22 +15,22 @@ import java.time.LocalDateTime;
 public class PaymentEntity {
     @Id // pk 컬럼 지정
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    private int pmNum;
+    private int pm_num;
 
     @ManyToOne
-    @JoinColumn(name = "bUserId", referencedColumnName = "userId", nullable = false)
+    @JoinColumn(name = "b_user_id", referencedColumnName = "user_id", nullable = false)
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "tNum", referencedColumnName = "tNum", nullable = false)
+    @JoinColumn(name = "t_num", referencedColumnName = "t_num", nullable = false)
     private TransactionEntity transaction;
 
-    private int pmPrice;
+    private int pm_price;
 
     @Column(length = 50)
-    private String pmMethod;
+    private String pm_method;
 
-    private LocalDateTime pmDate;
+    private LocalDateTime pm_date;
 
-    private int pmState;
+    private byte pm_state;
 }

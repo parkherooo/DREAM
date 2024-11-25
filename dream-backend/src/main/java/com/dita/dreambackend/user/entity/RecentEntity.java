@@ -17,20 +17,20 @@ import java.time.LocalDateTime;
 public class RecentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long rcNum;
+    private Long rc_num;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     @ToString.Exclude // 순환 참조 방지
     private UserEntity user;
 
 
     @ManyToOne
-    @JoinColumn(name = "pNum", referencedColumnName = "pNum", nullable = false) // null 허용
+    @JoinColumn(name = "p_num", referencedColumnName = "p_num", nullable = false) // null 허용
     @ToString.Exclude // 순환 참조 방지
     private ProductEntity product;
 
     @CreationTimestamp
     @Column(updatable = false, nullable = false)
-    private LocalDateTime rcDate;
+    private LocalDateTime rc_date;
 }

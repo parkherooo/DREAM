@@ -17,19 +17,19 @@ public class InterestEntity {
     // 기본 키: userId
     @Id
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     @ToString.Exclude // 순환 참조 방지
     private UserEntity user;
 
     // pNum: Product 테이블의 FK
     @ManyToOne
-    @JoinColumn(name = "pNum", referencedColumnName = "pNum", nullable = false)
+    @JoinColumn(name = "p_num", referencedColumnName = "p_num", nullable = false)
     @ToString.Exclude // 순환 참조 방지
     private ProductEntity product;
 
     // stNum: Style 테이블의 FK
     @ManyToOne
-    @JoinColumn(name = "stNum", referencedColumnName = "stNum", nullable = false)
+    @JoinColumn(name = "st_num", referencedColumnName = "st_num", nullable = false)
     @ToString.Exclude // 순환 참조 방지
     private StyleEntity style;
 }
