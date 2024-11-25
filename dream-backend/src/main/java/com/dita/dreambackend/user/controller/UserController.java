@@ -37,7 +37,7 @@ public class UserController {
 
     @PostMapping("/Login")
     public String SignUp(@RequestBody UserDTO userDTO) {
-        boolean success = userService.Login(userDTO.getUserId(),userDTO.getPwd()); //DTO에서 아이디와 패스워드를 받아와 서비스에있는 Login을 호출
+        boolean success = userService.Login(userDTO.getUser_id(),userDTO.getPwd()); //DTO에서 아이디와 패스워드를 받아와 서비스에있는 Login을 호출
         if(!success) {
             return "로그인 실패";
         }
