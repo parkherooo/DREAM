@@ -1,7 +1,10 @@
 package com.dita.dreambackend.style.dto;
 
+import com.dita.dreambackend.style.entity.StyleEntity;
+import com.dita.dreambackend.user.entity.UserEntity;
 import lombok.*;
 
+import javax.swing.text.Style;
 import java.time.LocalDateTime;
 
 @Getter
@@ -18,4 +21,18 @@ public class StyleDTO {
     private int ht_count;
     private LocalDateTime st_date;
     private String hashtag;
+
+    public static StyleDTO toStyleDTO(StyleEntity styleEntity) {
+        StyleDTO styleDTO = new StyleDTO();
+        styleDTO.setStNum(styleEntity.getStNum());
+        styleDTO.setUserId(styleEntity.getUserId().getUserId());
+        styleDTO.setTitle(styleEntity.getTitle());
+        styleDTO.setStContent(styleEntity.getStContent());
+        styleDTO.setImage(styleEntity.getImage());
+        styleDTO.setHtCount(styleEntity.getHtCount());
+        styleDTO.setStDate(styleEntity.getStDate());
+        styleDTO.setHashtag(styleEntity.getHashtag());
+        return styleDTO;
+    }
+
 }

@@ -7,7 +7,8 @@ import ShopBanner from "./shop/ShopBanner"; // 샵 배너 추가
 import ShopCategory from "./shop/ShopCategory"; // 샵 카테고리별 내용
 import "./App.css";
 import SignUp from "./user/SignUp";
-
+import StylePost from "./style/StylePost";
+import StyleList from "./style/StyleList";
 function App() {
     return (
         <Router>
@@ -25,6 +26,8 @@ function App() {
                                 </>
                             }
                         />
+                        <Route path="/StylePost" element={<StylePost />} />{/*게시글 작성 페이지*/}
+                        {<Route path="/StyleList" element={<StyleList />} />/*게시글 작성 페이지*/}
                         <Route path="/login" element={<Login />} /> {/* 로그인 페이지 */}
                         <Route path="/SignUp" element={<SignUp />} /> {/* 로그인 페이지 */}
                         <Route path="/my-page" element={<div>My Page</div>} /> {/* 마이페이지 */}

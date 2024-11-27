@@ -84,7 +84,16 @@ function SignUp() {
             })
             .catch((error) => {
                 console.error(error);
-                alert('회원가입 실패. 다시 시도해주세요.');
+                if (error.response) {
+                    // 서버에서의 응답 에러 처리
+                    alert(error.response.data); // 서버에서 전송한 에러 메시지
+                } else if (error.request) {
+                    // 요청이 전송되었으나 응답이 없는 경우
+                    alert('서버 응답 없음. 다시 시도해주세요.');
+                } else {
+                    // 다른 에러 처리
+                    alert('에러 발생: ' + error.message);
+                }
             });
     };
 
