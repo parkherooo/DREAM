@@ -1,0 +1,21 @@
+.filter-menu {
+    position: relative;
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    padding: 0 350px;
+}
+
+.filter-button {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.filter-button:hover {
+    background: #f8f8f8;
+}

@@ -16,23 +16,23 @@ import java.time.LocalDateTime;
 public class TransactionEntity {
     @Id // pk 컬럼 지정
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    private int tNum;
+    private int t_num;
 
     @ManyToOne
-    @JoinColumn(name = "pNum", referencedColumnName = "pNum", nullable = false)
+    @JoinColumn(name = "p_num", referencedColumnName = "p_num", nullable = false)
     private ProductEntity product;
 
     @ManyToOne
-    @JoinColumn(name = "bUserId", referencedColumnName = "userId", nullable = false) // 크기 지정과 널값 허용하는지 여부
+    @JoinColumn(name = "b_user_id", referencedColumnName = "user_id", nullable = false) // 크기 지정과 널값 허용하는지 여부
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "sUserId", referencedColumnName = "userId", nullable = false)
+    @JoinColumn(name = "s_user_id", referencedColumnName = "user_id", nullable = false)
     private UserEntity user1;
 
-    private int tPrice;
+    private int t_price;
 
-    private LocalDateTime tDate;
+    private LocalDateTime t_date;
 
-    private int tState;
+    private byte t_state;
 }

@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor //모든 필드를 매개변수로 하는 생성자
 
 public class CategoryDTO {
-    private Long cNum;
-    private String cName;
-    private String high_cName;
+    private Long c_num;
+    private String c_name;
+    private String high_c_name;
 }

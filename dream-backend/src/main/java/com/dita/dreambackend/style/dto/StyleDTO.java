@@ -13,13 +13,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor // 기본 생성자
 @AllArgsConstructor // 모든 필드를 매개변수로 하는 생성자
 public class StyleDTO {
-    private int stNum;
-    private String userId;
+    private int st_num;
+    private String user_id;
     private String title;
-    private String stContent;
+    private String st_content;
     private String image;
-    private int htCount;
-    private LocalDateTime stDate;
+    private int ht_count;
+    private LocalDateTime st_date;
     private String hashtag;
 
     public static StyleDTO toStyleDTO(StyleEntity styleEntity) {

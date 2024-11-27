@@ -42,6 +42,7 @@ public class UserController {
     }
 
     @PostMapping("/Login")
+
     public ResponseEntity<String> login(@RequestBody UserDTO userDTO, HttpSession session) {
         boolean success = userService.Login(userDTO.getUserId(), userDTO.getPwd());
         if (!success) {
@@ -61,6 +62,7 @@ public class UserController {
             response.put("userId", userId);
             System.out.println("session_check"+userId);
             return ResponseEntity.ok(response);
+
         }
         System.out.println("session_not_check"+userId);
         response.put("isLoggedIn", false);
