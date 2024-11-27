@@ -4,7 +4,6 @@ import com.dita.dreambackend.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +19,7 @@ public class StyleEntity {
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
-    private UserEntity user;
+    private UserEntity userId;
 
     @Column(length = 100)
     private String title;
@@ -31,7 +30,7 @@ public class StyleEntity {
     @Column(length = 255)
     private String image;
 
-    private int htCount;
+    private int htCount = 0;
 
     private LocalDateTime stDate;
 
