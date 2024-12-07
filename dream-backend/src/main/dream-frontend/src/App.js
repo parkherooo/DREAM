@@ -4,7 +4,7 @@ import Login from "./user/Login"; // 로그인 페이지
 import BannerSlider from "./home/BannerSlider"; // 배너 슬라이더
 import CategoryList from "./home/CategoryList"; // 카테고리 목록
 import ShopBanner from "./shop/ShopBanner"; // 샵 배너 추가
-import ShopCategory from "./shop/ShopCategory"; // 샵 카테고리별 내용
+import ShopPage from "./shop/ShopPage"; // 샵 카테고리별 내용
 import "./App.css";
 import SignUp from "./user/SignUp";
 
@@ -37,7 +37,7 @@ function App() {
                             element={
                                 <>
                                     <ShopBanner /> {/* SHOP 배너 */}
-                                    <ShopCategory /> {/* SHOP 카테고리별 내용 */}
+                                    <ShopPage /> {/* SHOP 카테고리별 내용 */}
                                 </>
                             }
                         />
