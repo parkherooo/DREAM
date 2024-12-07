@@ -21,11 +21,12 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    // 특정 상품 조회
-    public ProductDTO getProductById(Long id) {
-        ProductEntity product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
-        return convertToDTO(product);
+    // 상위 카테고리에 따라 상품 조회
+    public List<ProductDTO> getProductsByCategory(String highCategory) {
+        List<ProductEntity> products = productRepository.findByCategory(highCategory);
+        return products.stream()
+                .map(this::convertToDTO) // DTO 변환
+                .collect(Collectors.toList());
     }
 
     // Entity -> DTO 변환 메서드

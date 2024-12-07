@@ -1,4 +1,4 @@
-/* ShopCategory 전체 컨테이너 */
+/* ShopPage 전체 컨테이너 */
 .shop-category {
     display: flex;
     flex-direction: column; /* 세로 정렬 */
