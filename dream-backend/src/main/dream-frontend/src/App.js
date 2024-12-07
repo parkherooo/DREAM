@@ -7,6 +7,11 @@ import ShopBanner from "./shop/ShopBanner"; // 샵 배너 추가
 import ShopPage from "./shop/ShopPage"; // 샵 카테고리별 내용
 import "./App.css";
 import SignUp from "./user/SignUp";
+import StylePost from "./style/StylePost";
+import StyleList from "./style/StyleList";
+import StyleDetail from "./style/StyleDetail";
+import StyleUpdate from "./style/StyleUpdate";
+import "./App.css";
 
 function App() {
     return (
@@ -19,18 +24,23 @@ function App() {
                             path="/"
                             element={
                                 <>
-                                    {/* 메인 페이지 내용 */}
                                     <BannerSlider />
                                     <CategoryList />
                                 </>
                             }
                         />
-                        <Route path="/login" element={<Login />} /> {/* 로그인 페이지 */}
-                        <Route path="/SignUp" element={<SignUp />} /> {/* 로그인 페이지 */}
-                        <Route path="/my-page" element={<div>My Page</div>} /> {/* 마이페이지 */}
-                        <Route path="/interests" element={<div>관심 페이지</div>} /> {/* 관심 페이지 */}
-                        <Route path="/notifications" element={<div>알림 페이지</div>} /> {/* 알림 페이지 */}
 
+                        <Route path="/StylePost" element={<StylePost />} />
+                        <Route path="/StyleList" element={<StyleList />} />
+                        <Route path="/StyleDetail/:st_num" element={<StyleDetail />} />
+                        <Route path="/StyleUpdate/:st_num" element={<StyleUpdate />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/SignUp" element={<SignUp />} />
+                        <Route path="/my-page" element={<div>My Page</div>} />
+                        <Route path="/interests" element={<div>관심 페이지</div>} />
+                        <Route path="/notifications" element={<div>알림 페이지</div>} />
+                        <Route path="/shop/*" element={<><ShopBanner /><ShopCategory /></>} />
+                                                        
                         {/* SHOP 페이지 */}
                         <Route
                             path="/shop/*"
@@ -41,6 +51,7 @@ function App() {
                                 </>
                             }
                         />
+
                     </Routes>
                 </main>
             </div>

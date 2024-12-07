@@ -1,0 +1,104 @@
+.style-detail{
+    align-items: center;
+    text-align: center;
+}
+
+.image-slider {
+    position: relative;
+    width: 100%;
+    max-width: 600px; /* 이미지 최대 너비 설정 */
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 10px; /* 둥근 모서리 */
+    background: #fff; /* 흰색 배경 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+}
+
+.style-detail-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease; /* 이미지 전환 효과 */
+}
+
+.prev-button,
+.next-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.82); /* 반투명 배경 */
+    color: #888888; /* 화살표 색상 */
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.3s ease; /* 호버 효과 */
+}
+
+.prev-button {
+    left: 10px; /* 왼쪽 화살표 배치 */
+}
+
+.next-button {
+    right: 10px; /* 오른쪽 화살표 배치 */
+}
+
+.image-indicator {
+    position: absolute;
+    bottom: 0px; /* 이미지 아래쪽에 배치 */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px; /* 점 사이 간격 */
+}
+
+.indicator-dot {
+    width: 10px;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.3); /* 비활성화 점 색상 */
+    border-radius: 50%;
+    transition: background 0.3s ease;
+}
+
+.indicator-dot.active {
+    background: rgba(0, 0, 0, 0.8); /* 활성화된 점 색상 */
+}
+.style-detail-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* 버튼들을 가운데 정렬 */
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.edit-button, .delete-button {
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.edit-button {
+    background-color: #000000;
+    color: white;
+}
+
+.delete-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.edit-button:hover {
+    background-color: #888888;
+}
+
+.delete-button:hover {
+    background-color: #d32f2f;
+}

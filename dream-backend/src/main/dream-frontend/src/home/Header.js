@@ -1,29 +1,68 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Link와 현재 경로 확인용 useLocation
-import "./Header.css";
+import React, { useEffect, useState, useCallback } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import './Header.css';
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const Header = () => {
-    const location = useLocation(); // 현재 URL 경로를 가져옴
-    const [activeMenu, setActiveMenu] = useState('home'); // 기본값을 'home'으로 설정
+    const location = useLocation();
+    const [activeMenu, setActiveMenu] = useState('home');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user_id, setUser_id] = useState(null);
 
     // 메뉴 클릭 시 활성화 상태 업데이트
     const handleMenuClick = (menu) => {
         setActiveMenu(menu);
     };
 
+    // 세션 상태 확인 함수 (useCallback으로 메모이제이션)
+    const checkSession = useCallback(async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/check-session', { withCredentials: true });
+            if (response.data.user_id) {
+                setIsLoggedIn(true);
+                setUser_id(response.data.user_id);
+            } else {
+                setUser_id(null);
+                setIsLoggedIn(false);
+            }
+        } catch (error) {
+            console.error('세션 확인 실패:', error);
+        }
+    }, []); // 종속성 없음 (정적 함수)
+
+    useEffect(() => {
+        checkSession();
+    }, [checkSession]); // checkSession 함수에 종속
+
+
+    const handleLogout = async () => {
+        try {
+            await axios.post('http://localhost:8080/Logout', {}, { withCredentials: true });
+            setIsLoggedIn(false);
+            setUser_id(null);
+        } catch (error) {
+            console.error('로그아웃 실패:', error);
+        }
+    };
+
     return (
         <header>
             <div className="header-top">
-                {/* 우측 상단 링크 */}
                 <div className="user-links">
                     <Link to="/my-page">마이페이지</Link>
                     <Link to="/interests">관심</Link>
                     <Link to="/notifications">알림</Link>
-                    <Link to="/login">로그인</Link>
+                    {isLoggedIn ? (
+                        <button className="logout-btn" onClick={handleLogout} style={{ cursor: 'pointer' }}>
+                            로그아웃
+                        </button>
+                    ) : (
+                        <Link to="/login">로그인</Link>
+                    )}
                 </div>
             </div>
             <div className="headers">
-
                 <div className="header_logo">
                     <Link to="/" className="logo">
                         <h2>DREAM</h2>
@@ -36,8 +75,8 @@ const Header = () => {
                             HOME
                         </Link>
                         <Link
-                            to="/style"
-                            className={activeMenu === 'style' || location.pathname === '/style' ? 'active' : ''}
+                            to="/StyleList"
+                            className={activeMenu === 'style' || location.pathname === '/StyleList' ? 'active' : ''}
                             onClick={() => handleMenuClick('style')}>
                             STYLE
                         </Link>
