@@ -1,0 +1,62 @@
+/* style-list 컨테이너 */
+.style-list {
+    margin: 0 auto; /* 수평 가운데 정렬 */
+    padding-top: 10px;
+    display: flex; /* flexbox 사용 */
+    flex-direction: column; /* 세로로 배치 */
+    align-items: center; /* 자식 요소들을 가로로 중앙 정렬 */
+}
+.style-list h2{
+    font-weight: 600;
+    font-size: 28px;
+}
+.style-list hr{
+    border: 0;
+    border-top: 1px solid #d0d0d0; /* 수평선의 두께와 색상 */
+    width: 100%; /* 수평선의 너비 */
+    margin: 20px auto; /* 상하 여백 추가, 수평선 중앙 정렬 */
+}
+/* 스타일 카드의 컨테이너 */
+.style-cards {
+    display: flex;
+    flex-wrap: wrap; /* 여러 줄로 감싸기 */
+    gap: 20px; /* 카드들 사이의 간격 */
+    width: 60%;
+    align-items: center; /* 자식 요소들을 가로로 중앙 정렬 */
+    margin: 0 auto; /* 수평 가운데 정렬 */
+}
+
+
+/* 각 스타일 카드 */
+.style-card {
+    width: 23%; /* 4개씩 가로로 배치 */
+    box-sizing: border-box; /* padding, border 포함 */
+    background-color: #f5f5f5; /* 카드 배경색 */
+    border-radius: 10px;
+}
+
+/* 이미지 스타일 */
+.style-images {
+    text-align: center;
+}
+
+.style-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* 사용자 ID와 좋아요 수 */
+.style-card p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* 제목 스타일 */
+.style-card a {
+    color: black; /* 검정색으로 글자색 설정 */
+    text-decoration: none; /* 밑줄 없애기 */
+    font-size: 16px;
+    font-weight: bold;
+}
+

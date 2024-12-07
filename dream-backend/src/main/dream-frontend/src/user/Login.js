@@ -5,7 +5,7 @@ import "./Login.css";
 
 function Login() {
     const [userData, setUserData] = useState({
-        userId: '',
+        user_id: '',
         pwd: '',
     });
     const [emailError, setEmailError] = useState('');
@@ -23,7 +23,7 @@ function Login() {
         const { name, value } = e.target;
 
         // 이메일 유효성 검사
-        if (name === 'userId') {
+        if (name === 'user_id') {
             if (!isValidEmail(value)) {
                 setEmailError('이메일 형식으로 입력해주세요.');
             } else {
@@ -50,7 +50,7 @@ function Login() {
             });
     };
 
-    const isFormValid = userData.userId && userData.pwd && !emailError;
+    const isFormValid = userData.user_id && userData.pwd && !emailError;
 
     return (
         <div className="login-container">
@@ -63,8 +63,8 @@ function Login() {
                     <label htmlFor="email">이메일 주소</label>
                     <input
                         type="text"
-                        name="userId"
-                        value={userData.userId}
+                        name="user_id"
+                        value={userData.user_id}
                         onChange={handleChange}
                         placeholder="예) dream@dream.com"
                         required

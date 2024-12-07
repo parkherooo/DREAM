@@ -44,27 +44,27 @@ public class UserController {
     @PostMapping("/Login")
 
     public ResponseEntity<String> login(@RequestBody UserDTO userDTO, HttpSession session) {
-        boolean success = userService.Login(userDTO.getUserId(), userDTO.getPwd());
+        boolean success = userService.Login(userDTO.getUser_id(), userDTO.getPwd());
         if (!success) {
             return ResponseEntity.badRequest().body("로그인 실패");
         }
-        session.setAttribute("userId", userDTO.getUserId());
-        System.out.println("sessionLogin"+session.getAttribute("userId"));
+        session.setAttribute("user_id", userDTO.getUser_id());
+        System.out.println("sessionLogin"+session.getAttribute("user_id"));
         return ResponseEntity.ok("로그인 성공");
     }
 
     @GetMapping("/check-session")
     public ResponseEntity<Map<String, Object>> checkSession(HttpSession session) {
         Map<String, Object> response = new HashMap<>();
-        Object userId = session.getAttribute("userId");
-        if (userId != null) {
+        Object user_id = session.getAttribute("user_id");
+        if (user_id != null) {
             response.put("isLoggedIn", true);
-            response.put("userId", userId);
-            System.out.println("session_check"+userId);
+            response.put("user_id", user_id);
+            System.out.println("session_check"+user_id);
             return ResponseEntity.ok(response);
 
         }
-        System.out.println("session_not_check"+userId);
+        System.out.println("session_not_check"+user_id);
         response.put("isLoggedIn", false);
         return ResponseEntity.ok(response);
     }
