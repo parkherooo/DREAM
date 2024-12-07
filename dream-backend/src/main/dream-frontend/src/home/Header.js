@@ -8,7 +8,7 @@ const Header = () => {
     const location = useLocation();
     const [activeMenu, setActiveMenu] = useState('home');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userId, setUserId] = useState(null);
+    const [user_id, setUser_id] = useState(null);
 
     // 메뉴 클릭 시 활성화 상태 업데이트
     const handleMenuClick = (menu) => {
@@ -19,11 +19,11 @@ const Header = () => {
     const checkSession = useCallback(async () => {
         try {
             const response = await axios.get('http://localhost:8080/check-session', { withCredentials: true });
-            if (response.data.userId) {
+            if (response.data.user_id) {
                 setIsLoggedIn(true);
-                setUserId(response.data.userId);
+                setUser_id(response.data.user_id);
             } else {
-                setUserId(null);
+                setUser_id(null);
                 setIsLoggedIn(false);
             }
         } catch (error) {
@@ -40,7 +40,7 @@ const Header = () => {
         try {
             await axios.post('http://localhost:8080/Logout', {}, { withCredentials: true });
             setIsLoggedIn(false);
-            setUserId(null);
+            setUser_id(null);
         } catch (error) {
             console.error('로그아웃 실패:', error);
         }

@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpSession;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,28 +20,28 @@ public class StyleController {
 
     @PostMapping("/StylePost")
     public ResponseEntity<String> stylePost(
-            @RequestParam("title") String title,
+            @RequestParam("tags") String tags,
             @RequestParam("content") String content,
-            @RequestParam(name = "img", required = false) MultipartFile[] imgs, // 이미지 파일 처리
+            @RequestParam(name = "img", required = false) MultipartFile[] img, // 이미지 파일 처리
             @RequestParam("hashtag") String hashtag,
             HttpSession session
     ) {
         // 사용자 확인
-        String userId = (String) session.getAttribute("userId");
+        String user_id = (String) session.getAttribute("user_id");
 
-        if (userId == null) {
+        if (user_id == null) {
             return ResponseEntity.badRequest().body("사용자가 로그인되어 있지 않습니다.");
         }
 
         // DTO 생성
         StyleDTO styleDTO = new StyleDTO();
-        styleDTO.setUserId(userId);
-        styleDTO.setTitle(title);
-        styleDTO.setStContent(content);
+        styleDTO.setUser_id(user_id);
+        styleDTO.setTags(tags);
+        styleDTO.setSt_content(content);
         styleDTO.setHashtag(hashtag);
 
         // 서비스 로직 호출
-        boolean result = styleService.StylePost(styleDTO, imgs); // MultipartFile 전달
+        boolean result = styleService.StylePost(styleDTO, img); // MultipartFile 전달
         if (!result) {
             return ResponseEntity.badRequest().body("작성 실패");
         }
@@ -51,16 +50,71 @@ public class StyleController {
     }
 
     @GetMapping("/StyleList")
-    public String styleList(Model model) {
-        List<StyleDTO> styleList = styleService.findAll();
-        model.addAttribute("styleList", styleList);
-        return "styleList";
+    public List<StyleDTO> styleList() {
+        return styleService.findAll();
     }
 
-    @GetMapping("/StyleDetail{id}")
-    public String styleDetail(Model model, @PathVariable String id) {
-        StyleDTO styleDTO = styleService.findById(id);
-        model.addAttribute("styleDTO", styleDTO);
-        return "styleDetail";
+    @GetMapping("/StyleDetail/{id}")
+    public StyleDTO styleDetail(@PathVariable long id) {
+        return styleService.findById(id);
+
     }
+
+    @GetMapping("/StyleUpdate/{id}")
+    public StyleDTO styleUpdate(@PathVariable long id) {
+        return styleService.findById(id);
+    }
+
+    @PostMapping("/StyleUpdate")
+    public ResponseEntity<String> styleUpdate(
+            @RequestParam("st_num") int st_num,
+            @RequestParam("tags") String tags,
+            @RequestParam("content") String content,
+            @RequestParam(name = "img", required = false) MultipartFile[] img, // 이미지 파일 처리
+            @RequestParam("hashtag") String hashtag,
+            HttpSession session
+    ){
+        // 사용자 확인
+        String user_id = (String) session.getAttribute("user_id");
+
+        if (user_id == null) {
+            return ResponseEntity.badRequest().body("사용자가 로그인되어 있지 않습니다.");
+        }
+
+        // DTO 생성
+        StyleDTO styleDTO = new StyleDTO();
+        styleDTO.setSt_num(st_num);
+        styleDTO.setUser_id(user_id);
+        styleDTO.setTags(tags);
+        styleDTO.setSt_content(content);
+        styleDTO.setHashtag(hashtag);
+
+        // 서비스 로직 호출
+        boolean result = styleService.StyleUpdate(styleDTO, img); // MultipartFile 전달
+        if (!result) {
+            return ResponseEntity.badRequest().body("수정 실패");
+        }
+
+        return ResponseEntity.ok("수정 성공");
+    }
+
+    @DeleteMapping("/StyleDelete/{id}")
+    public ResponseEntity<String> styleDelete(@PathVariable long id, HttpSession session) {
+        // 사용자 확인
+        String user_id = (String) session.getAttribute("user_id");
+
+        if (user_id == null) {
+            return ResponseEntity.badRequest().body("사용자가 로그인되어 있지 않습니다.");
+        }
+
+        // 서비스 로직 호출
+        boolean result = styleService.StyleDelete(id); // 삭제 서비스 호출
+        if (!result) {
+            return ResponseEntity.badRequest().body("삭제 실패");
+        }
+
+        return ResponseEntity.ok("삭제 성공");
+    }
+
+
 }

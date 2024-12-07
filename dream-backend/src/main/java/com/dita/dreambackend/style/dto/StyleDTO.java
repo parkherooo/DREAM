@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class StyleDTO {
     private int st_num;
     private String user_id;
-    private String title;
+    private String tags;
     private String st_content;
     private String image;
     private int ht_count;
@@ -24,13 +24,13 @@ public class StyleDTO {
 
     public static StyleDTO toStyleDTO(StyleEntity styleEntity) {
         StyleDTO styleDTO = new StyleDTO();
-        styleDTO.setStNum(styleEntity.getStNum());
-        styleDTO.setUserId(styleEntity.getUserId().getUserId());
-        styleDTO.setTitle(styleEntity.getTitle());
-        styleDTO.setStContent(styleEntity.getStContent());
+        styleDTO.setSt_num(styleEntity.getSt_num());
+        styleDTO.setUser_id(styleEntity.getUser_id().getUser_id());
+        styleDTO.setTags(styleEntity.getTags());
+        styleDTO.setSt_content(styleEntity.getSt_content());
         styleDTO.setImage(styleEntity.getImage());
-        styleDTO.setHtCount(styleEntity.getHtCount());
-        styleDTO.setStDate(styleEntity.getStDate());
+        styleDTO.setHt_count(styleEntity.getHt_count());
+        styleDTO.setSt_date(styleEntity.getSt_date());
         styleDTO.setHashtag(styleEntity.getHashtag());
         return styleDTO;
     }

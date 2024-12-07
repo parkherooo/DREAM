@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+
 import java.time.LocalDateTime;
 
 // DB의 테이블 역할을 하는 클래스
@@ -20,11 +21,11 @@ public class StyleEntity {
     @ManyToOne
 
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
-    private UserEntity user;
+    private UserEntity user_id;
 
 
     @Column(length = 100)
-    private String title;
+    private String tags;
 
     @Column(length = 500)
     private String st_content;
