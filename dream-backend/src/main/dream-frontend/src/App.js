@@ -39,7 +39,6 @@ function App() {
                         <Route path="/my-page" element={<div>My Page</div>} />
                         <Route path="/interests" element={<div>관심 페이지</div>} />
                         <Route path="/notifications" element={<div>알림 페이지</div>} />
-                        <Route path="/shop/*" element={<><ShopBanner /><ShopCategory /></>} />
                                                         
                         {/* SHOP 페이지 */}
                         <Route

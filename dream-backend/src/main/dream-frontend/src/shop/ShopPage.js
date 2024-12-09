@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import { Routes, Route } from "react-router-dom";
 import FilterMenu from "./FilterMenu"; // 필터 메뉴
 import CategoryItems from "./CategoryItems"; // 카테고리 아이템 컴포넌트
 import ProductGrid from "./ProductGrid"; // 상품 그리드
+import ProductDetail from "./ProductDetail"; // 상품 상세
 import "./ShopPage.css";
 
 // 각 페이지에 전달할 카테고리 데이터를 정의
@@ -53,66 +54,74 @@ function ShopPage() {
     return (
         <div className="shop-category">
             <Routes>
+                {/* 전체 */}
                 <Route
                     path="all"
                     element={
                         <>
-                            <CategoryItems categories={categoriesData.all} /> {/* 전체 */}
+                            <CategoryItems categories={categoriesData.all} /> {/* 전체 카테고리 */}
                             <FilterMenu />
-                            <ProductGrid category="전체" /> {/* '전체' 카테고리 */}
+                            <ProductGrid category="전체" /> {/* '전체' 상품 */}
                         </>
                     }
                 />
+                {/* 상의 */}
                 <Route
                     path="tops"
                     element={
                         <>
-                            <CategoryItems categories={categoriesData.tops} /> {/* 상의 */}
+                            <CategoryItems categories={categoriesData.tops} /> {/* 상의 카테고리 */}
                             <FilterMenu />
-                            <ProductGrid category="상의" /> {/* '상의' 카테고리 */}
+                            <ProductGrid category="상의" /> {/* '상의' 상품 */}
                         </>
                     }
                 />
+                {/* 하의 */}
                 <Route
                     path="bottoms"
                     element={
                         <>
-                            <CategoryItems categories={categoriesData.bottoms} /> {/* 하의 */}
+                            <CategoryItems categories={categoriesData.bottoms} /> {/* 하의 카테고리 */}
                             <FilterMenu />
-                            <ProductGrid category="하의" /> {/* '하의' 카테고리 */}
+                            <ProductGrid category="하의" /> {/* '하의' 상품 */}
                         </>
                     }
                 />
+                {/* 신발 */}
                 <Route
                     path="shoes"
                     element={
                         <>
-                            <CategoryItems categories={categoriesData.shoes} /> {/* 신발 */}
+                            <CategoryItems categories={categoriesData.shoes} /> {/* 신발 카테고리 */}
                             <FilterMenu />
-                            <ProductGrid category="신발" /> {/* '신발' 카테고리 */}
+                            <ProductGrid category="신발" /> {/* '신발' 상품 */}
                         </>
                     }
                 />
+                {/* 가방 */}
                 <Route
                     path="bags"
                     element={
                         <>
-                            <CategoryItems categories={categoriesData.bags} /> {/* 가방 */}
+                            <CategoryItems categories={categoriesData.bags} /> {/* 가방 카테고리 */}
                             <FilterMenu />
-                            <ProductGrid category="가방" /> {/* '가방' 카테고리 */}
+                            <ProductGrid category="가방" /> {/* '가방' 상품 */}
                         </>
                     }
                 />
+                {/* 패션잡화 */}
                 <Route
                     path="accessories"
                     element={
                         <>
-                            <CategoryItems categories={categoriesData.accessories} /> {/* 패션잡화 */}
+                            <CategoryItems categories={categoriesData.accessories} /> {/* 패션잡화 카테고리 */}
                             <FilterMenu />
-                            <ProductGrid category="패션잡화" /> {/* '패션잡화' 카테고리 */}
+                            <ProductGrid category="패션잡화" /> {/* '패션잡화' 상품 */}
                         </>
                     }
                 />
+                {/* 상품 상세보기 */}
+                <Route path="product/:productId" element={<ProductDetail />} />
             </Routes>
         </div>
     );

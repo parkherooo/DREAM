@@ -1,9 +1,9 @@
 import React from "react";
 import "./CategoryItems.css";
 
-const CategoryItems = ({ categories }) => {
+const CategoryItems = ({ categories, onCategoryChange }) => {
     const handleClick = (category) => {
-        console.log(`${category.name} 클릭됨!`); // 버튼 클릭 시 동작
+        onCategoryChange(category.name); // 선택된 카테고리를 부모로 전달
     };
 
     return (
@@ -12,7 +12,7 @@ const CategoryItems = ({ categories }) => {
                 <button
                     key={index}
                     className="category-item"
-                    onClick={() => handleClick(category)} // 클릭 이벤트 추가
+                    onClick={() => handleClick(category)}
                 >
                     <img src={category.img} alt={category.name} />
                     <p>{category.name}</p>
