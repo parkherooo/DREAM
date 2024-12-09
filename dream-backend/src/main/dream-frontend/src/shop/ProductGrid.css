@@ -3,8 +3,8 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 유동적 열 크기 */
     gap: 20px;
-    padding: 0 350px;
     justify-content: center;
+    padding: 0 350px;
 }
 
 /* 상품 카드 스타일 */
