@@ -41,7 +41,7 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    // 그룹화된 상품들의 정보를 합산
+    // 그룹화된 상품 정보를 합산
     private ProductDTO aggregateProductGroup(List<ProductEntity> group) {
         ProductEntity representative = group.get(0);
         int totalStock = group.stream().mapToInt(ProductEntity::getStock_quantity).sum();
@@ -50,9 +50,9 @@ public class ProductService {
                 representative.getCategory().getC_num(),
                 representative.getP_name(),
                 representative.getBrand(),
-                null, // 사이즈는 표시하지 않음
+                null,
                 representative.getPrice(),
-                totalStock, // 총 수량
+                totalStock,
                 representative.getP_img(),
                 representative.getP_details()
         );
@@ -62,7 +62,34 @@ public class ProductService {
     public ProductDTO getProductById(Long productId) {
         ProductEntity product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다."));
-        return convertToDTO(product);
+
+        // 동일한 상품 이름과 브랜드의 모든 변형(사이즈 및 가격) 조회
+        List<ProductEntity> allVariants = productRepository.findByPNameAndBrand(product.getP_name(), product.getBrand());
+
+        // 사이즈, 가격, 재고 정보를 JSON 형식으로 생성
+        String sizeWithDetails = allVariants.stream()
+                .map(variant -> variant.getSize() + ":" + variant.getPrice() + ":" + variant.getStock_quantity())
+                .collect(Collectors.joining(","));
+
+        ProductDTO productDTO = convertToDTO(product);
+        productDTO.setSize(sizeWithDetails); // 사이즈, 가격, 재고 정보 저장
+        return productDTO;
+    }
+
+    // 필터링된 상품 조회 시 그룹화 추가
+    public List<ProductDTO> filterProducts(String category, List<String> subcategories) {
+        List<ProductEntity> filteredProducts = productRepository.filterProducts(category, subcategories);
+
+        // 상품을 그룹화
+        Map<String, List<ProductEntity>> groupedProducts = filteredProducts.stream()
+                .collect(Collectors.groupingBy(
+                        product -> product.getP_name() + "_" + product.getBrand() // p_name과 brand를 기준으로 그룹화
+                ));
+
+        // 그룹화된 데이터를 DTO로 변환
+        return groupedProducts.values().stream()
+                .map(this::aggregateProductGroup)
+                .collect(Collectors.toList());
     }
 
     // Entity -> DTO 변환 메서드
@@ -75,7 +102,7 @@ public class ProductService {
                 product.getSize(),
                 product.getPrice(),
                 product.getStock_quantity(),
-                product.getP_img(),
+                product.getP_img() != null ? product.getP_img() : "", // p_img가 null이면 빈 문자열 반환
                 product.getP_details()
         );
     }

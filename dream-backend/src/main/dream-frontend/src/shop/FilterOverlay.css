@@ -15,7 +15,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* 어두운 반투명 배경 */
+    background: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
 
@@ -28,12 +28,11 @@
     height: 100%;
     background: #fff;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-    z-index: 2; /* 배경보다 위에 위치 */
+    z-index: 2;
     display: flex;
     flex-direction: column;
     padding: 20px;
     overflow-y: auto;
-    transition: transform 0.3s ease;
 }
 
 /* 필터 창 내부 콘텐츠 */
@@ -55,72 +54,79 @@
     cursor: pointer;
 }
 
-/* 필터 섹션 */
-.filter-section {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.filter-section h3 {
-    font-size: 16px;
+/* 필터 제목 */
+.filter-overlay-content h2 {
+    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.filter-section button {
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    background: #f9f9f9;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-.filter-section button:hover {
-    background: #f0f0f0;
-}
-
-/* 사이즈 필터 섹션 */
-.size-group {
     margin-bottom: 20px;
 }
 
-.size-group h4 {
+/* 카테고리 제목 */
+.filter-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.filter-section-header h3 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.toggle-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* 카테고리 그룹 */
+.filter-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.category-group {
+    margin-bottom: 15px;
+}
+
+.category-group h4 {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
-.size-options {
+/* 필터 옵션 */
+.filter-options {
     display: flex;
-    flex-wrap: wrap; /* 여러 줄로 정렬 */
-    gap: 10px; /* 버튼 간 간격 */
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.size-option {
+/* 선택된 필터 옵션 */
+.filter-item.selected {
+    background: black;
+    color: white;
+    border-color: black;
+}
+
+.filter-item {
     padding: 8px 12px;
     border: 1px solid #ddd;
     background: #f9f9f9;
     cursor: pointer;
-    border-radius: 20px; /* 버튼 둥글게 */
+    border-radius: 20px;
     font-size: 14px;
-    color: #333;
-    min-width: 40px; /* 버튼 최소 너비 */
+    min-width: 60px;
     text-align: center;
 }
 
-.size-option:hover {
+.filter-item:hover {
     background: #f0f0f0;
     border-color: #aaa;
 }
-
-.size-option:focus {
-    outline: none;
-    border-color: black; /* 선택된 버튼 강조 */
-    background: #e0e0e0;
-}
-
 
 /* 초기화와 확인 버튼 */
 .filter-actions {
@@ -137,6 +143,7 @@
     cursor: pointer;
     flex: 1;
     text-align: center;
+    border-radius: 5px;
 }
 
 .apply-button {
@@ -147,4 +154,5 @@
     cursor: pointer;
     flex: 2;
     text-align: center;
+    border-radius: 5px;
 }

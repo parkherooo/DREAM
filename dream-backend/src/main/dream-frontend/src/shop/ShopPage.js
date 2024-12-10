@@ -51,6 +51,12 @@ const categoriesData = {
 };
 
 function ShopPage() {
+    const [appliedFilters, setAppliedFilters] = useState({});
+
+    const handleApplyFilters = (filters) => {
+        setAppliedFilters(filters); // 필터 업데이트
+    };
+
     return (
         <div className="shop-category">
             <Routes>
@@ -60,8 +66,8 @@ function ShopPage() {
                     element={
                         <>
                             <CategoryItems categories={categoriesData.all} /> {/* 전체 카테고리 */}
-                            <FilterMenu />
-                            <ProductGrid category="전체" /> {/* '전체' 상품 */}
+                            <FilterMenu onApplyFilters={handleApplyFilters} />
+                            <ProductGrid category="전체" appliedFilters={appliedFilters} />
                         </>
                     }
                 />
@@ -71,8 +77,8 @@ function ShopPage() {
                     element={
                         <>
                             <CategoryItems categories={categoriesData.tops} /> {/* 상의 카테고리 */}
-                            <FilterMenu />
-                            <ProductGrid category="상의" /> {/* '상의' 상품 */}
+                            <FilterMenu onApplyFilters={handleApplyFilters} />
+                            <ProductGrid category="상의" appliedFilters={appliedFilters} />
                         </>
                     }
                 />
@@ -82,8 +88,8 @@ function ShopPage() {
                     element={
                         <>
                             <CategoryItems categories={categoriesData.bottoms} /> {/* 하의 카테고리 */}
-                            <FilterMenu />
-                            <ProductGrid category="하의" /> {/* '하의' 상품 */}
+                            <FilterMenu onApplyFilters={handleApplyFilters} />
+                            <ProductGrid category="하의" appliedFilters={appliedFilters} />
                         </>
                     }
                 />
@@ -93,8 +99,8 @@ function ShopPage() {
                     element={
                         <>
                             <CategoryItems categories={categoriesData.shoes} /> {/* 신발 카테고리 */}
-                            <FilterMenu />
-                            <ProductGrid category="신발" /> {/* '신발' 상품 */}
+                            <FilterMenu onApplyFilters={handleApplyFilters} />
+                            <ProductGrid category="신발" appliedFilters={appliedFilters} />
                         </>
                     }
                 />
@@ -104,8 +110,8 @@ function ShopPage() {
                     element={
                         <>
                             <CategoryItems categories={categoriesData.bags} /> {/* 가방 카테고리 */}
-                            <FilterMenu />
-                            <ProductGrid category="가방" /> {/* '가방' 상품 */}
+                            <FilterMenu onApplyFilters={handleApplyFilters} />
+                            <ProductGrid category="가방" appliedFilters={appliedFilters} />
                         </>
                     }
                 />
@@ -115,8 +121,8 @@ function ShopPage() {
                     element={
                         <>
                             <CategoryItems categories={categoriesData.accessories} /> {/* 패션잡화 카테고리 */}
-                            <FilterMenu />
-                            <ProductGrid category="패션잡화" /> {/* '패션잡화' 상품 */}
+                            <FilterMenu onApplyFilters={handleApplyFilters} />
+                            <ProductGrid category="패션잡화" appliedFilters={appliedFilters} />
                         </>
                     }
                 />

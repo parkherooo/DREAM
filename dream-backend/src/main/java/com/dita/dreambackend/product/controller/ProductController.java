@@ -34,4 +34,13 @@ public class ProductController {
         return productService.getProductById(productId);
     }
 
+    // 필터 기능
+    @GetMapping("/filter")
+    public List<ProductDTO> filterProducts(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) List<String> subcategories
+    ) {
+        return productService.filterProducts(category, subcategories);
+    }
+
 }
