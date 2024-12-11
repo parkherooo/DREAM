@@ -1,0 +1,56 @@
+.hist {
+    margin: 70px 150px;
+}
+
+.hist-menu {
+    display: flex; /* 항목들을 가로로 배치 */
+    justify-content: space-between; /* 항목들 간 간격을 일정하게 */
+    padding: 10px;
+    width: 100%;
+    max-width: 600px; /* 원하는 최대 너비를 설정 */
+    margin: 30px 200px;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column; /* 아이템 내 텍스트 세로로 배치 */
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-bottom: 2px solid transparent; /* 기본적으로 투명한 밑줄 */
+}
+
+.menu-item span {
+    font-size: 14px;
+    color: #AAAAAA;
+}
+
+.menu-item strong {
+    font-weight: bold;
+    color: #333;
+}
+
+/* hover 시 밑줄 추가 */
+.menu-item:hover {
+    border-bottom: 2px solid;
+}
+
+.history-none{
+    text-align: center;
+    color: #696868;
+    margin: 100px auto;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-around;
+    padding-left: 450px;
+    padding-bottom: 300px;
+}
+
+.hist-hr{
+    margin: 50px;
+}
+
+.hist-hr hr{
+    border: 1px solid #aaaaaa;
+}
