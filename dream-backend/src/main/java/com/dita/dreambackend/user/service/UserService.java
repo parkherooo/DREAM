@@ -15,17 +15,18 @@ public class UserService {
     private final UserRepository userRepository;
 
     public boolean SignUp(UserDTO userDTO) { //받은 값들을 Entity -> 테이블과 컬럼값 set 자바 bean과 같음
-        if (userRepository.findById(userDTO.getUserId()).isPresent()) {
+        if (userRepository.findById(userDTO.getUser_id()).isPresent()) {
             return false;
         }
         UserEntity userEntity = new UserEntity();
-        userEntity.setUserId(userDTO.getUserId());
+        userEntity.setUser_id(userDTO.getUser_id());
         userEntity.setName(userDTO.getName());
         userEntity.setPwd(userDTO.getPwd());
         userEntity.setBirth(userDTO.getBirth());
         userEntity.setAddress(userDTO.getAddress());
         userEntity.setPhone(userDTO.getPhone());
-        userEntity.setLoginPlatform(userDTO.getLoginPlatform());
+        userEntity.setGender(userDTO.getGender());
+        userEntity.setLogin_platform(userDTO.getLogin_platform());
         userEntity.setShoes(userDTO.getShoes());
         userRepository.save(userEntity); //레퍼짓토리의 JPA이 제공하는 save 를 가져와서  DB에 저장
 
@@ -36,5 +37,44 @@ public class UserService {
         UserEntity userEntity = userRepository.findById(UserId).orElseThrow(()->new RuntimeException("아이디가 존재하지 않습니다."));
 
         return userEntity.getPwd().equals(pwd);
+    }
+
+    public UserDTO getUserInfo(String userId) {
+
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + userId));
+
+        // UserEntity를 UserDTO로 변환
+        return new UserDTO(
+                userEntity.getUser_id(),
+                userEntity.getName(),
+                userEntity.getPwd(),
+                userEntity.getBirth(),
+                userEntity.getPhone(),
+                userEntity.getAddress(),
+                userEntity.getGender(),
+                userEntity.getLogin_platform(),
+                userEntity.getManger(),
+                userEntity.getShoes()
+        );
+    }
+
+    public void updateUser(UserDTO userDTO) {
+        // 1. 기존 사용자 조회
+        UserEntity existingUser = userRepository.findById(userDTO.getUser_id())
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        // 2. 사용자 정보 업데이트
+        existingUser.setPwd(userDTO.getPwd());       // 비밀번호 업데이트
+        existingUser.setPhone(userDTO.getPhone());   // 전화번호 업데이트
+        existingUser.setShoes(userDTO.getShoes());   // 신발 사이즈 업데이트
+
+        // 3. 업데이트된 사용자 저장
+        userRepository.save(existingUser);
+    }
+
+    public void deleteUser(UserDTO userDTO){
+        // 사용자 ID로 삭제
+        userRepository.deleteById(userDTO.getUser_id());
     }
 }
