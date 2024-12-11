@@ -16,24 +16,26 @@ import java.time.LocalDateTime;
 public class StyleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    private int stNum;
+    private int st_num;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
+
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private UserEntity user;
+
 
     @Column(length = 100)
     private String title;
 
     @Column(length = 500)
-    private String stContent;
+    private String st_content;
 
     @Column(length = 255)
     private String image;
 
-    private int htCount;
+    private int ht_count;
 
-    private LocalDateTime stDate;
+    private LocalDateTime st_date;
 
     private String hashtag;
 }

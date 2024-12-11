@@ -9,13 +9,13 @@ import lombok.*;
 @AllArgsConstructor //모든 필드를 매개변수로 하는 생성자
 
 public class ProductDTO {
-    private Long pNum;
-    private Long cgNum;
-    private String pName;
+    private Long p_num;
+    private Long c_num;
+    private String p_name;
     private String brand;
     private String size;
     private int price;
     private int stock_quantity;
-    private String pImg;
-    private String pDetails;
+    private String p_img;
+    private String p_details;
 }

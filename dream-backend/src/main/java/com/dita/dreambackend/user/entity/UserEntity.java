@@ -13,9 +13,9 @@ import lombok.ToString;
 @Table(name = "user")
 public class UserEntity {
     @Id
-    private String userId;
+    private String user_id;
 
-    @Column(length = 50, nullable = false) //컬럼 속성 지정 길이와 널값을 혀용하는지 false -> 널값 비허용
+    @Column(length = 50) //컬럼 속성 지정 길이와 널값을 혀용하는지 false -> 널값 비허용
     private String name;
 
     @Column(length = 50, nullable = false)
@@ -31,7 +31,10 @@ public class UserEntity {
     private String address;
 
     @Column(length = 50)
-    private String loginPlatform;
+    private String gender;
+
+    @Column(length = 50)
+    private String login_platform;
 
     @Column(nullable = false)
     private int manger = 0;

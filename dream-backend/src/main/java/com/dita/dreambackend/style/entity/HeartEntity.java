@@ -14,18 +14,18 @@ import lombok.ToString;
 public class HeartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long hrNum;
+    private Long hr_num;
 
     @ManyToOne
-    @JoinColumn(name = "stNum", referencedColumnName = "stNum", nullable = false) // style 테이블의 PK 컬럼 이름을 지정
+    @JoinColumn(name = "st_num", referencedColumnName = "st_num", nullable = false) // style 테이블의 PK 컬럼 이름을 지정
     @ToString.Exclude // 순환 참조 방지
     private StyleEntity style;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     @ToString.Exclude // 순환 참조 방지
     private UserEntity user;
 
     @Column (length = 1, nullable = false)
-    private byte hrState;
+    private byte hr_state;
 }

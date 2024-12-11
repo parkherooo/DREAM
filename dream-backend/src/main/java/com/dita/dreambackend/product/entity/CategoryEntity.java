@@ -13,11 +13,11 @@ import lombok.ToString;
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cNum;
+    private Long c_num;
 
     @Column(length = 50, nullable = false)
-    private String sName;
+    private String c_name;
 
     @Column(length = 50, nullable = false)
-    private String high_cNum;
+    private String high_c_name;
 }

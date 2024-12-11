@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecentDTO {
-    private Long rcNum;
-    private String userId;
-    private Long pNum;
-    private LocalDateTime rcDate;
+    private Long rc_num;
+    private String user_id;
+    private Long p_num;
+    private LocalDateTime rc_date;
 }

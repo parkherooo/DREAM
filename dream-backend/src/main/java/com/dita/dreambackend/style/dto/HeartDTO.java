@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HeartDTO {
-    private Long hrNum;
-    private Long stNum;
-    private String userId;
-    private byte hrState;   // tinyint
+    private Long hr_num;
+    private Long st_num;
+    private String user_id;
+    private byte hr_state;   // tinyint
 }
