@@ -43,6 +43,7 @@ function Login() {
             .then(response => {
                 console.log(response.data);
                 navigate(previousPath);
+                window.location.reload();
             })
             .catch(error => {
                 console.error(error);
@@ -97,7 +98,7 @@ function Login() {
             </div>
 
             <div className="social-login">
-                <button className="naver-login-btn">
+                <button className="naver-login-btn" onClick={handleNaverLogin}>
                     N 네이버로 로그인
                 </button>
             </div>
@@ -105,4 +106,11 @@ function Login() {
     );
 }
 
+const handleNaverLogin = () => {
+    const clientId = 'brSfM5h52FlNz8aesNXC';
+    const redirectUri = encodeURIComponent('http://localhost:8080/naver/callback');
+    const naverAuthUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=STATE_STRING`;
+    window.location.href = naverAuthUrl;
+};
 export default Login;
+

@@ -2,6 +2,9 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
 import axios from 'axios';
+import { HiOutlineShoppingBag } from "react-icons/hi2";
+import { IoSearchOutline } from "react-icons/io5";
+
 axios.defaults.withCredentials = true;
 
 const Header = () => {
@@ -64,7 +67,11 @@ const Header = () => {
             </div>
             <div className="headers">
                 <div className="header_logo">
-                    <Link to="/" className="logo">
+                    <Link
+                        to="/"
+                        className="logo"
+                        onClick={() => handleMenuClick('home')}
+                    >
                         <h2>DREAM</h2>
                     </Link>
                     <div className="header_menu">
@@ -85,6 +92,14 @@ const Header = () => {
                             className={activeMenu === 'shop' || location.pathname === '/shop' ? 'active' : ''}
                             onClick={() => handleMenuClick('shop')}>
                             SHOP
+                        </Link>
+
+                        {/* 검색 및 장바구니 아이콘 추가 */}
+                        <Link to="/search" className="icon-link">
+                            <IoSearchOutline className="icon" />
+                        </Link>
+                        <Link to="/cart" className="icon-link">
+                            <HiOutlineShoppingBag className="icon" />
                         </Link>
                     </div>
                 </div>

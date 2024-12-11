@@ -38,4 +38,12 @@ public class UserService {
 
         return userEntity.getPwd().equals(pwd);
     }
+
+    public UserEntity saveUser(UserEntity user) {
+        return userRepository.save(user);
+    }
+
+    public boolean isUserExists(String user_id) {
+        return userRepository.existsByUser_id(user_id);
+    }
 }

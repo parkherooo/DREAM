@@ -1,5 +1,6 @@
 package com.dita.dreambackend.style.controller;
 
+import com.dita.dreambackend.style.dto.HeartDTO;
 import com.dita.dreambackend.style.dto.StyleDTO;
 import com.dita.dreambackend.style.service.StyleService;
 
@@ -114,6 +115,59 @@ public class StyleController {
         }
 
         return ResponseEntity.ok("삭제 성공");
+    }
+
+    @PostMapping("/StyleHeart")
+    public ResponseEntity<String> styleHeart(
+            @RequestParam("st_num") long st_num,
+            HttpSession session
+    ){
+        String user_id = (String) session.getAttribute("user_id");
+        if (user_id == null) {
+            return ResponseEntity.badRequest().body("사용자가 로그인되어 있지 않습니다.");
+        }
+        HeartDTO heartDTO = new HeartDTO();
+        heartDTO.setUser_id(user_id);
+        heartDTO.setSt_num(st_num);
+        heartDTO.setHr_state((byte) 1);
+        boolean result = styleService.StyleHeart(heartDTO);
+        if (!result) {
+            return ResponseEntity.badRequest().body("좋아요 실패");
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/StyleHeartCheck")
+    public ResponseEntity<Boolean> checkStyleHeart(
+            @RequestParam("st_num") long st_num,
+            HttpSession session
+    ) {
+        String user_id = (String) session.getAttribute("user_id");
+        if (user_id == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+
+        boolean isHearted = styleService.checkHeartExists(user_id, st_num);
+        return ResponseEntity.ok(isHearted);
+    }
+    @PostMapping("/StyleHeartDown")
+    public ResponseEntity<String> styleHeartdown(
+            @RequestParam("st_num") long st_num,
+            HttpSession session
+    ){
+        String user_id = (String) session.getAttribute("user_id");
+        if (user_id == null) {
+            return ResponseEntity.badRequest().body("사용자가 로그인되어 있지 않습니다.");
+        }
+        HeartDTO heartDTO = new HeartDTO();
+        heartDTO.setUser_id(user_id);
+        heartDTO.setSt_num(st_num);
+        heartDTO.setHr_state((byte) 0);
+        boolean result = styleService.StyleHeartDown(heartDTO);
+        if (!result) {
+            return ResponseEntity.badRequest().body("좋아요 실패");
+        }
+        return ResponseEntity.ok().build();
     }
 
 
