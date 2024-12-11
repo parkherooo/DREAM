@@ -77,8 +77,8 @@ public class ProductService {
     }
 
     // 필터링된 상품 조회 시 그룹화 추가
-    public List<ProductDTO> filterProducts(String category, List<String> subcategories) {
-        List<ProductEntity> filteredProducts = productRepository.filterProducts(category, subcategories);
+    public List<ProductDTO> filterProducts(String category, List<String> subcategories, List<String> brands) {
+        List<ProductEntity> filteredProducts = productRepository.filterProducts(category, subcategories, brands);
 
         // 상품을 그룹화
         Map<String, List<ProductEntity>> groupedProducts = filteredProducts.stream()

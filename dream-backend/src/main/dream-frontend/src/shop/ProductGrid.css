@@ -77,3 +77,53 @@
     margin: 0;
 }
 
+.no-products-message {
+    position: absolute; /* 화면 중앙에 고정 */
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    color: #555;
+    gap: 20px; /* 이미지와 텍스트 사이 간격 */
+}
+
+.no-products-image {
+    max-width: 150px;
+    max-height: 150px;
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
+
+.no-products-message h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.no-products-message p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.refresh-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.refresh-button:hover {
+    background-color: #0056b3;
+}
+
+

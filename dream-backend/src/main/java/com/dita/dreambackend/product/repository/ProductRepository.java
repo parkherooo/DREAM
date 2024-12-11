@@ -17,10 +17,11 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     @Query("SELECT p FROM ProductEntity p " +
             "JOIN p.category c " +
             "WHERE (:category IS NULL OR c.high_c_name = :category) " +
-            "AND (:subcategories IS NULL OR c.c_name IN :subcategories)")
+            "AND (:subcategories IS NULL OR c.c_name IN :subcategories) " +
+            "AND (:brands IS NULL OR TRIM(LOWER(p.brand)) IN :brands)")
     List<ProductEntity> filterProducts(
             @Param("category") String category,
-            @Param("subcategories") List<String> subcategories
+            @Param("subcategories") List<String> subcategories,
+            @Param("brands") List<String> brands
     );
-
 }
