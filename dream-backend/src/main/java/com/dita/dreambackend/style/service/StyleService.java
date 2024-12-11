@@ -1,7 +1,10 @@
 package com.dita.dreambackend.style.service;
 
+import com.dita.dreambackend.style.dto.HeartDTO;
 import com.dita.dreambackend.style.dto.StyleDTO;
+import com.dita.dreambackend.style.entity.HeartEntity;
 import com.dita.dreambackend.style.entity.StyleEntity;
+import com.dita.dreambackend.style.repository.HeartRepository;
 import com.dita.dreambackend.style.repository.StyleRepository;
 import com.dita.dreambackend.user.entity.UserEntity;
 import com.dita.dreambackend.user.repository.UserRepository;
@@ -22,6 +25,7 @@ public class StyleService {
     private final UserRepository userRepository;
 
     private final String uploadDir = "C:\\DREAM\\dream-backend\\src\\main\\resources\\static\\images\\style";
+    private final HeartRepository heartRepository;
 
     public boolean StylePost(StyleDTO styleDTO, MultipartFile[] imgs) {
         // 사용자 확인
@@ -144,5 +148,54 @@ public class StyleService {
         return true;
     }
 
+    public boolean StyleHeart(HeartDTO heartDTO) {
+        // user_id로 UserEntity 찾기
+        UserEntity userEntity = userRepository.findById(heartDTO.getUser_id())
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 ID입니다."));
+
+        // st_num으로 StyleEntity 찾기
+        StyleEntity styleEntity = styleRepository.findById(heartDTO.getSt_num())
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 스타일 번호입니다."));
+
+        // HeartEntity 생성 및 값 설정
+        HeartEntity heartEntity = new HeartEntity();
+        heartEntity.setUser(userEntity);
+        heartEntity.setStyle(styleEntity);
+        heartEntity.setHr_state(heartDTO.getHr_state());
+
+        // HeartEntity 저장
+        heartRepository.save(heartEntity);
+        styleEntity.setHt_count(styleEntity.getHt_count() + 1);
+        styleRepository.save(styleEntity);
+        return true; // 성공적으로 저장되었음을 반환
+    }
+
+    public boolean checkHeartExists(String user_id, long st_num) {
+        // 좋아요 테이블에서 해당 userId와 stNum에 대한 좋아요 데이터가 있는지 확인
+        return heartRepository.existsByUserUserIdAndStyleStNum(user_id, st_num);
+    }
+
+
+    public boolean StyleHeartDown(HeartDTO heartDTO) {
+        // user_id로 UserEntity 찾기
+        UserEntity userEntity = userRepository.findById(heartDTO.getUser_id())
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 ID입니다."));
+
+        // st_num으로 StyleEntity 찾기
+        StyleEntity styleEntity = styleRepository.findById(heartDTO.getSt_num())
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 스타일 번호입니다."));
+
+        // HeartEntity 삭제
+        HeartEntity heartEntity = heartRepository.findByUserAndStyle(userEntity, styleEntity)
+                .orElseThrow(() -> new IllegalArgumentException("하트 데이터가 존재하지 않습니다."));
+
+        heartRepository.delete(heartEntity);
+
+        // 스타일의 ht_count 감소
+        styleEntity.setHt_count(styleEntity.getHt_count() - 1);
+        styleRepository.save(styleEntity);
+
+        return true; // 성공적으로 삭제되었음을 반환
+    }
 
 }

@@ -12,6 +12,11 @@ import StyleDetail from "./style/StyleDetail";
 import StyleUpdate from "./style/StyleUpdate";
 import "./App.css";
 
+function NaverCallback() {
+    // 네이버 로그인 콜백 처리 페이지
+    return <div>네이버 로그인 처리 중입니다...</div>;
+}
+
 function App() {
     return (
         <Router>
@@ -38,6 +43,9 @@ function App() {
                         <Route path="/interests" element={<div>관심 페이지</div>} />
                         <Route path="/notifications" element={<div>알림 페이지</div>} />
                         <Route path="/shop/*" element={<><ShopBanner /><ShopCategory /></>} />
+
+                        {/* 네이버 로그인 콜백 처리 경로 */}
+                        <Route path="/naver-callback" element={<NaverCallback />} />
                     </Routes>
                 </main>
             </div>

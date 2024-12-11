@@ -8,6 +8,7 @@
 }
 
 .header-top .user-links a {
+    margin-top: 10px;
     margin-right: 15px;
     text-decoration: none;
     font-size: 12px;
@@ -36,12 +37,14 @@
 }
 
 .header_menu {
+    margin-top: 10px;
     display: flex;
     justify-content: flex-end; /* 메뉴 항목들을 우측 정렬 */
     text-align: right;
 }
 
 .header_menu a {
+
     margin: 0 15px; /* 좌우 간격을 추가 */
     text-decoration: none;
     color: black;
@@ -59,4 +62,17 @@
 .logout-btn{
     background-color: white;
     border: none;
+}
+.icon-link {
+    text-decoration: none;
+    color: inherit;
+    font-size: 18px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.icon {
+    font-size: 24px;
+    color: #333; /* 원하는 색상으로 변경 가능 */
+    transition: color 0.3s ease;
 }
