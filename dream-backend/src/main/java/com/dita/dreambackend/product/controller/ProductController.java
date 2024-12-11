@@ -38,9 +38,10 @@ public class ProductController {
     @GetMapping("/filter")
     public List<ProductDTO> filterProducts(
             @RequestParam(required = false) String category,
-            @RequestParam(required = false) List<String> subcategories
+            @RequestParam(required = false) List<String> subcategories,
+            @RequestParam(required = false) List<String> brands
     ) {
-        return productService.filterProducts(category, subcategories);
+        return productService.filterProducts(category, subcategories, brands);
     }
 
 }
