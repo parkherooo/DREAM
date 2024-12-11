@@ -1,0 +1,7 @@
+/* ShopPage 전체 컨테이너 */
+.shop-category {
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    width: 100%;
+    box-sizing: border-box; /* 패딩 포함 박스 모델 */
+}

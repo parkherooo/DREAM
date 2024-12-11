@@ -2,6 +2,7 @@ package com.dita.dreambackend.product.controller;
 
 import com.dita.dreambackend.product.dto.ProductDTO;
 import com.dita.dreambackend.product.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 @CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor
 public class ProductController {
     @Autowired
     private ProductService productService;
@@ -20,9 +22,25 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    // 특정 상품 조회
-    @GetMapping("/{id}")
-    public ProductDTO getProductById(@PathVariable Long id) {
-        return productService.getProductById(id);
+    // 카테고리별 상품 조회
+    @GetMapping("/category/{category}")
+    public List<ProductDTO> getProductsByCategory(@PathVariable String category) {
+        return productService.getProductsByCategory(category);
     }
+
+    // 상품 상세 조회
+    @GetMapping("/{productId}")
+    public ProductDTO getProductById(@PathVariable Long productId) {
+        return productService.getProductById(productId);
+    }
+
+    // 필터 기능
+    @GetMapping("/filter")
+    public List<ProductDTO> filterProducts(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) List<String> subcategories
+    ) {
+        return productService.filterProducts(category, subcategories);
+    }
+
 }
