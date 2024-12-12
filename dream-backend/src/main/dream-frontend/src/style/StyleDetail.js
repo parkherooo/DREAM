@@ -9,6 +9,7 @@ const StyleDetail = () => {
     const { st_num } = useParams();
     const navigate = useNavigate();
     const [style, setStyle] = useState(null);
+    const [tags, setTags] = useState(null);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -90,6 +91,7 @@ const StyleDetail = () => {
         fetchStyleDetail();
         fetchComments();
 
+
         // 스타일 마킹 상태 확인
         const checkMarkStatus = async () => {
             try {
@@ -120,6 +122,47 @@ const StyleDetail = () => {
         checkHeartStatus();
     }, [st_num]);
 
+    useEffect(() => {
+        if (style) {
+            findTags();
+        }
+    }, [style]);
+    const findTags = async () => {
+
+        if (!style || !style.tags) {
+            console.warn("style 또는 tags 데이터가 없음");
+            return;
+        }
+
+        // 1. tags 값이 배열일 경우 문자열로 변환
+        let tags = "";
+        if (Array.isArray(style.tags)) {
+            tags = style.tags.join(","); // [21, 22] -> "21,22"
+        } else {
+            tags = style.tags;
+        }
+
+        // 2. 중괄호 제거 처리
+        tags = tags.replace(/[\[\]]/g, "");
+        console.log("중괄호 제거 후 tags 값:", tags);
+
+        // 3. tags 값이 비었거나 유효하지 않은 경우 요청 제한
+        if (!tags || tags.trim().length === 0) {
+            console.warn("태그 값이 비어 있음");
+            return;
+        }
+
+        try {
+            const response = await axios.get(`http://localhost:8080/tags`, {
+                params: { tags },
+            });
+            console.log("응답 데이터:", response.data);
+            setTags(response.data);
+        } catch (error) {
+            console.error("Error fetching tags:", error.response || error.message);
+            alert("태그 정보를 가져오는데 문제가 발생했습니다.");
+        }
+    };
     const handleStyleUpdate = () => {
         if (style && style.user_id === user_id) {
             // 스타일 수정 페이지로 이동
@@ -287,7 +330,25 @@ const StyleDetail = () => {
                         </a>
                     ))}
                 </div>
+                <div>
+                    <p>상품 태그</p>
+                    {tags && tags.length > 0 ? (
+                        tags.map((tag, index) => (
+                            <div key={index}>
+                                <img
+                                    src={`http://localhost:8080/product_img/${tag.p_img.split(',')[0].trim()}`}
+                                    alt={tag.p_img.split(',')[0].trim()}
+                                    className="search-result-img"
+                                />
+                                <br/>
+                                {tag.p_details}
+                            </div>
 
+                        ))
+                    ) : (
+                        <p>No tags available</p>
+                    )}
+                </div>
                 {/* 게시글 수정/삭제 버튼 */}
                 {style.user_id === user_id && (
                     <div>

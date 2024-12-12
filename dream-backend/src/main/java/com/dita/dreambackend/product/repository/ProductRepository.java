@@ -24,4 +24,11 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             @Param("subcategories") List<String> subcategories,
             @Param("brands") List<String> brands
     );
+
+    @Query("SELECT DISTINCT p FROM ProductEntity p WHERE p.p_details LIKE CONCAT('%', :p_details, '%')")
+    List<ProductEntity> findByPName(String p_details);
+
+    @Query("SELECT p FROM ProductEntity p WHERE p.p_num IN :tagIds")
+    List<ProductEntity> findByProductIds(@Param("tagIds") List<Integer> tagIds);
+
 }

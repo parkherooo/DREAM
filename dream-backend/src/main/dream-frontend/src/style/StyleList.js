@@ -10,7 +10,7 @@ const StyleList = () => {
     const [loading, setLoading] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(null);  // 로그인 상태를 관리할 상태 추가
     const location = useLocation();  // URL의 쿼리 파라미터를 받기 위한 useLocation 훅 사용
-
+    const [isHeartStatusInitialized, setHeartStatusInitialized] = useState(false);
     // 로그인 상태를 확인하는 함수
     const checkLoginStatus = async () => {
         try {
@@ -152,12 +152,14 @@ const StyleList = () => {
                 })
             );
             setStyles(updatedStyles); // 상태 업데이트
+            setHeartStatusInitialized(true); // 초기화를 완료로 설정
         };
 
-        if (styles.length > 0) {
+        // 초기화가 아직 되지 않았고 스타일 데이터가 있는 경우에만 실행
+        if (styles.length > 0 && !isHeartStatusInitialized) {
             initializeHeartStatus();
         }
-    }, [styles]);
+    }, [styles, isHeartStatusInitialized]);
 
     return (
         <div className="style-list">

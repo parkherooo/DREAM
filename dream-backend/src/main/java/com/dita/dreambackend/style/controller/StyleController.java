@@ -1,5 +1,6 @@
 package com.dita.dreambackend.style.controller;
 
+import com.dita.dreambackend.product.dto.ProductDTO;
 import com.dita.dreambackend.style.dto.CommentDTO;
 import com.dita.dreambackend.style.dto.HeartDTO;
 import com.dita.dreambackend.style.dto.StyleDTO;
@@ -223,5 +224,17 @@ public class StyleController {
         boolean isMark = styleService.markCheck(user_id,st_num);
         return ResponseEntity.ok(isMark);
     }
+
+    @PostMapping("/searchProduct")
+    public List<ProductDTO> SeacrchProduct(@RequestParam String keyword){
+        return styleService.searchProduct(keyword);
+
+    }
+
+    @GetMapping("/tags")
+    public List<ProductDTO> findTags(@RequestParam String tags) {
+        return styleService.findTags(tags);
+    }
+
 
 }
