@@ -189,7 +189,7 @@ h1, h2, h3, h4, p, ul, li, a, button, span, strong {
     font-size: 14px;
 }
 
-.item-image {
+.item-image img{
     width: 80px;
     height: 80px;
     background-color: #ddd;
@@ -255,7 +255,7 @@ h1, h2, h3, h4, p, ul, li, a, button, span, strong {
     flex-grow: 0;
 }
 
-.int-item-image {
+.int-item-image img{
     width: 150px;
     height: 150px;
     background-color: #ddd;

@@ -11,30 +11,48 @@ function Interests() {
     });
     const [loading, setLoading] = useState(true); // 데이터 로딩 상태
     const [view, setView] = useState("product"); // 관심 상품과 스타일 보기 상태 관리
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate(); // 페이지 이동을 위한 훅
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const userResponse = await axios.get('http://localhost:8080/my-page', {
-                    params: { user_id: 'aaa@aaa.com' },
-                });
-                const interestsResponse = await axios.get('http://localhost:8080/my-page/interests', {
-                    params: { user_id: userResponse.data.user_id },
-                });
-
-                setUserData({
-                    interests: interestsResponse.data,  // 관심 상품
-                });
-                setLoading(false);
-            } catch (error) {
-                console.error('데이터 가져오기 실패:', error);
+    const checkSession = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/check-session', { withCredentials: true });
+            if (response.data.user_id) {
+                setIsLoggedIn(true);
+                fetchUserData(response.data.user_id); // 세션에서 받은 user_id로 유저 정보 가져오기
+            } else {
+                setIsLoggedIn(false);
                 setLoading(false);
             }
-        };
+        } catch (error) {
+            console.error("세션 확인 오류:", error);
+            setLoading(false);
+        }
+    };
 
-        fetchUserData();
+    const fetchUserData = async (user_id) => {
+        try {
+            const userResponse = await axios.get('http://localhost:8080/my-page', {
+                params: { user_id: user_id },
+            });
+            const interestsResponse = await axios.get('http://localhost:8080/my-page/interests', {
+                params: { user_id: userResponse.data.user_id },
+            });
+
+            setUserData({
+                interests: interestsResponse.data,  // 관심 상품
+            });
+            setLoading(false);
+        } catch (error) {
+            console.error('데이터 가져오기 실패:', error);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        checkSession(); // 컴포넌트가 로드될 때 세션 확인
     }, []);
+
 
     // 관심 상품 보기 / 스타일 보기 토글 함수
     const handleViewChange = (viewType) => {
@@ -47,6 +65,14 @@ function Interests() {
     const handleShop = () => {
         navigate('/shop'); // 스타일 페이지로 이동
     };
+
+    if (loading) {
+        return <div>로딩 중...</div>;
+    }
+
+    if (!isLoggedIn) {
+        navigate("/login");
+    }
 
     return (
         <div className="mypage">
@@ -73,12 +99,12 @@ function Interests() {
                                 .map((item, index) => {
                                     const [productNum, productImage, productBrand, productName, productPrice] = item; // Object[]에서 값 추출
                                     const handleProduct = () => {
-                                        navigate(`/shop/${productNum}`);
+                                        navigate(`/shop/product/${productNum}`);
                                     };
                                     return (
                                         <div className="int-item" key={index} onClick={handleProduct}>
                                             <div className="int-item-image">
-                                                <img src={productImage} alt={productImage} />
+                                                <img src={`/product_img/${productImage}`} alt={productImage} />
                                             </div>
                                             <div className="int-item-details">
                                                 <p>{productBrand}</p>
@@ -109,7 +135,7 @@ function Interests() {
                                 .map((item, index) => {
                                     const [, , , , , styleNum, styleImage] = item; // 스타일 이미지 추출
                                     const handleStyle = () => {
-                                        navigate(`/style/${styleNum}`);
+                                        navigate(`/StyleDetail/${styleNum}`);
                                     };
                                     return (
                                         <div className="int-item" key={index} onClick={handleStyle}>

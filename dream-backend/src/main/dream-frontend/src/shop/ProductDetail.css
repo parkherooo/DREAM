@@ -223,6 +223,11 @@
 .favorite-icon {
     width: 16px;
     height: 16px;
+    color: gray; /* 기본 색상 */
+}
+
+.favorite-icon.active {
+    color: orange; /* 관심상품 등록 상태의 색상 */
 }
 
 .product-detail-warning {
@@ -253,7 +258,7 @@
     background-color: white;
     border-radius: 10px;
     width: 600px;
-    height: 600px;
+    height: 650px;
     padding: 20px;
     text-align: center;
     position: relative;

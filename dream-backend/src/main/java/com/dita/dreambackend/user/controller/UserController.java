@@ -115,12 +115,25 @@ public class UserController {
         userService.deleteUser(user);
         return ResponseEntity.ok("탈퇴 성공");
     }
-          
+
     @PostMapping("/Logout")
     public ResponseEntity<String> logout(HttpSession session) {
 
         session.invalidate(); // 세션 무효화
         return ResponseEntity.ok("로그아웃 성공");
+    }
+
+
+    @PutMapping("/my-page/address")
+    public ResponseEntity<String> updateAddress(@RequestBody UserDTO user) {
+        userService.updateAddress(user); // 사용자 정보 업데이트 서비스 호출
+        return ResponseEntity.ok("업데이트 성공");
+    }
+
+    @PutMapping("/my-page/profile")
+    public ResponseEntity<String> updateName(@RequestBody UserDTO user) {
+        userService.updateName(user); // 사용자 정보 업데이트 서비스 호출
+        return ResponseEntity.ok("업데이트 성공");
     }
 
     @GetMapping("/Find-email")
@@ -184,7 +197,5 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("비밀번호 변경 실패.");
         }
     }
-
-
 }
 

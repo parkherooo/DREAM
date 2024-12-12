@@ -11,32 +11,48 @@ function SalesHistory() {
     });
     const [loading, setLoading] = useState(true);
     const [currentFilter, setCurrentFilter] = useState(null); // 필터 상태: null은 전체 표시
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const userResponse = await axios.get('http://localhost:8080/my-page', {
-                    params: { user_id: 'aaa@aaa.com'},
-                });
-                const salesResponse = await axios.get(
-                    "http://localhost:8080/my-page/sales-history",
-                    {
-                        params: { user_id: userResponse.data.user_id },
-                    }
-                );
-
-                setUserData({
-                    salesHistory: salesResponse.data, // 판매 내역
-                });
-                setLoading(false);
-            } catch (error) {
-                console.error("데이터 가져오기 실패:", error);
+    // 세션 확인 함수
+    const checkSession = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/check-session', { withCredentials: true });
+            if (response.data.user_id) {
+                setIsLoggedIn(true);
+                fetchUserData(response.data.user_id); // 세션에서 받은 user_id로 유저 정보 가져오기
+            } else {
+                setIsLoggedIn(false);
                 setLoading(false);
             }
-        };
+        } catch (error) {
+            console.error("세션 확인 오류:", error);
+            setLoading(false);
+        }
+    };
 
-        fetchUserData();
+    // 사용자 데이터 가져오는 함수
+    const fetchUserData = async (userId) => {
+        try {
+            const salesResponse = await axios.get(
+                "http://localhost:8080/my-page/sales-history",
+                {
+                    params: { user_id: userId }, // 세션에서 받은 user_id로 데이터 요청
+                }
+            );
+
+            setUserData({
+                salesHistory: salesResponse.data, // 구매 내역
+            });
+            setLoading(false);
+        } catch (error) {
+            console.error("데이터 가져오기 실패:", error);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        checkSession(); // 컴포넌트가 로드될 때 세션 확인
     }, []);
 
     // 상태별 개수 계산
@@ -48,6 +64,14 @@ function SalesHistory() {
         currentFilter === null
             ? userData.salesHistory
             : userData.salesHistory.filter(item => item[4] === currentFilter);
+
+    if (loading) {
+        return <div>로딩 중...</div>;
+    }
+
+    if (!isLoggedIn) {
+        navigate("/login");
+    }
 
     return (
         <div className="mypage">
@@ -75,13 +99,13 @@ function SalesHistory() {
                         const [productNum, productImage, productName, salePrice, saleState] = item; // 데이터 추출
                         const stateText = saleState === 0 ? "입찰 중" : "종료";
                         const handleProduct = () => {
-                            navigate(`/shop/${productNum}`);
+                            navigate(`/shop/product/${productNum}`);
                         };
                         return (
                             <div className="hist-hr">
                             <div className="item" key={index} onClick={handleProduct}>
                                 <div className="item-image">
-                                    <img src={productImage} alt={productImage} />
+                                    <img src={`/product_img/${productImage}`} alt={productImage} />
                                 </div>
                                 <div className="item-details">
                                     <span>{productName}</span>

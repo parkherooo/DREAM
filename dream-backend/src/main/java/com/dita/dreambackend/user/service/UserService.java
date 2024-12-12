@@ -63,6 +63,12 @@ public class UserService {
         );
     }
 
+    // 사용자 정보 조회 (Entity 반환)
+    public UserEntity getUserEntityById(String userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + userId));
+    }
+
     public void updateUser(UserDTO userDTO) {
         // 1. 기존 사용자 조회
         UserEntity existingUser = userRepository.findById(userDTO.getUser_id())
@@ -72,6 +78,28 @@ public class UserService {
         existingUser.setPwd(userDTO.getPwd());       // 비밀번호 업데이트
         existingUser.setPhone(userDTO.getPhone());   // 전화번호 업데이트
         existingUser.setShoes(userDTO.getShoes());   // 신발 사이즈 업데이트
+
+        // 3. 업데이트된 사용자 저장
+        userRepository.save(existingUser);
+    }
+    public void updateAddress(UserDTO userDTO) {
+        // 1. 기존 사용자 조회
+        UserEntity existingUser = userRepository.findById(userDTO.getUser_id())
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        // 2. 사용자 정보 업데이트
+        existingUser.setAddress(userDTO.getAddress()); // 주소 업데이트
+
+        // 3. 업데이트된 사용자 저장
+        userRepository.save(existingUser);
+    }
+    public void updateName(UserDTO userDTO) {
+        // 1. 기존 사용자 조회
+        UserEntity existingUser = userRepository.findById(userDTO.getUser_id())
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        // 2. 사용자 정보 업데이트
+        existingUser.setName(userDTO.getName());
 
         // 3. 업데이트된 사용자 저장
         userRepository.save(existingUser);

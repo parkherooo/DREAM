@@ -16,7 +16,6 @@ function Sidebar() {
                 <li><Link to="/my-page/information">로그인 정보</Link></li>
                 <li><Link to="/my-page/profile">프로필 관리</Link></li>
                 <li><Link to="/my-page/address">주소록</Link></li>
-                <li><Link to="/my-page/account">판매 정산 계좌</Link></li>
             </ul>
         </div>
     );

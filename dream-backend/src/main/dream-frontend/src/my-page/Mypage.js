@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {BrowserRouter as Router, Route, Routes, useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import './Mypage.css';
 
@@ -13,13 +13,30 @@ function Mypage() {
         interests: [],
     });
     const [loading, setLoading] = useState(true); // 데이터 로딩 상태
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태
     const navigate = useNavigate(); // 페이지 이동을 위한 훅
 
     useEffect(() => {
-        const fetchUserData = async () => {
+        const checkSession = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/check-session', { withCredentials: true });
+                if (response.data.user_id) {
+                    setIsLoggedIn(true);
+                    fetchUserData(response.data.user_id); // 세션에서 받은 user_id로 유저 정보 가져오기
+                } else {
+                    setIsLoggedIn(false);
+                    setLoading(false);
+                }
+            } catch (error) {
+                console.error("세션 확인 오류:", error);
+                setLoading(false);
+            }
+        };
+
+        const fetchUserData = async (user_id) => {
             try {
                 const userResponse = await axios.get('http://localhost:8080/my-page', {
-                    params: { user_id: 'aaa@aaa.com'},
+                    params: { user_id },
                 });
                 const salesResponse = await axios.get('http://localhost:8080/my-page/sales-history', {
                     params: { user_id: userResponse.data.user_id },
@@ -45,7 +62,7 @@ function Mypage() {
             }
         };
 
-        fetchUserData();
+        checkSession(); // 세션 확인 호출
     }, []);
 
     // 상태별 개수 계산
@@ -53,7 +70,6 @@ function Mypage() {
     const SfinishedCount = userData.salesHistory.filter(item => item[4] === 1).length;
     const BbidCount = userData.buysHistory.filter(item => item[4] === 0).length;
     const BfinishedCount = userData.buysHistory.filter(item => item[4] === 1).length;
-
 
     const handleProfileEdit = () => {
         navigate('/my-page/profile'); // 프로필 관리 페이지로 이동
@@ -63,11 +79,17 @@ function Mypage() {
         navigate('/my-style'); // 스타일 페이지로 이동
     };
 
+    if (loading) {
+        return <div>로딩 중...</div>;
+    }
 
+    if (!isLoggedIn) {
+        navigate("/login");
+    }
 
     return (
         <div className="mypage">
-            <Sidebar/>
+            <Sidebar />
             <div className="mypage-container">
                 <div className="profile-info">
                     <div className="profile-image"></div>
@@ -90,7 +112,7 @@ function Mypage() {
                     <div className="history-status">
                         <div className="status-item">
                             <span>전체</span>
-                            <strong style={{color: "#EB3333"}}>{userData.buysHistory.length}</strong>
+                            <strong style={{ color: "#EB3333" }}>{userData.buysHistory.length}</strong>
                         </div>
                         <div className="status-item">
                             <span>입찰 중</span>
@@ -109,12 +131,12 @@ function Mypage() {
                                 .map((item, index) => {
                                     const [productNum, productImage, productName, buyPrice, buyState] = item; // Object[]에서 값 추출
                                     const handleProduct = () => {
-                                        navigate(`/shop/${productNum}`);
+                                        navigate(`/shop/product/${productNum}`);
                                     };
                                     return (
                                         <div className="item" key={index} onClick={handleProduct}>
                                             <div className="item-image">
-                                                <img src={productImage} alt={productImage}/>
+                                                <img src={`/product_img/${productImage}`} alt={productImage} />
                                             </div>
                                             <div className="item-details">
                                                 <span>{productName}</span>
@@ -141,7 +163,7 @@ function Mypage() {
                     <div className="history-status">
                         <div className="status-item">
                             <span>전체</span>
-                            <strong style={{color: "#06BC15"}}>{userData.salesHistory.length}</strong>
+                            <strong style={{ color: "#06BC15" }}>{userData.salesHistory.length}</strong>
                         </div>
                         <div className="status-item">
                             <span>입찰 중</span>
@@ -160,12 +182,12 @@ function Mypage() {
                                 .map((item, index) => {
                                     const [productNum, productImage, productName, salePrice, saleState] = item; // Object[]에서 값 추출
                                     const handleProduct = () => {
-                                        navigate(`/shop/${productNum}`);
+                                        navigate(`/shop/product/${productNum}`);
                                     };
                                     return (
                                         <div className="item" key={index} onClick={handleProduct}>
                                             <div className="item-image">
-                                                <img src={productImage} alt={productImage}/>
+                                                <img src={`/product_img/${productImage}`} alt={productImage} />
                                             </div>
                                             <div className="item-details">
                                                 <span>{productName}</span>
@@ -199,12 +221,12 @@ function Mypage() {
                                 .map((item, index) => {
                                     const [productNum, productImage, productBrand, productName, productPrice] = item; // Object[]에서 값 추출
                                     const handleProduct = () => {
-                                        navigate(`/shop/${productNum}`);
+                                        navigate(`/shop/product/${productNum}`);
                                     };
                                     return (
                                         <div className="int-item" key={index} onClick={handleProduct}>
                                             <div className="int-item-image">
-                                                <img src={productImage} alt={productImage}/>
+                                                <img src={`/product_img/${productImage}`} alt={productImage} />
                                             </div>
                                             <div className="int-item-details">
                                                 <p>{productBrand}</p>
@@ -220,7 +242,6 @@ function Mypage() {
                             </div>
                         )}
                     </div>
-
                 </div>
             </div>
         </div>
