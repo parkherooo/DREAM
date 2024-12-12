@@ -42,6 +42,8 @@ const AlarmOverlay = ({ onClose }) => {
                 window.location.href = "/my-page/sales-history"; // 판매 내역 페이지로 이동
             } else if (content.includes("구매")) {
                 window.location.href = "/my-page/buys-history"; // 구매 내역 페이지로 이동
+            } else if (content.includes("댓글")) {
+                window.location.href = "/style";
             }
         } catch (error) {
             console.error("알림 확인 상태 업데이트에 실패했습니다:", error);
