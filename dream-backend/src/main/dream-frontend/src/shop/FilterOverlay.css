@@ -6,6 +6,7 @@
     width: 100%;
     height: 100%;
     z-index: 1000;
+    overflow: hidden; /* 자식 요소가 잘리지 않도록 설정 */
 }
 
 /* 어두운 배경 */
@@ -25,14 +26,15 @@
     top: 0;
     right: 0;
     width: 30%;
-    height: 100%;
+    height: 100%; /* 전체 화면 높이를 사용 */
     background: #fff;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 2;
     display: flex;
     flex-direction: column;
     padding: 20px;
-    overflow-y: auto;
+    overflow-y: auto; /* 내용이 길어질 경우 스크롤 활성화 */
+    box-sizing: border-box; /* 패딩 포함한 크기 계산 */
 }
 
 /* 필터 창 내부 콘텐츠 */
@@ -41,6 +43,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    height: 100%; /* 부모의 높이를 차지 */
+    box-sizing: border-box; /* 패딩 포함 */
 }
 
 /* 닫기 버튼 */
@@ -66,7 +70,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 .filter-section-header h3 {
@@ -85,11 +88,7 @@
 .filter-categories {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-}
-
-.category-group {
-    margin-bottom: 15px;
+    gap: 0;
 }
 
 .category-group h4 {
@@ -134,6 +133,7 @@
     display: flex;
     justify-content: space-between;
     gap: 10px;
+    padding-bottom: 20px; /* 하단 공간 확보 */
 }
 
 .reset-button {

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./ProductDetail.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // FontAwesome 임포트
-import { faBookmark } from "@fortawesome/free-regular-svg-icons"; // 북마크 아이콘 임포트
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookmark as faSolidBookmark } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark as faRegularBookmark } from "@fortawesome/free-regular-svg-icons";
 
 const ProductDetail = () => {
     const { productId } = useParams();
@@ -11,12 +12,12 @@ const ProductDetail = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [selectedSize, setSelectedSize] = useState("");
+    const [selectedSize, setSelectedSize] = useState(""); // 선택된 사이즈
     const [selectedPrice, setSelectedPrice] = useState(0);
     const [selectedStock, setSelectedStock] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(false); // 관심상품 상태
     const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태
-    const [showMessage, setShowMessage] = useState(""); // 알림 메시지
 
     const parseSizes = (sizeString) => {
         return sizeString
@@ -27,6 +28,7 @@ const ProductDetail = () => {
             : [];
     };
 
+    // 상품 데이터 로드
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -36,16 +38,14 @@ const ProductDetail = () => {
                 if (response.data.size) {
                     const sizesWithDetails = parseSizes(response.data.size);
                     if (sizesWithDetails.length > 0) {
-                        setSelectedSize(sizesWithDetails[0].size);
-                        setSelectedPrice(sizesWithDetails[0].price);
-                        setSelectedStock(sizesWithDetails[0].stock);
+                        const defaultSize = sizesWithDetails[0];
+                        setSelectedSize(defaultSize.size);
+                        setSelectedPrice(defaultSize.price);
+                        setSelectedStock(defaultSize.stock);
                     }
                 }
 
                 setLoading(false);
-                // 로그인 여부 확인 (백엔드 로그인 세션 확인 API 호출)
-                const loginResponse = await axios.get("http://localhost:8080/auth/isLoggedIn");
-                setIsLoggedIn(loginResponse.data.loggedIn);
             } catch (err) {
                 setError(err.message);
                 setLoading(false);
@@ -53,34 +53,83 @@ const ProductDetail = () => {
         };
 
         fetchProduct();
+        checkSession();
     }, [productId]);
 
-    // 관심상품
-    const handleFavorite = async () => {
+    // 관심상품 여부 확인 (사이즈 변경 시 호출)
+    useEffect(() => {
+        if (selectedSize) {
+            checkInterest();
+        }
+    }, [selectedSize]); // 선택된 사이즈가 변경될 때마다 실행
+
+    // 세션 체크
+    const checkSession = async () => {
+        try {
+            const response = await axios.get("http://localhost:8080/check-session", { withCredentials: true });
+            setIsLoggedIn(response.data.isLoggedIn);
+        } catch (error) {
+            console.error("Error checking session:", error);
+            setIsLoggedIn(false);
+        }
+    };
+
+    // 관심상품 여부 확인
+    const checkInterest = async () => {
+        try {
+            const response = await axios.get(
+                `http://localhost:8080/interests/check`,
+                { params: { productId, size: selectedSize }, withCredentials: true }
+            );
+            setIsFavorite(response.data); // 선택된 사이즈에 따른 관심상품 여부 설정
+        } catch (error) {
+            console.error("Error checking interest:", error);
+        }
+    };
+
+    // 관심상품 추가/삭제 토글
+    const handleToggleFavorite = async () => {
         if (!isLoggedIn) {
-            setShowMessage("로그인이 필요합니다.");
+            alert("로그인이 필요합니다.");
             return;
         }
 
-        try {
-            const response = await axios.post("http://localhost:8080/interest/add", {
-                user_id: "현재로그인된유저ID", // 로그인된 유저 ID를 서버에서 받아오도록 설정
-                p_num: productId,
-            });
-            if (response.status === 200) {
-                setShowMessage("관심상품에 추가되었습니다!");
+        if (isFavorite) {
+            // 관심상품 삭제
+            try {
+                const response = await axios.delete(
+                    `http://localhost:8080/interests`,
+                    { params: { productId, size: selectedSize }, withCredentials: true }
+                );
+                if (response.status === 200) {
+                    alert("관심상품에서 삭제되었습니다.");
+                    setIsFavorite(false); // 상태 업데이트
+                }
+            } catch (error) {
+                console.error("Error removing from favorites:", error);
+                alert("관심상품 삭제 중 문제가 발생했습니다.");
             }
-        } catch (err) {
-            setShowMessage("관심상품 추가에 실패했습니다.");
+        } else {
+            // 관심상품 추가
+            try {
+                const response = await axios.post(
+                    "http://localhost:8080/interests",
+                    { p_num: productId },
+                    { params: { size: selectedSize }, withCredentials: true }
+                );
+                if (response.status === 200) {
+                    alert("관심상품에 추가되었습니다.");
+                    setIsFavorite(true); // 상태 업데이트
+                }
+            } catch (error) {
+                console.error("Error adding to favorites:", error);
+                alert("관심상품 추가 중 문제가 발생했습니다.");
+            }
         }
-
-        // 메시지를 몇 초 후에 사라지게 설정
-        setTimeout(() => setShowMessage(""), 3000);
     };
 
     // 사이즈 변경
-    const handleSizeChange = (e) => {
-        const newSize = e.target.value;
+    const handleSizeChange = (newSize) => {
         setSelectedSize(newSize);
         const matchingVariant = parseSizes(product?.size || "").find((variant) => variant.size === newSize);
         if (matchingVariant) {
@@ -89,13 +138,35 @@ const ProductDetail = () => {
         }
     };
 
-    const handleAddToCart = () => {
-        alert(`장바구니에 추가되었습니다.`);
+    const handleAddToCart = async () => {
+        if (!isLoggedIn) {
+            alert("로그인이 필요합니다.");
+            return;
+        }
+
+        try {
+            const response = await axios.post(
+                "http://localhost:8080/cart",
+                {
+                    p_num: productId,
+                    p_count: 1, // 수량은 기본값으로 1
+                },
+                { params: { size: selectedSize }, withCredentials: true }
+            );
+
+            if (response.status === 200) {
+                alert("장바구니에 상품이 담겼습니다.");
+            }
+        } catch (error) {
+            console.error("Error adding to cart:", error);
+            alert("장바구니 담기 중 문제가 발생했습니다.");
+        }
+
         setIsModalOpen(false);
     };
 
     const handleBuyNow = () => {
-        alert(`즉시 구매되었습니다: 사이즈 ${selectedSize}, 가격 ${selectedPrice}원`);
+        alert(`즉시 구매되었습니다.`);
         setIsModalOpen(false);
     };
 
@@ -147,11 +218,7 @@ const ProductDetail = () => {
                                         <button
                                             key={index}
                                             className={`size-option ${selectedSize === variant.size ? "selected" : ""}`}
-                                            onClick={() => {
-                                                setSelectedSize(variant.size);
-                                                setSelectedPrice(variant.price);
-                                                setSelectedStock(variant.stock);
-                                            }}
+                                            onClick={() => handleSizeChange(variant.size)}
                                         >
                                             {variant.size}
                                         </button>
@@ -179,12 +246,14 @@ const ProductDetail = () => {
 
                             {/* 관심상품 버튼 */}
                             <div className="product-detail-favorite">
-                                <button className="favorite-button">
-                                    <FontAwesomeIcon icon={faBookmark} className="favorite-icon" />
-                                    관심상품
+                                <button className="favorite-button" onClick={handleToggleFavorite}>
+                                    <FontAwesomeIcon
+                                        icon={isFavorite ? faSolidBookmark : faRegularBookmark}
+                                        className={`favorite-icon ${isFavorite ? "active" : ""}`}
+                                    />
+                                    {isFavorite ? "관심상품 등록됨" : "관심상품"}
                                 </button>
                             </div>
-                            {showMessage && <div className="message-box">{showMessage}</div>}
 
                             <div className="product-detail-warning">
                                 <p>※ 거래 주의사항 안내</p>

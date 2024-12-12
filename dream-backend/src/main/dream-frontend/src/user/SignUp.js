@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './SignUp.css';
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 function SignUp() {
     const [userData, setUserData] = useState({
-        userId: '',
+        user_id: '',
         pwd: '',
-        shoes: ''
+        shoes: '',
+        birth: '',
+        gender: '',
     });
 
     const [formErrors, setFormErrors] = useState({
-        userId: '',
+        user_id: '',
         pwd: '',
-        shoes: ''
+        shoes: '',
+        birth: '',
+        gender: '',
     });
 
     const navigate = useNavigate();
@@ -33,9 +38,9 @@ function SignUp() {
     const validateField = (name, value) => {
         const errors = { ...formErrors };
 
-        if (name === 'userId') {
+        if (name === 'user_id') {
             const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-            errors.userId = emailPattern.test(value) ? '' : '유효한 이메일 주소를 입력해주세요.';
+            errors.user_id = emailPattern.test(value) ? '' : '유효한 이메일 주소를 입력해주세요.';
         }
 
         if (name === 'pwd') {
@@ -46,18 +51,30 @@ function SignUp() {
             errors.shoes = value > 0 ? '' : '신발 사이즈를 입력해주세요.';
         }
 
+        if (name === 'birth') {
+            errors.birth = value ? '' : '생일을 입력해주세요.';
+        }
+
+        if (name === 'gender') {
+            errors.gender = value ? '' : '성별을 선택해주세요.';
+        }
+
         setFormErrors(errors);
     };
 
     // 폼 유효성 검사
     const isFormValid = () => {
         return (
-            userData.userId &&
+            userData.user_id &&
             userData.pwd &&
             userData.shoes &&
-            !formErrors.userId &&
+            userData.birth &&
+            userData.gender &&
+            !formErrors.user_id &&
             !formErrors.pwd &&
-            !formErrors.shoes
+            !formErrors.shoes &&
+            !formErrors.birth &&
+            !formErrors.gender
         );
     };
 
@@ -97,23 +114,22 @@ function SignUp() {
             });
     };
 
-
     return (
         <div className="container">
             <div className="signup-box">
                 <h2>회원가입</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">
-                        <label htmlFor="userId">이메일 주소*</label>
+                        <label htmlFor="user_id">이메일 주소*</label>
                         <input
                             type="text"
-                            id="userId"
-                            name="userId"
-                            value={userData.userId}
+                            id="user_id"
+                            name="user_id"
+                            value={userData.user_id}
                             onChange={handleChange}
                             placeholder="예)dream@dream.co.kr"
                         />
-                        {formErrors.userId && <span className="error">{formErrors.userId}</span>}
+                        {formErrors.user_id && <span className="error">{formErrors.user_id}</span>}
                     </div>
 
                     <div className="input-group">
@@ -130,6 +146,29 @@ function SignUp() {
                     </div>
 
                     <div className="input-group">
+                        <label htmlFor="name">이름</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={userData.name}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-group">
+                        <label htmlFor="phone">전화번호</label>
+                        <input
+                            type="text"
+                            id="phone"
+                            name="phone"
+                            value={userData.phone}
+                            onChange={handleChange}
+                            placeholder="예)010-1234-5678"
+                        />
+                    </div>
+
+                    <div className="input-group">
                         <label htmlFor="shoes">신발 사이즈</label>
                         <input
                             type="number"
@@ -142,13 +181,39 @@ function SignUp() {
                         {formErrors.shoes && <span className="error">{formErrors.shoes}</span>}
                     </div>
 
-                    <div className="submit-btn">
-                        <button type="submit" disabled={!isFormValid()}>본인 인증하고 가입하기</button>
+                    <div className="input-group">
+                        <label htmlFor="birth">생일</label>
+                        <input
+                            type="date"
+                            id="birth"
+                            name="birth"
+                            value={userData.birth}
+                            onChange={handleChange}
+                        />
+                        {formErrors.birth && <span className="error">{formErrors.birth}</span>}
+                    </div>
+
+                    <div className="input-group">
+                        <label htmlFor="gender">성별</label>
+                        <select
+                            id="gender"
+                            name="gender"
+                            value={userData.gender}
+                            onChange={handleChange}
+                        >
+                            <option value="">선택하세요</option>
+                            <option value="male">남성</option>
+                            <option value="female">여성</option>
+                            <option value="other">기타</option>
+                        </select>
+                        {formErrors.gender && <span className="error">{formErrors.gender}</span>}
+                    </div>
+
+                    <div className="submit-btn22">
+                        <button type="submit" disabled={!isFormValid()}>가입하기</button>
                     </div>
                 </form>
-
             </div>
-
         </div>
     );
 }

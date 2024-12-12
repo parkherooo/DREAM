@@ -4,6 +4,10 @@ import com.dita.dreambackend.user.dto.UserDTO;
 import com.dita.dreambackend.user.entity.UserEntity;
 import com.dita.dreambackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 //DTO->Entity 나
@@ -59,6 +63,12 @@ public class UserService {
         );
     }
 
+    // 사용자 정보 조회 (Entity 반환)
+    public UserEntity getUserEntityById(String userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + userId));
+    }
+
     public void updateUser(UserDTO userDTO) {
         // 1. 기존 사용자 조회
         UserEntity existingUser = userRepository.findById(userDTO.getUser_id())
@@ -99,12 +109,27 @@ public class UserService {
         // 사용자 ID로 삭제
         userRepository.deleteById(userDTO.getUser_id());
     }
-  
+
     public UserEntity saveUser(UserEntity user) {
         return userRepository.save(user);
     }
 
     public boolean isUserExists(String user_id) {
         return userRepository.existsByUser_id(user_id);
+    }
+
+    public String findEmail(String name, String phone) {
+        return userRepository.findEmail(name,phone);
+    }
+
+    public boolean updatePassword(String email, String newPassword) {
+        // 비밀번호 업데이트
+        userRepository.updatePasswordByEmail(email, newPassword);
+
+        return true;
+    }
+
+    public String findPwdCheck(String userId, String phone) {
+        return userRepository.findPwdCheck(userId,phone);
     }
 }
