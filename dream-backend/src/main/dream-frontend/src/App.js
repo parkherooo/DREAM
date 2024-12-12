@@ -19,8 +19,6 @@ import axios from "axios";
 import FindEmail from "./user/Find-email";
 import FindPassword from "./user/Find-password";
 
-axios.defaults.withCredentials = true;
-
 function NaverCallback() {
     // 네이버 로그인 콜백 처리 페이지
     return <div>네이버 로그인 처리 중입니다...</div>;
@@ -54,7 +52,7 @@ function App() {
                         <Route path="/alarm" element={<AlarmOverlay />} />
                         <Route path="/Find-email" element={<FindEmail />} />
                         <Route path="/Find-password" element={<FindPassword />} />
-                          
+
                         {/* SHOP 페이지 */}
                         <Route
                             path="/shop/*"

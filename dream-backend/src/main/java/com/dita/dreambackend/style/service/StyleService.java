@@ -1,5 +1,8 @@
 package com.dita.dreambackend.style.service;
 
+import com.dita.dreambackend.product.dto.ProductDTO;
+import com.dita.dreambackend.product.entity.ProductEntity;
+import com.dita.dreambackend.product.repository.ProductRepository;
 import com.dita.dreambackend.style.dto.CommentDTO;
 import com.dita.dreambackend.style.dto.HeartDTO;
 import com.dita.dreambackend.style.dto.StyleDTO;
@@ -21,8 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +36,7 @@ public class StyleService {
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final InterestRepository interestRepository;
+    private final ProductRepository productRepository;
 
     private final String uploadDir = "C:\\DREAM\\dream-backend\\src\\main\\resources\\static\\images\\style";
     private final HeartRepository heartRepository;
@@ -261,4 +267,28 @@ public class StyleService {
     public boolean markCheck(String user_id, long st_num){
         return interestRepository.existsByUserUserIdAndStyleStNum(user_id,st_num);
     }
+
+    public  List<ProductDTO> searchProduct(String p_details){
+        List<ProductEntity> productEntityList = productRepository.findByPName(p_details);
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for (ProductEntity productEntity : productEntityList) {
+            productDTOList.add(ProductDTO.toProductDTO(productEntity));
+        }
+        return productDTOList;
+    }
+
+    public List<ProductDTO> findTags(String tags) {
+        // 1. tags 문자열에서 대괄호와 공백을 제거하고 쉼표로 구분된 숫자 리스트로 변환
+        String cleanedTags = tags.replaceAll("[\\[\\] ]", "");  // [21, 22]에서 [ ] 제거
+        List<Integer> tagIds = Arrays.stream(cleanedTags.split(","))
+                .map(Integer::parseInt)  // 문자열을 Integer로 변환
+                .collect(Collectors.toList());  // 리스트로 변환
+        List<ProductEntity> productEntitydList = productRepository.findByProductIds(tagIds);
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for (ProductEntity productEntity : productEntitydList) {
+            productDTOList.add(ProductDTO.toProductDTO(productEntity));
+        }
+        return productDTOList;
+    }
+
 }

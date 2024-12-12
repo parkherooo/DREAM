@@ -76,7 +76,7 @@ input[type="text"]:focus {
 
 /* 검색 버튼 */
 .product-search button {
-
+    margin-bottom: 10px;
     border: none;
     background-color: #000; /* 검정색 배경 */
     color: #fff; /* 흰색 글자 */
@@ -102,6 +102,7 @@ input[type="text"]:focus {
 
 /* 등록 버튼 스타일 */
 .submit-button {
+    margin-bottom: 10px;
     width: 20%; /* 버튼 너비를 폼의 너비에 맞춤 */
     border: none;
     background-color: #000; /* 검정색 배경 */
@@ -129,6 +130,7 @@ input[type="text"]:focus {
 }
 
 .remove-image-button {
+    margin-bottom: 10px;
     position: absolute;
     top: 5px;
     right: 5px;
@@ -148,3 +150,12 @@ input[type="text"]:focus {
 .remove-image-button:hover {
     background-color: darkred;
 }
+.search-result-img{
+    width: 150px;
+    height: auto;
+}
+
+.search-results{
+    margin-top: 10px;
+}
+

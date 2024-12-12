@@ -1,0 +1,36 @@
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    padding: 20px;
+    height:  700px; /* 페이지 높이에 맞게 중앙 정렬 */
+    background-color: #f7f7f7; /* 배경색 */
+}
+
+/* 검색 입력창 스타일 */
+.search-container input {
+    width: 500px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    margin-right: 10px;
+    transition: border-color 0.3s;
+}
+
+/* 검색 버튼 스타일 */
+.search-container button {
+    background : none;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* 검색 아이콘 스타일 */
+.search-container button svg {
+    color: black;
+    font-size: 24px;
+}

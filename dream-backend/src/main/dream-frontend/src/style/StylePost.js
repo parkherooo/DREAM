@@ -16,7 +16,7 @@ function StylePost() {
     const [searchKeyword, setSearchKeyword] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [previewImages, setPreviewImages] = useState([]); // 미리보기 이미지
-
+    const [productDetails, setProductDetails] = useState([]);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setStyleData({ ...styleData, [name]: value });
@@ -61,11 +61,12 @@ function StylePost() {
             });
     };
 
-    const addTag = (product) => {
+    const addTag = (p_num, p_details) => {
         setStyleData((prev) => ({
             ...prev,
-            tags: [...prev.tags, product],
+            tags: [...prev.tags, p_num],
         }));
+        setProductDetails((prev) => [...prev, { p_num, p_details }]);
     };
 
     const removeTag = (index) => {
@@ -74,10 +75,23 @@ function StylePost() {
             updatedTags.splice(index, 1);
             return { ...prev, tags: updatedTags };
         });
+
+        // productDetails에서 해당 p_num 제거
+        setProductDetails((prev) => {
+            const updatedDetails = [...prev];
+            updatedDetails.splice(index, 1);
+            return updatedDetails;
+        });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // 내용(content)과 이미지(img)가 비어 있는지 체크
+        if (!styleData.content.trim() || styleData.img.length === 0) {
+            alert("내용과 이미지를 모두 입력해주세요.");
+            return; // 유효하지 않으면 함수 종료
+        }
 
         const formData = new FormData();
         formData.append("content", styleData.content);
@@ -167,10 +181,13 @@ function StylePost() {
                     <div className="search-results">
                         {searchResults.map((product, index) => (
                             <div key={index} className="search-result-item">
-                                <img src={product.imgUrl} alt={product.name} />
-                                <div>{product.name}</div>
-                                <div>{product.price}원</div>
-                                <button type="button" onClick={() => addTag(product)}>
+                                <img
+                                    src={`http://localhost:8080/product_img/${product.p_img.split(',')[0].trim()}`}
+                                    alt={product.p_img.split(',')[0].trim()}
+                                    className="search-result-img"
+                                />
+                                <div>{product.p_details}</div>
+                                <button type="button" onClick={() => addTag(product.p_num, product.p_details)}>
                                     추가
                                 </button>
                             </div>
@@ -179,9 +196,9 @@ function StylePost() {
                 </div>
 
                 <div className="tag-list">
-                    {styleData.tags.map((tag, index) => (
+                    {productDetails.map((product, index) => (
                         <div key={index} className="tag-item">
-                            <span>{tag.name}</span>
+                            <span>{product.p_details}</span> {/* p_details를 출력 */}
                             <button type="button" onClick={() => removeTag(index)}>
                                 X
                             </button>

@@ -1,5 +1,6 @@
 package com.dita.dreambackend.product.dto;
 
+import com.dita.dreambackend.product.entity.ProductEntity;
 import lombok.*;
 
 import java.util.Arrays;
@@ -20,6 +21,20 @@ public class ProductDTO {
     private int stock_quantity;
     private String p_img; // 쉼표로 구분된 이미지 문자열
     private String p_details;
+
+    public static ProductDTO toProductDTO(ProductEntity productEntity) {
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setP_num(productEntity.getP_num());
+        productDTO.setC_num(productEntity.getCategory().getC_num());
+        productDTO.setP_name(productEntity.getP_name());
+        productDTO.setBrand(productEntity.getBrand());
+        productDTO.setSize(productEntity.getSize());
+        productDTO.setPrice(productEntity.getPrice());
+        productDTO.setStock_quantity(productEntity.getStock_quantity());
+        productDTO.setP_img(productEntity.getP_img());
+        productDTO.setP_details(productEntity.getP_details());
+        return productDTO;
+    }
 
     // 이미지를 리스트로 변환 (getter)
     public List<String> getP_imgList() {
