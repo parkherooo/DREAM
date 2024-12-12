@@ -17,6 +17,43 @@ function Address() {
     const [postcode, setPostcode] = useState(''); // 우편번호 상태
     const [detailAddress, setDetailAddress] = useState(''); // 상세 주소 상태
     const navigate = useNavigate(); // 페이지 이동을 위한 훅
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const checkSession = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/check-session', { withCredentials: true });
+            if (response.data.user_id) {
+                setIsLoggedIn(true);
+                fetchUserData(response.data.user_id); // 세션에서 받은 user_id로 유저 정보 가져오기
+            } else {
+                setIsLoggedIn(false);
+                setLoading(false);
+            }
+        } catch (error) {
+            console.error("세션 확인 오류:", error);
+            setLoading(false);
+        }
+    };
+
+    // 사용자 데이터 가져오기 함수
+    const fetchUserData = async (user_id) => {
+        try {
+            const userResponse = await axios.get('http://localhost:8080/my-page', {
+                params: { user_id: user_id },
+            });
+
+            setUserData({
+                user_id: userResponse.data.user_id,
+                name: userResponse.data.name,
+                phone: userResponse.data.phone,
+                address: userResponse.data.address,
+            });
+            setLoading(false);
+        } catch (error) {
+            console.error('데이터 가져오기 실패:', error);
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
         // Daum 주소 API 스크립트 동적 로딩
@@ -25,33 +62,14 @@ function Address() {
         script.async = true;
         document.body.appendChild(script);
 
-        // 사용자 데이터 가져오기
-        const fetchUserData = async () => {
-            try {
-                const userResponse = await axios.get('http://localhost:8080/my-page', {
-                    params: { user_id: 'aaa@aaa.com' },
-                });
-
-                setUserData({
-                    user_id: userResponse.data.user_id,
-                    name: userResponse.data.name,
-                    phone: userResponse.data.phone,
-                    address: userResponse.data.address,
-                });
-                setLoading(false);
-            } catch (error) {
-                console.error('데이터 가져오기 실패:', error);
-                setLoading(false);
-            }
-        };
-
-        fetchUserData();
+        // 세션 확인
+        checkSession();
 
         // 클린업: 컴포넌트 언마운트 시 스크립트 제거
         return () => {
             document.body.removeChild(script);
         };
-    }, []); // 컴포넌트 마운트 시 한 번만 실행
+    }, []); // 컴포넌트가 마운트될 때 한 번만 실행
 
     const handleAddressChange = (e) => {
         setNewAddress(e.target.value);
@@ -62,8 +80,11 @@ function Address() {
             // 주소 포맷: (우편번호) 주소 상세주소
             const fullAddress = `(${postcode}) ${newAddress} ${detailAddress}`;
 
-            // 새 주소로 업데이트 요청
-            await axios.put('http://localhost:8080/my-page/address', userData);
+            // 주소 업데이트 요청
+            await axios.put('http://localhost:8080/my-page/address', {
+                user_id: userData.user_id, // user_id를 보내야 정확히 업데이트 가능
+                address: fullAddress, // 업데이트할 새 주소
+            });
 
             // userData 업데이트
             setUserData({ ...userData, address: fullAddress });
@@ -96,6 +117,14 @@ function Address() {
     const handleModalClose = () => {
         setIsModalOpen(false); // 모달 닫기
     };
+
+    if (loading) {
+        return <div>로딩 중...</div>;
+    }
+
+    if (!isLoggedIn) {
+        navigate("/login");
+    }
 
     return (
         <div className="mypage">
