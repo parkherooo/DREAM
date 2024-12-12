@@ -104,7 +104,7 @@ function Interests() {
                                     return (
                                         <div className="int-item" key={index} onClick={handleProduct}>
                                             <div className="int-item-image">
-                                                <img src={`/product_img/${productImage}`} alt={productImage} />
+                                                <img src={`/product_img/${productImage.split(',')[0].trim()}`} alt={productImage} />
                                             </div>
                                             <div className="int-item-details">
                                                 <p>{productBrand}</p>
