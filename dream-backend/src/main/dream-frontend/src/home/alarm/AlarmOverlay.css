@@ -1,0 +1,94 @@
+/* 오버레이 배경 */
+.alarm-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: flex-end;
+    z-index: 1000; /* 다른 요소들과 겹치지 않도록 확인 */
+}
+
+
+/* 오버레이 내용 */
+.overlay-content {
+    background: white;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    text-align: left;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2); /* 오른쪽 그림자 */
+    border-radius: 0; /* 테두리를 네모로 */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 알림 제목 및 닫기 버튼 */
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* 닫기 버튼 */
+.close-btn {
+    border: none;
+    padding: 5px 10px;
+    font-size: 25px;
+    font-weight: lighter;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    background: white;
+}
+
+/* 알림 리스트 */
+.alarm-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    text-align: left;
+}
+
+
+.no-alarms {
+    color: #555;
+    font-size: 14px;
+}
+
+/* 기본 알림 항목 스타일 */
+.alarm-item {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: white; /* 기본 배경색 */
+    transition: background-color 0.3s ease; /* 배경색 전환 효과 */
+}
+
+/* 미확인 상태 (al_check === 0)인 경우 */
+.alarm-item.unread {
+    background-color: rgba(255, 255, 0, 0.2);
+}
+
+/* 확인 상태 (al_check === 1)인 경우 */
+.alarm-item.read {
+    background-color: white; /* 확인된 배경색 */
+}
+
+/* 알림 리스트 스타일 */
+.alarm-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 추가적인 스타일 */
+.alarm-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 호버 시 약간의 그림자 */
+}
+

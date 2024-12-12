@@ -114,7 +114,7 @@ function Mypage() {
                                     return (
                                         <div className="item" key={index} onClick={handleProduct}>
                                             <div className="item-image">
-                                                <img src={productImage} alt={productImage}/>
+                                                <img src={`/product_img/${productImage}`} alt={productImage}/>
                                             </div>
                                             <div className="item-details">
                                                 <span>{productName}</span>
@@ -165,7 +165,7 @@ function Mypage() {
                                     return (
                                         <div className="item" key={index} onClick={handleProduct}>
                                             <div className="item-image">
-                                                <img src={productImage} alt={productImage}/>
+                                                <img src={`/product_img/${productImage}`} alt={productImage}/>
                                             </div>
                                             <div className="item-details">
                                                 <span>{productName}</span>
@@ -204,7 +204,7 @@ function Mypage() {
                                     return (
                                         <div className="int-item" key={index} onClick={handleProduct}>
                                             <div className="int-item-image">
-                                                <img src={productImage} alt={productImage}/>
+                                                <img src={`/product_img/${productImage}`} alt={productImage}/>
                                             </div>
                                             <div className="int-item-details">
                                                 <p>{productBrand}</p>

@@ -13,6 +13,8 @@ import StyleDetail from "./style/StyleDetail";
 import StyleUpdate from "./style/StyleUpdate";
 import "./App.css";
 import MyPageRoutes from "./my-page/MyPageRoutes";
+import Interests from "./my-page/Interests";
+import AlarmOverlay from "./home/alarm/AlarmOverlay";
 
 function NaverCallback() {
     // 네이버 로그인 콜백 처리 페이지
@@ -42,8 +44,8 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/SignUp" element={<SignUp />} />
                         <Route path="/*" element={<MyPageRoutes />} />
-                        <Route path="/interests" element={<div>관심 페이지</div>} />
-                        <Route path="/notifications" element={<div>알림 페이지</div>} />
+                        <Route path="/interests" element={<Interests />} />
+                        <Route path="/alarm" element={<AlarmOverlay />} />
 
                         {/* SHOP 페이지 */}
                         <Route
