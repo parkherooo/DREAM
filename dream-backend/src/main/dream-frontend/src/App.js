@@ -5,7 +5,7 @@ import BannerSlider from "./home/BannerSlider"; // 배너 슬라이더
 import CategoryList from "./home/CategoryList"; // 카테고리 목록
 import ShopBanner from "./shop/ShopBanner"; // 샵 배너 추가
 import ShopPage from "./shop/ShopPage"; // 샵 카테고리별 내용
-import "./App.css";
+import Cart from "./cart/Cart"; // 장바구니 요약 섹션
 import SignUp from "./user/SignUp";
 import StylePost from "./style/StylePost";
 import StyleList from "./style/StyleList";
@@ -55,6 +55,9 @@ function App() {
                                 </>
                             }
                         />
+
+                        {/* 장바구니 페이지 */}
+                        <Route path="/cart" element={<Cart />} />
 
                         {/* 네이버 로그인 콜백 처리 경로 */}
                         <Route path="/naver-callback" element={<NaverCallback />} />

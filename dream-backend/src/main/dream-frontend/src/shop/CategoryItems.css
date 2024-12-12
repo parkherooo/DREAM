@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center; /* 중앙 정렬 */
     align-items: center; /* 수직 중앙 정렬 */
-    gap: 10px; /* 아이템 간 간격 */
+    gap: 110px; /* 아이템 간 간격 */
     overflow-x: auto; /* 스크롤 허용 (긴 경우) */
     white-space: nowrap; /* 한 줄 유지 */
     padding: 10px 300px;
