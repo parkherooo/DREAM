@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface InterestRepository extends JpaRepository<InterestEntity, String> {
 
-    @Query("SELECT p.p_img AS productImage, p.brand AS productBrand, p.p_name AS productName, " +
-            "p.price AS productPrice, s.image AS styleImage " +
+    @Query("SELECT p.p_num AS productNum, p.p_img AS productImage, p.brand AS productBrand, p.p_name AS productName, " +
+            "p.price AS productPrice, s.st_num AS styleNum, s.image AS styleImage " +
             "FROM InterestEntity i " +
             "LEFT JOIN i.product p " +  // ProductEntity와 LEFT JOIN
             "LEFT JOIN i.style s " +    // StyleEntity와 LEFT JOIN

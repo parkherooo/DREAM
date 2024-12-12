@@ -49,10 +49,10 @@ function Mypage() {
     }, []);
 
     // 상태별 개수 계산
-    const SbidCount = userData.salesHistory.filter(item => item[3] === 0).length;
-    const SfinishedCount = userData.salesHistory.filter(item => item[3] === 1).length;
-    const BbidCount = userData.buysHistory.filter(item => item[3] === 0).length;
-    const BfinishedCount = userData.buysHistory.filter(item => item[3] === 1).length;
+    const SbidCount = userData.salesHistory.filter(item => item[4] === 0).length;
+    const SfinishedCount = userData.salesHistory.filter(item => item[4] === 1).length;
+    const BbidCount = userData.buysHistory.filter(item => item[4] === 0).length;
+    const BfinishedCount = userData.buysHistory.filter(item => item[4] === 1).length;
 
 
     const handleProfileEdit = () => {
@@ -62,6 +62,7 @@ function Mypage() {
     const handleStyle = () => {
         navigate('/my-style'); // 스타일 페이지로 이동
     };
+
 
 
     return (
@@ -106,11 +107,14 @@ function Mypage() {
                             userData.buysHistory
                                 .slice(0, 3)
                                 .map((item, index) => {
-                                    const [productImage, productName, buyPrice, buyState] = item; // Object[]에서 값 추출
+                                    const [productNum, productImage, productName, buyPrice, buyState] = item; // Object[]에서 값 추출
+                                    const handleProduct = () => {
+                                        navigate(`/shop/${productNum}`);
+                                    };
                                     return (
-                                        <div className="item" key={index}>
+                                        <div className="item" key={index} onClick={handleProduct}>
                                             <div className="item-image">
-                                                <img src={productImage} alt={productName}/>
+                                                <img src={productImage} alt={productImage}/>
                                             </div>
                                             <div className="item-details">
                                                 <span>{productName}</span>
@@ -154,11 +158,14 @@ function Mypage() {
                             userData.salesHistory
                                 .slice(0, 3)
                                 .map((item, index) => {
-                                    const [productImage, productName, salePrice, saleState] = item; // Object[]에서 값 추출
+                                    const [productNum, productImage, productName, salePrice, saleState] = item; // Object[]에서 값 추출
+                                    const handleProduct = () => {
+                                        navigate(`/shop/${productNum}`);
+                                    };
                                     return (
-                                        <div className="item" key={index}>
+                                        <div className="item" key={index} onClick={handleProduct}>
                                             <div className="item-image">
-                                                <img src={productImage} alt={productName}/>
+                                                <img src={productImage} alt={productImage}/>
                                             </div>
                                             <div className="item-details">
                                                 <span>{productName}</span>
@@ -185,16 +192,19 @@ function Mypage() {
                         {userData.interests && userData.interests.length > 0 ? (
                             userData.interests
                                 .filter(item => {
-                                    const [productImage, productBrand, productName, productPrice] = item; // Object[]에서 값 추출
-                                    return productImage && productBrand && productName && productPrice; // 값이 모두 null이 아닐 때만 유지
+                                    const [productNum, productImage, productBrand, productName, productPrice] = item; // Object[]에서 값 추출
+                                    return productNum && productImage && productBrand && productName && productPrice; // 값이 모두 null이 아닐 때만 유지
                                 })
                                 .slice(0, 4)
                                 .map((item, index) => {
-                                    const [productImage, productBrand, productName, productPrice] = item; // Object[]에서 값 추출
+                                    const [productNum, productImage, productBrand, productName, productPrice] = item; // Object[]에서 값 추출
+                                    const handleProduct = () => {
+                                        navigate(`/shop/${productNum}`);
+                                    };
                                     return (
-                                        <div className="int-item" key={index}>
+                                        <div className="int-item" key={index} onClick={handleProduct}>
                                             <div className="int-item-image">
-                                                <img src={productImage} alt={productName}/>
+                                                <img src={productImage} alt={productImage}/>
                                             </div>
                                             <div className="int-item-details">
                                                 <p>{productBrand}</p>
@@ -206,7 +216,7 @@ function Mypage() {
                                 })
                         ) : (
                             <div className="none">
-                                <p>거래 내역이 없습니다.</p>
+                                <p>관심 상품이 없습니다.</p>
                             </div>
                         )}
                     </div>

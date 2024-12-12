@@ -40,14 +40,14 @@ function SalesHistory() {
     }, []);
 
     // 상태별 개수 계산
-    const bidCount = userData.salesHistory.filter(item => item[3] === 0).length;
-    const finishedCount = userData.salesHistory.filter(item => item[3] === 1).length;
+    const bidCount = userData.salesHistory.filter(item => item[4] === 0).length;
+    const finishedCount = userData.salesHistory.filter(item => item[4] === 1).length;
 
     // 현재 필터링된 데이터
     const filteredHistory =
         currentFilter === null
             ? userData.salesHistory
-            : userData.salesHistory.filter(item => item[3] === currentFilter);
+            : userData.salesHistory.filter(item => item[4] === currentFilter);
 
     return (
         <div className="mypage">
@@ -72,13 +72,16 @@ function SalesHistory() {
                 </div>
                 {filteredHistory.length > 0 ? (
                     filteredHistory.map((item, index) => {
-                        const [productImage, productName, salePrice, saleState] = item; // 데이터 추출
+                        const [productNum, productImage, productName, salePrice, saleState] = item; // 데이터 추출
                         const stateText = saleState === 0 ? "입찰 중" : "종료";
+                        const handleProduct = () => {
+                            navigate(`/shop/${productNum}`);
+                        };
                         return (
                             <div className="hist-hr">
-                            <div className="item" key={index}>
+                            <div className="item" key={index} onClick={handleProduct}>
                                 <div className="item-image">
-                                    <img src={productImage} alt={productName} />
+                                    <img src={productImage} alt={productImage} />
                                 </div>
                                 <div className="item-details">
                                     <span>{productName}</span>

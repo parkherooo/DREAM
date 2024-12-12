@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface SaleRepository extends JpaRepository<SaleEntity, Long> {
 
-    @Query("SELECT s.product.p_img AS productImage, s.product.p_name AS productName, s.s_price AS salePrice, s.s_state AS saleState" +
+    @Query("SELECT s.product.p_num AS productNum, s.product.p_img AS productImage, s.product.p_name AS productName, s.s_price AS salePrice, s.s_state AS saleState" +
             " FROM SaleEntity s " +
             " WHERE s.user.user_id = :user_id")
     List<Object[]> findSalesHistoryByUserId(@Param("user_id") String user_id);

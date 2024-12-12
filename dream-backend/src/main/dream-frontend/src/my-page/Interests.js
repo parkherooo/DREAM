@@ -41,6 +41,13 @@ function Interests() {
         setView(viewType);
     };
 
+    const handleStyle = () => {
+        navigate('/style'); // 스타일 페이지로 이동
+    };
+    const handleShop = () => {
+        navigate('/shop'); // 스타일 페이지로 이동
+    };
+
     return (
         <div className="mypage">
             <Sidebar />
@@ -53,18 +60,25 @@ function Interests() {
                 </div>
                 <div className="interest-list">
                     {view === "product" ? (
-                        userData.interests && userData.interests.length > 0 ? (
+                        userData.interests && userData.interests.length > 0 &&
+                        userData.interests.some(item => {
+                            const [productNum, productImage, productBrand, productName, productPrice] = item; // Object[]에서 값 추출
+                            return productNum && productImage && productBrand && productName && productPrice;
+                        })? (
                             userData.interests
                                 .filter(item => {
-                                    const [productImage, productBrand, productName, productPrice] = item; // Object[]에서 값 추출
-                                    return productImage && productBrand && productName && productPrice; // 값이 모두 null이 아닐 때만 유지
+                                    const [productNum, productImage, productBrand, productName, productPrice] = item; // Object[]에서 값 추출
+                                    return productNum && productImage && productBrand && productName && productPrice; // 값이 모두 null이 아닐 때만 유지
                                 })
                                 .map((item, index) => {
-                                    const [productImage, productBrand, productName, productPrice] = item; // Object[]에서 값 추출
+                                    const [productNum, productImage, productBrand, productName, productPrice] = item; // Object[]에서 값 추출
+                                    const handleProduct = () => {
+                                        navigate(`/shop/${productNum}`);
+                                    };
                                     return (
-                                        <div className="int-item" key={index}>
+                                        <div className="int-item" key={index} onClick={handleProduct}>
                                             <div className="int-item-image">
-                                                <img src={productImage} alt={productName} />
+                                                <img src={productImage} alt={productImage} />
                                             </div>
                                             <div className="int-item-details">
                                                 <p>{productBrand}</p>
@@ -77,21 +91,28 @@ function Interests() {
                         ) : (
                             <div className="int-none">
                                 <p>추가하신 관심 상품이 없습니다.</p>
-                                <button>Shop 바로가기</button>
+                                <button onClick={handleShop}>Shop 바로가기</button>
                             </div>
                         )
                     ) : (
-                        userData.interests && userData.interests.length > 0 ? (
+                        userData.interests && userData.interests.length > 0 &&
+                        userData.interests.some(item => {
+                            const [, , , , , styleNum, styleImage] = item;
+                            return styleNum && styleImage; // 둘 다 존재하는 항목이 하나라도 있는지 확인
+                        })? (
                             userData.interests
                                 .filter(item => {
-                                    const [, , , , styleImage] = item; // Object[]에서 값 추출
-                                    return styleImage; // 값이 모두 null이 아닐 때만 유지
+                                    const [, , , , , styleNum, styleImage] = item; // Object[]에서 값 추출
+                                    return styleNum && styleImage; // 값이 모두 null이 아닐 때만 유지
                                 })
                                 .slice(0, 4)
                                 .map((item, index) => {
-                                    const [, , , , styleImage] = item; // 스타일 이미지 추출
+                                    const [, , , , , styleNum, styleImage] = item; // 스타일 이미지 추출
+                                    const handleStyle = () => {
+                                        navigate(`/style/${styleNum}`);
+                                    };
                                     return (
-                                        <div className="int-item" key={index}>
+                                        <div className="int-item" key={index} onClick={handleStyle}>
                                             <div className="int-item-image">
                                                 <img src={styleImage} alt={styleImage} />
                                             </div>
@@ -100,8 +121,8 @@ function Interests() {
                                 })
                         ) : (
                             <div className="int-none">
-                                <p>추가하신 스타일이 없습니다.</p>
-                                <button>Style 바로가기</button>
+                                <p>추가하신 관심 스타일이 없습니다.</p>
+                                <button onClick={handleStyle}>Style 바로가기</button>
                             </div>
                         )
                     )}
