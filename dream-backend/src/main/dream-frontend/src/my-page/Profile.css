@@ -1,0 +1,19 @@
+.profile{
+    margin:70px 150px;
+}
+
+.profile hr{
+    border: 1px solid;
+}
+
+.profile-1 {
+    display: flex;
+    margin-bottom: 50px;
+}
+
+.form hr {
+    margin-top: 10px;
+    border: none;
+    border-top: 1px solid #ccc;
+    width: 100%;
+}

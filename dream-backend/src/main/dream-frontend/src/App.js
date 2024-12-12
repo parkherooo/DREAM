@@ -12,6 +12,7 @@ import StyleList from "./style/StyleList";
 import StyleDetail from "./style/StyleDetail";
 import StyleUpdate from "./style/StyleUpdate";
 import "./App.css";
+import MyPageRoutes from "./my-page/MyPageRoutes";
 
 function NaverCallback() {
     // 네이버 로그인 콜백 처리 페이지
@@ -34,14 +35,13 @@ function App() {
                                 </>
                             }
                         />
-
                         <Route path="/StylePost" element={<StylePost />} />
                         <Route path="/StyleList" element={<StyleList />} />
                         <Route path="/StyleDetail/:st_num" element={<StyleDetail />} />
                         <Route path="/StyleUpdate/:st_num" element={<StyleUpdate />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/SignUp" element={<SignUp />} />
-                        <Route path="/my-page" element={<div>My Page</div>} />
+                        <Route path="/*" element={<MyPageRoutes />} />
                         <Route path="/interests" element={<div>관심 페이지</div>} />
                         <Route path="/notifications" element={<div>알림 페이지</div>} />
 
@@ -61,7 +61,6 @@ function App() {
 
                         {/* 네이버 로그인 콜백 처리 경로 */}
                         <Route path="/naver-callback" element={<NaverCallback />} />
-
                     </Routes>
                 </main>
             </div>

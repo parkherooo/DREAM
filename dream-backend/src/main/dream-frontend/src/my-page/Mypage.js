@@ -109,7 +109,7 @@ function Mypage() {
                                 .map((item, index) => {
                                     const [productNum, productImage, productName, buyPrice, buyState] = item; // Object[]에서 값 추출
                                     const handleProduct = () => {
-                                        navigate(`/shop/${productNum}`);
+                                        navigate(`/shop/product/${productNum}`);
                                     };
                                     return (
                                         <div className="item" key={index} onClick={handleProduct}>
@@ -160,7 +160,7 @@ function Mypage() {
                                 .map((item, index) => {
                                     const [productNum, productImage, productName, salePrice, saleState] = item; // Object[]에서 값 추출
                                     const handleProduct = () => {
-                                        navigate(`/shop/${productNum}`);
+                                        navigate(`/shop/product/${productNum}`);
                                     };
                                     return (
                                         <div className="item" key={index} onClick={handleProduct}>
@@ -199,7 +199,7 @@ function Mypage() {
                                 .map((item, index) => {
                                     const [productNum, productImage, productBrand, productName, productPrice] = item; // Object[]에서 값 추출
                                     const handleProduct = () => {
-                                        navigate(`/shop/${productNum}`);
+                                        navigate(`/shop/product/${productNum}`);
                                     };
                                     return (
                                         <div className="int-item" key={index} onClick={handleProduct}>
