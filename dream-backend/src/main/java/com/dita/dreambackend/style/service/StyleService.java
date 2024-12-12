@@ -1,9 +1,12 @@
 package com.dita.dreambackend.style.service;
 
+import com.dita.dreambackend.style.dto.CommentDTO;
 import com.dita.dreambackend.style.dto.HeartDTO;
 import com.dita.dreambackend.style.dto.StyleDTO;
+import com.dita.dreambackend.style.entity.CommentEntity;
 import com.dita.dreambackend.style.entity.HeartEntity;
 import com.dita.dreambackend.style.entity.StyleEntity;
+import com.dita.dreambackend.style.repository.CommentRepository;
 import com.dita.dreambackend.style.repository.HeartRepository;
 import com.dita.dreambackend.style.repository.StyleRepository;
 import com.dita.dreambackend.user.entity.UserEntity;
@@ -23,6 +26,7 @@ import java.util.Optional;
 public class StyleService {
     private final StyleRepository styleRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
     private final String uploadDir = "C:\\DREAM\\dream-backend\\src\\main\\resources\\static\\images\\style";
     private final HeartRepository heartRepository;
@@ -80,6 +84,16 @@ public class StyleService {
         }
         return styleDTOList;
     }
+
+    public List<StyleDTO> findHashTag(String hashtag){
+        List<StyleEntity> styleEntityList = styleRepository.findHashTag(hashtag);
+        List<StyleDTO> styleDTOList = new ArrayList<>();
+        for (StyleEntity styleEntity : styleEntityList) {
+            styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+        }
+        return styleDTOList;
+    }
+
 
     public StyleDTO findById(long id) {
         Optional<StyleEntity> styleEntityOptional = styleRepository.findById(id);
@@ -198,4 +212,30 @@ public class StyleService {
         return true; // 성공적으로 삭제되었음을 반환
     }
 
+    public boolean StyleComment(CommentDTO commentDTO) {
+        UserEntity userEntity = userRepository.findById(commentDTO.getUser_id())
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 ID입니다."));
+
+        // st_num으로 StyleEntity 찾기
+        StyleEntity styleEntity = styleRepository.findById(commentDTO.getSt_num())
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 스타일 번호입니다."));
+
+        CommentEntity commentEntity = new CommentEntity();
+        commentEntity.setUser(userEntity);
+        commentEntity.setStyle(styleEntity);
+        commentEntity.setCm_content(commentDTO.getCm_content());
+        commentEntity.setCm_date(LocalDateTime.now());
+        commentRepository.save(commentEntity);
+
+        return true;
+    }
+
+    public List<CommentDTO> findCommentAll(long st_num) {
+        List<CommentEntity> commentEntityList = commentRepository.findByStNum(st_num);
+        List<CommentDTO> commentDTOList = new ArrayList<>();
+        for (CommentEntity commentEntity : commentEntityList) {
+            commentDTOList.add(CommentDTO.toCommentDTO(commentEntity));
+        }
+       return commentDTOList;
+    }
 }

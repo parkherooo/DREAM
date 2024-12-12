@@ -44,6 +44,7 @@ const Header = () => {
             await axios.post('http://localhost:8080/Logout', {}, { withCredentials: true });
             setIsLoggedIn(false);
             setUser_id(null);
+            window.location.reload();
         } catch (error) {
             console.error('로그아웃 실패:', error);
         }

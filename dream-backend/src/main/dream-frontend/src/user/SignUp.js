@@ -4,13 +4,13 @@ import './SignUp.css';
 import { useNavigate} from "react-router-dom";
 function SignUp() {
     const [userData, setUserData] = useState({
-        userId: '',
+        user_id: '',
         pwd: '',
         shoes: ''
     });
 
     const [formErrors, setFormErrors] = useState({
-        userId: '',
+        user_id: '',
         pwd: '',
         shoes: ''
     });
@@ -33,9 +33,9 @@ function SignUp() {
     const validateField = (name, value) => {
         const errors = { ...formErrors };
 
-        if (name === 'userId') {
+        if (name === 'user_id') {
             const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-            errors.userId = emailPattern.test(value) ? '' : '유효한 이메일 주소를 입력해주세요.';
+            errors.user_id = emailPattern.test(value) ? '' : '유효한 이메일 주소를 입력해주세요.';
         }
 
         if (name === 'pwd') {
@@ -52,10 +52,10 @@ function SignUp() {
     // 폼 유효성 검사
     const isFormValid = () => {
         return (
-            userData.userId &&
+            userData.user_id &&
             userData.pwd &&
             userData.shoes &&
-            !formErrors.userId &&
+            !formErrors.user_id &&
             !formErrors.pwd &&
             !formErrors.shoes
         );
@@ -104,16 +104,16 @@ function SignUp() {
                 <h2>회원가입</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">
-                        <label htmlFor="userId">이메일 주소*</label>
+                        <label htmlFor="user_id">이메일 주소*</label>
                         <input
                             type="text"
-                            id="userId"
-                            name="userId"
-                            value={userData.userId}
+                            id="user_id"
+                            name="user_id"
+                            value={userData.user_id}
                             onChange={handleChange}
                             placeholder="예)dream@dream.co.kr"
                         />
-                        {formErrors.userId && <span className="error">{formErrors.userId}</span>}
+                        {formErrors.user_id && <span className="error">{formErrors.user_id}</span>}
                     </div>
 
                     <div className="input-group">
