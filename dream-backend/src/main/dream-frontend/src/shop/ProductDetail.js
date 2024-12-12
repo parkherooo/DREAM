@@ -2,18 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./ProductDetail.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // FontAwesome 임포트
+import { faBookmark } from "@fortawesome/free-regular-svg-icons"; // 북마크 아이콘 임포트
 
 const ProductDetail = () => {
-    const { productId } = useParams(); // URL에서 상품 ID 가져오기
-    const [product, setProduct] = useState(null); // 상품 데이터 상태
-    const [loading, setLoading] = useState(true); // 로딩 상태
-    const [error, setError] = useState(null); // 에러 상태
-    const [currentSlide, setCurrentSlide] = useState(0); // 현재 슬라이드 상태
-    const [selectedSize, setSelectedSize] = useState(""); // 선택된 사이즈 상태
-    const [selectedPrice, setSelectedPrice] = useState(0); // 선택된 가격 상태
-    const [selectedStock, setSelectedStock] = useState(0); // 선택된 재고 상태
+    const { productId } = useParams();
+    const [product, setProduct] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [selectedSize, setSelectedSize] = useState("");
+    const [selectedPrice, setSelectedPrice] = useState(0);
+    const [selectedStock, setSelectedStock] = useState(0);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태
+    const [showMessage, setShowMessage] = useState(""); // 알림 메시지
 
-    // 사이즈, 가격, 재고를 파싱
     const parseSizes = (sizeString) => {
         return sizeString
             ? sizeString.split(",").map((item) => {
@@ -29,17 +33,19 @@ const ProductDetail = () => {
                 const response = await axios.get(`http://localhost:8080/products/${productId}`);
                 setProduct(response.data);
 
-                // 사이즈, 가격, 재고 초기 설정
                 if (response.data.size) {
                     const sizesWithDetails = parseSizes(response.data.size);
                     if (sizesWithDetails.length > 0) {
-                        setSelectedSize(sizesWithDetails[0].size); // 첫 번째 사이즈 선택
-                        setSelectedPrice(sizesWithDetails[0].price); // 첫 번째 가격 설정
-                        setSelectedStock(sizesWithDetails[0].stock); // 첫 번째 재고 설정
+                        setSelectedSize(sizesWithDetails[0].size);
+                        setSelectedPrice(sizesWithDetails[0].price);
+                        setSelectedStock(sizesWithDetails[0].stock);
                     }
                 }
 
                 setLoading(false);
+                // 로그인 여부 확인 (백엔드 로그인 세션 확인 API 호출)
+                const loginResponse = await axios.get("http://localhost:8080/auth/isLoggedIn");
+                setIsLoggedIn(loginResponse.data.loggedIn);
             } catch (err) {
                 setError(err.message);
                 setLoading(false);
@@ -49,58 +55,75 @@ const ProductDetail = () => {
         fetchProduct();
     }, [productId]);
 
-    if (loading) return <div>Loading...</div>; // 로딩 상태 표시
-    if (error) return <div>Error: {error}</div>; // 에러 메시지 표시
+    // 관심상품
+    const handleFavorite = async () => {
+        if (!isLoggedIn) {
+            setShowMessage("로그인이 필요합니다.");
+            return;
+        }
 
-    // 이미지 리스트 생성
-    const images = product?.p_img ? product.p_img.split(",").map((img) => img.trim()) : [];
+        try {
+            const response = await axios.post("http://localhost:8080/interest/add", {
+                user_id: "현재로그인된유저ID", // 로그인된 유저 ID를 서버에서 받아오도록 설정
+                p_num: productId,
+            });
+            if (response.status === 200) {
+                setShowMessage("관심상품에 추가되었습니다!");
+            }
+        } catch (err) {
+            setShowMessage("관심상품 추가에 실패했습니다.");
+        }
 
-    // 사이즈 변경 핸들러
+        // 메시지를 몇 초 후에 사라지게 설정
+        setTimeout(() => setShowMessage(""), 3000);
+    };
+
+    // 사이즈 변경
     const handleSizeChange = (e) => {
         const newSize = e.target.value;
         setSelectedSize(newSize);
-
-        // 선택된 사이즈에 맞는 가격과 재고 찾기
         const matchingVariant = parseSizes(product?.size || "").find((variant) => variant.size === newSize);
         if (matchingVariant) {
-            setSelectedPrice(matchingVariant.price); // 해당 사이즈의 가격 설정
-            setSelectedStock(matchingVariant.stock); // 해당 사이즈의 재고 설정
+            setSelectedPrice(matchingVariant.price);
+            setSelectedStock(matchingVariant.stock);
         }
     };
 
-    // 이전 슬라이드로 이동
+    const handleAddToCart = () => {
+        alert(`장바구니에 추가되었습니다.`);
+        setIsModalOpen(false);
+    };
+
+    const handleBuyNow = () => {
+        alert(`즉시 구매되었습니다: 사이즈 ${selectedSize}, 가격 ${selectedPrice}원`);
+        setIsModalOpen(false);
+    };
+
     const handlePrevSlide = () => {
-        if (currentSlide > 0) {
-            setCurrentSlide((prev) => prev - 1);
-        }
+        setCurrentSlide((prev) => Math.max(prev - 1, 0));
     };
 
-    // 다음 슬라이드로 이동
     const handleNextSlide = () => {
-        if (currentSlide < images.length - 1) {
-            setCurrentSlide((prev) => prev + 1);
-        }
+        setCurrentSlide((prev) => Math.min(prev + 1, images.length - 1));
     };
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
+
+    const images = product?.p_img ? product.p_img.split(",").map((img) => img.trim()) : [];
 
     return (
-        <div className="product-detail-container">
-            {product ? (
-                <>
-                    {/* 이미지 슬라이드 */}
-                    {images.length > 0 ? (
+        <>
+            <div className={`product-detail-container ${isModalOpen ? "blurred-background" : ""}`}>
+                {product && (
+                    <>
+                        {/* 이미지 슬라이드 */}
                         <div className="product-detail-slider">
-                            <button
-                                className="slider-button prev"
-                                onClick={handlePrevSlide}
-                                disabled={currentSlide === 0}
-                            >
+                            <button className="slider-button prev" onClick={handlePrevSlide} disabled={currentSlide === 0}>
                                 &#8249;
                             </button>
                             <div className="product-detail-slide">
-                                <img
-                                    src={`/product_img/${images[currentSlide]}`}
-                                    alt={`Product ${currentSlide + 1}`}
-                                />
+                                <img src={`/product_img/${images[currentSlide]}`} alt={`Product ${currentSlide + 1}`} />
                             </div>
                             <button
                                 className="slider-button next"
@@ -110,60 +133,95 @@ const ProductDetail = () => {
                                 &#8250;
                             </button>
                         </div>
-                    ) : (
-                        <div className="no-images">이미지가 없습니다</div>
-                    )}
 
-                    {/* 상품 정보 */}
-                    <div className="product-detail-info">
-                        <h1 className="product-detail-name">{product.p_name}</h1>
-                        <p className="product-detail-price">{selectedPrice.toLocaleString()}원</p>
-                        <p className="product-detail-description">{product.p_details}</p>
+                        {/* 상품 정보 */}
+                        <div className="product-detail-info">
+                            <h1 className="product-detail-name">{product.p_name}</h1>
+                            <p className="product-detail-description">{product.p_details}</p>
+                            <p className="product-detail-price">{selectedPrice.toLocaleString()}원</p>
 
-                        {/* 사이즈 선택 */}
-                        <div className="product-size-selector">
-                            <label htmlFor="size-select">사이즈 선택:</label>
-                            <select
-                                id="size-select"
-                                value={selectedSize}
-                                onChange={handleSizeChange}
-                            >
-                                {parseSizes(product.size).map((variant, index) => (
-                                    <option key={index} value={variant.size}>
-                                        {variant.size}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        <div className="product-detail-additional-info">
-                            <div>
-                                <p className="product-detail-stock">재고: {selectedStock}개</p>
+                            <div className="product-size-selector">
+                                <p>사이즈 선택:</p>
+                                <div className="size-options">
+                                    {parseSizes(product.size).map((variant, index) => (
+                                        <button
+                                            key={index}
+                                            className={`size-option ${selectedSize === variant.size ? "selected" : ""}`}
+                                            onClick={() => {
+                                                setSelectedSize(variant.size);
+                                                setSelectedPrice(variant.price);
+                                                setSelectedStock(variant.stock);
+                                            }}
+                                        >
+                                            {variant.size}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
-                            <div>
-                                <span>브랜드:</span> {product.brand}
+
+                            <div className="product-detail-additional-info">
+                                <div>
+                                    <p className="product-detail-stock">재고: {selectedStock}개</p>
+                                </div>
+                                <div>
+                                    <span>브랜드:</span> {product.brand}
+                                </div>
+                            </div>
+
+                            <div className="product-detail-actions">
+                                <button onClick={() => setIsModalOpen(true)} className="product-detail-buy-button">
+                                    구매 {selectedPrice.toLocaleString()}원
+                                </button>
+                                <button className="product-detail-sell-button">
+                                    판매 {Math.floor(selectedPrice * 1.2).toLocaleString()}원
+                                </button>
+                            </div>
+
+                            {/* 관심상품 버튼 */}
+                            <div className="product-detail-favorite">
+                                <button className="favorite-button">
+                                    <FontAwesomeIcon icon={faBookmark} className="favorite-icon" />
+                                    관심상품
+                                </button>
+                            </div>
+                            {showMessage && <div className="message-box">{showMessage}</div>}
+
+                            <div className="product-detail-warning">
+                                <p>※ 거래 주의사항 안내</p>
+                                <p>교환/환불은 제한될 수 있습니다.</p>
                             </div>
                         </div>
+                    </>
+                )}
+            </div>
 
-                        <div className="product-detail-actions">
-                        <button className="product-detail-buy-button" disabled={selectedStock <= 0}>
-                                구매 {selectedPrice.toLocaleString()}원
-                            </button>
-                            <button className="product-detail-sell-button">
-                                판매 {Math.floor(selectedPrice * 1.2).toLocaleString()}원
-                            </button>
+            {/* 구매 모달 */}
+            {isModalOpen && (
+                <div className="modal-overlay">
+                    <div className="modal-container">
+                        <button className="modal-close-button" onClick={() => setIsModalOpen(false)}>
+                            ✕
+                        </button>
+                        <h2>구매하기</h2>
+                        <div className="modal-product-info">
+                            <img src={`/product_img/${images[0]}`} alt={product.p_name} />
+                            <h1 className="product-detail-name">{product.p_name}</h1>
+                            <p>{product.p_details}</p>
+                            <p>사이즈: {selectedSize}</p>
+                            <p>{selectedPrice.toLocaleString()}원</p>
                         </div>
-
-                        <div className="product-detail-warning">
-                            <p>※ 거래 주의사항 안내</p>
-                            <p>교환/환불은 제한될 수 있습니다.</p>
+                        <div className="modal-actions">
+                            <button className="add-to-cart-button" onClick={handleAddToCart}>
+                                장바구니 담기
+                            </button>
+                            <button className="buy-now-button" onClick={handleBuyNow}>
+                                즉시 구매하기
+                            </button>
                         </div>
                     </div>
-                </>
-            ) : (
-                <div>Loading product details...</div>
+                </div>
             )}
-        </div>
+        </>
     );
 };
 
