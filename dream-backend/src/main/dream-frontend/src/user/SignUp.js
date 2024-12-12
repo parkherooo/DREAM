@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './SignUp.css';
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 function SignUp() {
     const [userData, setUserData] = useState({
         user_id: '',
         pwd: '',
-        shoes: ''
+        shoes: '',
+        birth: '',
+        gender: '',
     });
 
     const [formErrors, setFormErrors] = useState({
         user_id: '',
         pwd: '',
-        shoes: ''
+        shoes: '',
+        birth: '',
+        gender: '',
     });
 
     const navigate = useNavigate();
@@ -46,6 +51,14 @@ function SignUp() {
             errors.shoes = value > 0 ? '' : '신발 사이즈를 입력해주세요.';
         }
 
+        if (name === 'birth') {
+            errors.birth = value ? '' : '생일을 입력해주세요.';
+        }
+
+        if (name === 'gender') {
+            errors.gender = value ? '' : '성별을 선택해주세요.';
+        }
+
         setFormErrors(errors);
     };
 
@@ -55,9 +68,13 @@ function SignUp() {
             userData.user_id &&
             userData.pwd &&
             userData.shoes &&
+            userData.birth &&
+            userData.gender &&
             !formErrors.user_id &&
             !formErrors.pwd &&
-            !formErrors.shoes
+            !formErrors.shoes &&
+            !formErrors.birth &&
+            !formErrors.gender
         );
     };
 
@@ -97,7 +114,6 @@ function SignUp() {
             });
     };
 
-
     return (
         <div className="container">
             <div className="signup-box">
@@ -130,6 +146,29 @@ function SignUp() {
                     </div>
 
                     <div className="input-group">
+                        <label htmlFor="name">이름</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={userData.name}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-group">
+                        <label htmlFor="phone">전화번호</label>
+                        <input
+                            type="text"
+                            id="phone"
+                            name="phone"
+                            value={userData.phone}
+                            onChange={handleChange}
+                            placeholder="예)010-1234-5678"
+                        />
+                    </div>
+
+                    <div className="input-group">
                         <label htmlFor="shoes">신발 사이즈</label>
                         <input
                             type="number"
@@ -142,13 +181,39 @@ function SignUp() {
                         {formErrors.shoes && <span className="error">{formErrors.shoes}</span>}
                     </div>
 
-                    <div className="submit-btn">
-                        <button type="submit" disabled={!isFormValid()}>본인 인증하고 가입하기</button>
+                    <div className="input-group">
+                        <label htmlFor="birth">생일</label>
+                        <input
+                            type="date"
+                            id="birth"
+                            name="birth"
+                            value={userData.birth}
+                            onChange={handleChange}
+                        />
+                        {formErrors.birth && <span className="error">{formErrors.birth}</span>}
+                    </div>
+
+                    <div className="input-group">
+                        <label htmlFor="gender">성별</label>
+                        <select
+                            id="gender"
+                            name="gender"
+                            value={userData.gender}
+                            onChange={handleChange}
+                        >
+                            <option value="">선택하세요</option>
+                            <option value="male">남성</option>
+                            <option value="female">여성</option>
+                            <option value="other">기타</option>
+                        </select>
+                        {formErrors.gender && <span className="error">{formErrors.gender}</span>}
+                    </div>
+
+                    <div className="submit-btn22">
+                        <button type="submit" disabled={!isFormValid()}>가입하기</button>
                     </div>
                 </form>
-
             </div>
-
         </div>
     );
 }

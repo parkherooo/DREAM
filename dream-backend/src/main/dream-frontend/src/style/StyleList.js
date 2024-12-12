@@ -15,7 +15,6 @@ const StyleList = () => {
     const checkLoginStatus = async () => {
         try {
             const response = await axios.get("http://localhost:8080/check-session", { withCredentials: true });
-            console.log("Session Check Response:", response.data); // 응답 확인
             setIsLoggedIn(response.data.isLoggedIn); // isLoggedIn 값을 상태로 설정
         } catch (error) {
             console.error("Error checking login status:", error);
@@ -51,6 +50,20 @@ const StyleList = () => {
             console.error("Error fetching styles:", error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    // 스타일에 대한 좋아요 상태 확인
+    const checkStyleHeart = async (st_num) => {
+        try {
+            const response = await axios.get("http://localhost:8080/StyleHeartCheck", {
+                params: { st_num },
+                withCredentials: true,
+            });
+            return response.data;  // 좋아요 상태 반환
+        } catch (error) {
+            console.error("Error checking heart status:", error);
+            return false;
         }
     };
 
@@ -129,6 +142,23 @@ const StyleList = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, [handleScroll]);
 
+    useEffect(() => {
+        // 스타일 데이터에 대한 좋아요 상태를 초기화
+        const initializeHeartStatus = async () => {
+            const updatedStyles = await Promise.all(
+                styles.map(async (style) => {
+                    const isHearted = await checkStyleHeart(style.st_num);
+                    return { ...style, isLiked: isHearted };
+                })
+            );
+            setStyles(updatedStyles); // 상태 업데이트
+        };
+
+        if (styles.length > 0) {
+            initializeHeartStatus();
+        }
+    }, [styles]);
+
     return (
         <div className="style-list">
             <h2>STYLE</h2>
@@ -143,10 +173,10 @@ const StyleList = () => {
                 </div>
                 <div className="style-post-button">
                     <Link
-                        to={isLoggedIn ? `/StylePost` : "#"}
+                        to={isLoggedIn ? `/StylePost` : "#" }
                         onClick={(e) => {
                             if (!isLoggedIn) {
-                                e.preventDefault(); // 링크 동작을 막음
+                                e.preventDefault();
                                 alert("로그인 후 이용해주세요.");
                             }
                         }}

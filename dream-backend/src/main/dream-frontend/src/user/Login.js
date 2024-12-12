@@ -93,8 +93,8 @@ function Login() {
             </form>
             <div className="additional-links">
                 <a href="/SignUp">이메일 가입</a>
-                <a href="/find-email">이메일 찾기</a>
-                <a href="/find-password">비밀번호 찾기</a>
+                <a href="/Find-email">이메일 찾기</a>
+                <a href="/Find-password">비밀번호 찾기</a>
             </div>
 
             <div className="social-login">

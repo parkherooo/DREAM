@@ -5,6 +5,7 @@ import com.dita.dreambackend.style.dto.HeartDTO;
 import com.dita.dreambackend.style.dto.StyleDTO;
 import com.dita.dreambackend.style.service.StyleService;
 
+import com.dita.dreambackend.user.dto.InterestDTO;
 import jakarta.servlet.http.HttpSession;
 
 import lombok.RequiredArgsConstructor;
@@ -195,4 +196,32 @@ public class StyleController {
 
     @GetMapping("/StyleComment/{st_num}")
     public List<CommentDTO> styleComment(@PathVariable long st_num ){ return  styleService.findCommentAll(st_num);}
+
+    @PostMapping("/StyleMark")
+    public ResponseEntity<String> styleMark(
+            @RequestParam("st_num") long st_num,
+            HttpSession session
+    ) {
+        String user_id = (String) session.getAttribute("user_id");
+
+        InterestDTO interestDTO = new InterestDTO();
+        interestDTO.setUser_id(user_id);
+        interestDTO.setSt_num((int) st_num);
+        styleService.StyleMark(interestDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/MarkCheck")
+    public ResponseEntity<Boolean> checkStyleMark(
+            @RequestParam("st_num") long st_num,
+            HttpSession session
+    ) {
+        String user_id = (String) session.getAttribute("user_id");
+        if (user_id == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean isMark = styleService.markCheck(user_id,st_num);
+        return ResponseEntity.ok(isMark);
+    }
+
 }

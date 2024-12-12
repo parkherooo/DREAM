@@ -178,6 +178,10 @@
     color: blue;
     text-decoration: none;
 }
+.mark-icon{
+    margin-left: 85%;
+    font-size: 32px;
+}
 /* 수정과 삭제 버튼을 포함하는 div 스타일 */
 button {
     margin-top: 10px;
