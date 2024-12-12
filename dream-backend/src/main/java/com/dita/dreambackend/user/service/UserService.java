@@ -82,6 +82,28 @@ public class UserService {
         // 3. 업데이트된 사용자 저장
         userRepository.save(existingUser);
     }
+    public void updateAddress(UserDTO userDTO) {
+        // 1. 기존 사용자 조회
+        UserEntity existingUser = userRepository.findById(userDTO.getUser_id())
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        // 2. 사용자 정보 업데이트
+        existingUser.setAddress(userDTO.getAddress()); // 주소 업데이트
+
+        // 3. 업데이트된 사용자 저장
+        userRepository.save(existingUser);
+    }
+    public void updateName(UserDTO userDTO) {
+        // 1. 기존 사용자 조회
+        UserEntity existingUser = userRepository.findById(userDTO.getUser_id())
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        // 2. 사용자 정보 업데이트
+        existingUser.setName(userDTO.getName());
+
+        // 3. 업데이트된 사용자 저장
+        userRepository.save(existingUser);
+    }
 
     public void deleteUser(UserDTO userDTO){
         // 사용자 ID로 삭제

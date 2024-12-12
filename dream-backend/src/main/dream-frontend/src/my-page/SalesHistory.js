@@ -75,13 +75,13 @@ function SalesHistory() {
                         const [productNum, productImage, productName, salePrice, saleState] = item; // 데이터 추출
                         const stateText = saleState === 0 ? "입찰 중" : "종료";
                         const handleProduct = () => {
-                            navigate(`/shop/${productNum}`);
+                            navigate(`/shop/product/${productNum}`);
                         };
                         return (
                             <div className="hist-hr">
                             <div className="item" key={index} onClick={handleProduct}>
                                 <div className="item-image">
-                                    <img src={productImage} alt={productImage} />
+                                    <img src={`/product_img/${productImage}`} alt={productImage} />
                                 </div>
                                 <div className="item-details">
                                     <span>{productName}</span>

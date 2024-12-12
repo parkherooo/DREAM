@@ -109,12 +109,12 @@ function Mypage() {
                                 .map((item, index) => {
                                     const [productNum, productImage, productName, buyPrice, buyState] = item; // Object[]에서 값 추출
                                     const handleProduct = () => {
-                                        navigate(`/shop/${productNum}`);
+                                        navigate(`/shop/product/${productNum}`);
                                     };
                                     return (
                                         <div className="item" key={index} onClick={handleProduct}>
                                             <div className="item-image">
-                                                <img src={productImage} alt={productImage}/>
+                                                <img src={`/product_img/${productImage}`} alt={productImage}/>
                                             </div>
                                             <div className="item-details">
                                                 <span>{productName}</span>
@@ -160,12 +160,12 @@ function Mypage() {
                                 .map((item, index) => {
                                     const [productNum, productImage, productName, salePrice, saleState] = item; // Object[]에서 값 추출
                                     const handleProduct = () => {
-                                        navigate(`/shop/${productNum}`);
+                                        navigate(`/shop/product/${productNum}`);
                                     };
                                     return (
                                         <div className="item" key={index} onClick={handleProduct}>
                                             <div className="item-image">
-                                                <img src={productImage} alt={productImage}/>
+                                                <img src={`/product_img/${productImage}`} alt={productImage}/>
                                             </div>
                                             <div className="item-details">
                                                 <span>{productName}</span>
@@ -199,12 +199,12 @@ function Mypage() {
                                 .map((item, index) => {
                                     const [productNum, productImage, productBrand, productName, productPrice] = item; // Object[]에서 값 추출
                                     const handleProduct = () => {
-                                        navigate(`/shop/${productNum}`);
+                                        navigate(`/shop/product/${productNum}`);
                                     };
                                     return (
                                         <div className="int-item" key={index} onClick={handleProduct}>
                                             <div className="int-item-image">
-                                                <img src={productImage} alt={productImage}/>
+                                                <img src={`/product_img/${productImage}`} alt={productImage}/>
                                             </div>
                                             <div className="int-item-details">
                                                 <p>{productBrand}</p>
