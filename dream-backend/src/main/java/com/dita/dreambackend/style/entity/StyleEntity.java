@@ -19,10 +19,8 @@ public class StyleEntity {
     private int st_num;
 
     @ManyToOne
-
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private UserEntity user_id;
-
 
     @Column(length = 100)
     private String tags;

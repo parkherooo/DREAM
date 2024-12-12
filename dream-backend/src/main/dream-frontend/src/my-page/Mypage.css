@@ -1,0 +1,280 @@
+
+h1, h2, h3, h4, p, ul, li, a, button, span, strong {
+    font-family: 'Arial', sans-serif;
+    letter-spacing: -1px;
+    margin: 0;
+    padding: 0;
+}
+.mypage {
+    display: flex;
+    margin: 0 100px;
+}
+
+/* 사이드바 */
+.mypage-sidebar {
+    margin: 70px;
+}
+
+.mypage-sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.mypage-sidebar h3 {
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.mypage-sidebar .menu li {
+    list-style-type: none;
+    margin: 10px 0;
+}
+
+.mypage-sidebar .menu a {
+    text-decoration: none; /* 링크 밑줄 없애기 */
+    font-size: 14px;
+    color: #AAAAAA; /* 기본 색깔 */
+    font-weight: normal;
+}
+
+/* 링크 기본 스타일 */
+.mypage-sidebar .menu a {
+    color: #AAAAAA; /* 기본 링크 색상 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+}
+
+/* 마우스 오버 시 스타일 */
+.mypage-sidebar .menu a:hover {
+    color: #000000; /* 마우스 오버 시 색상 */
+    font-weight: bold; /* 마우스 오버 시 볼드 */
+}
+
+
+/* 컨테이너 */
+.mypage-container {
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    justify-content: flex-start; /* 세로 정렬 시작으로 변경 */
+    align-items: center; /* 가로 가운데 정렬 */
+    max-width: 1200px;
+    padding: 50px;
+    margin: 0 150px;
+    gap: 100px;
+}
+
+
+/* 프로필 정보 */
+.profile-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    border: 1px solid #D9D9D9;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.profile-image {
+    width: 60px;
+    height: 60px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin-right: 30px;
+}
+
+.profile-details h3 {
+    font-size: 23px;
+    margin-right: 400px;
+}
+
+.profile-details p {
+    font-size: 15px;
+    color: #666;
+}
+
+.profile-buttons button {
+    background-color: #ffffff;
+    border: 1px solid #D9D9D9;
+    color: #696868;
+    padding: 10px 15px;
+    margin-right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.profile-buttons button:hover {
+    background-color: #D9D9D9;
+}
+
+/* 구매/판매 내역 */
+.history h3 {
+    display: inline-block;
+    margin: 0;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.history a {
+    display: inline-block;
+    margin-left: auto; /* 오른쪽 끝으로 이동 */
+    text-decoration: none; /* 밑줄 제거 */
+    color: #252525; /* 링크 색상 */
+    font-size: 14px;
+}
+
+.history-header {
+    display: flex; /* Flexbox로 정렬 */
+    align-items: center; /* 세로 가운데 정렬 */
+    margin-bottom: 10px; /* 아래 간격 추가 */
+}
+
+.history-status {
+    background-color: #f0f0f0;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-around; /* 항목 간 균일 배치 */
+    gap: 105px;
+    padding: 30px 90px;
+    font-size: 14px;
+    color: #252525;
+}
+
+.status-item {
+    text-align: center; /* 텍스트와 숫자를 중앙 정렬 */
+    padding: 0 10px; /* 내부 간격 조정 */
+    position: relative;
+}
+
+.status-item:nth-child(2) {
+    border-left: 1px solid #d9d9d9; /* 구분선 추가 */
+
+    padding-left: 70px;
+}
+
+.status-item span {
+    display: block;
+    font-size: 14px;
+    color: #252525;
+}
+
+.status-item strong {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-top: 5px; /* 숫자와 텍스트 간격 */
+}
+
+.status-item:first-child strong {
+    color: #eb3333; /* "전체" 숫자 강조 색상 */
+}
+
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item {
+    display: flex;
+    gap: 10px;
+    margin: 30px;
+}
+
+.none{
+    text-align: center;
+    color: #696868;
+    margin: 100px auto;
+    font-size: 14px;
+}
+
+.item-image {
+    width: 80px;
+    height: 80px;
+    background-color: #ddd;
+}
+
+.item-details {
+    display: flex; /* Flexbox로 레이아웃 */
+    gap: 40px; /* 각 span 사이의 간격 */
+    align-items: center; /* 세로 정렬 */
+}
+
+.item-details span:first-child {
+    width:500px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.item-details span:nth-child(2),
+.item-details span:nth-child(3) {
+    font-size: 15px;
+}
+
+/* 마지막 요소의 정렬 문제 해결 */
+.item-details .status {
+    width: 60px; /* 고정 너비 설정 (60px로 고정) */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    font-size: 15px;
+}
+
+.interest h3 {
+    display: inline-block;
+    margin: 0;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.interest a {
+    display: inline-block;
+    margin-left: auto; /* 오른쪽 끝으로 이동 */
+    text-decoration: none; /* 밑줄 제거 */
+    color: #252525; /* 링크 색상 */
+    font-size: 14px;
+}
+
+.interest-header {
+    display: flex; /* Flexbox로 정렬 */
+    align-items: center; /* 세로 가운데 정렬 */
+    margin-bottom: 10px; /* 아래 간격 추가 */
+    gap: 650px;
+}
+
+.interest-list{
+    display: flex;
+    flex-wrap: wrap;
+    /*justify-content: space-between;*/
+    margin: 20px;
+    gap:20px;
+}
+
+.int-item{
+    flex: 1 1 calc(25% - 16px); /* 한 줄에 4개씩 배치 (전체 너비의 25%) */
+    flex-shrink: 1;
+    flex-grow: 0;
+}
+
+.int-item-image {
+    width: 150px;
+    height: 150px;
+    background-color: #ddd;
+}
+
+.int-item-details{
+    margin-top: 10px;
+}
+
+.int-item-details p:first-child{
+    font-weight: bold;
+}
+
+.int-item-details p:nth-child(2){
+    margin-bottom: 10px;
+    max-width: 180px;
+}
+
+.int-item-details span{
+    font-weight: bold;
+    font-size: 15px;
+}

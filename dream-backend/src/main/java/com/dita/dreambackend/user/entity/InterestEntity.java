@@ -14,8 +14,10 @@ import lombok.ToString;
 @Table(name = "interest")
 public class InterestEntity {
 
-    // 기본 키: userId
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto Increment
+    private Long int_num;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     @ToString.Exclude // 순환 참조 방지
@@ -23,13 +25,13 @@ public class InterestEntity {
 
     // pNum: Product 테이블의 FK
     @ManyToOne
-    @JoinColumn(name = "p_num", referencedColumnName = "p_num", nullable = false)
+    @JoinColumn(name = "p_num", referencedColumnName = "p_num", nullable = true)
     @ToString.Exclude // 순환 참조 방지
     private ProductEntity product;
 
     // stNum: Style 테이블의 FK
     @ManyToOne
-    @JoinColumn(name = "st_num", referencedColumnName = "st_num", nullable = false)
+    @JoinColumn(name = "st_num", referencedColumnName = "st_num", nullable = true)
     @ToString.Exclude // 순환 참조 방지
     private StyleEntity style;
 }

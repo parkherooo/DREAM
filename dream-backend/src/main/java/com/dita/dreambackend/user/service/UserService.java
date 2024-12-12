@@ -39,6 +39,45 @@ public class UserService {
         return userEntity.getPwd().equals(pwd);
     }
 
+    public UserDTO getUserInfo(String userId) {
+
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + userId));
+
+        // UserEntity를 UserDTO로 변환
+        return new UserDTO(
+                userEntity.getUser_id(),
+                userEntity.getName(),
+                userEntity.getPwd(),
+                userEntity.getBirth(),
+                userEntity.getPhone(),
+                userEntity.getAddress(),
+                userEntity.getGender(),
+                userEntity.getLogin_platform(),
+                userEntity.getManger(),
+                userEntity.getShoes()
+        );
+    }
+
+    public void updateUser(UserDTO userDTO) {
+        // 1. 기존 사용자 조회
+        UserEntity existingUser = userRepository.findById(userDTO.getUser_id())
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        // 2. 사용자 정보 업데이트
+        existingUser.setPwd(userDTO.getPwd());       // 비밀번호 업데이트
+        existingUser.setPhone(userDTO.getPhone());   // 전화번호 업데이트
+        existingUser.setShoes(userDTO.getShoes());   // 신발 사이즈 업데이트
+
+        // 3. 업데이트된 사용자 저장
+        userRepository.save(existingUser);
+    }
+
+    public void deleteUser(UserDTO userDTO){
+        // 사용자 ID로 삭제
+        userRepository.deleteById(userDTO.getUser_id());
+    }
+  
     public UserEntity saveUser(UserEntity user) {
         return userRepository.save(user);
     }

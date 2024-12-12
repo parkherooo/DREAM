@@ -22,6 +22,7 @@ public class ProductEntity {
     @JoinColumn(name = "c_num", referencedColumnName = "c_num", nullable = false)
     private CategoryEntity category;
 
+
     @Column(length = 100)
     private String p_name;
 

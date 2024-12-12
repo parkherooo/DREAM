@@ -1,0 +1,38 @@
+.int {
+    margin: 70px 150px;
+}
+
+.int-button{
+    background-color: black;
+    color: white;
+    border-radius: 8px;
+    padding: 2px 4px;
+    margin-right: 3px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.int-button:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid;
+}
+
+.int-header hr {
+    width: 1000px;
+    border: 2px solid black;
+}
+
+.int-none {
+    margin: 200px auto;
+    text-align: center;
+}
+
+.int-none button {
+    background-color: #ffffff;
+    border: 1px solid #D9D9D9;
+    color: #696868;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
