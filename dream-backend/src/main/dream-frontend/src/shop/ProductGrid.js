@@ -8,7 +8,6 @@ const ProductGrid = ({ category, appliedFilters }) => {
     const [loading, setLoading] = useState(true); // 로딩 상태 관리
     const [error, setError] = useState(null); // 에러 상태 관리
     const navigate = useNavigate(); // useNavigate 사용 확인
-    const location = useLocation(); // 현재 URL의 query string 읽기
 
     // 문자열 정규화 함수: 공백 제거 및 소문자로 변환
     const normalizeString = (str) => str.trim().toLowerCase();
