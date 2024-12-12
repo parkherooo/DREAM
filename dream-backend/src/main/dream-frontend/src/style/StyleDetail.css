@@ -1,33 +1,74 @@
-.style-detail{
-    align-items: center;
-    text-align: center;
+/* 스타일 디테일 */
+.style-detail {
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
 }
 
+/* 헤더 */
+.style-detail-header{
+    text-align: left;
+    font-size: 24px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+/* 스타일 제목 */
+.style-detail h2 {
+    font-weight: 600;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* 수평선 */
+.style-detail-hr {
+    border: 0;
+    border-top: 1px solid #d0d0d0;
+    width: 100%;
+    margin: 20px auto;
+}
+
+.style-detail-content {
+    width: 40%;
+    margin: 0 auto; /* 가운데 정렬 */
+}
+
+/* 이미지 슬라이더 */
 .image-slider {
     position: relative;
     width: 100%;
-    max-width: 600px; /* 이미지 최대 너비 설정 */
+    max-width: 600px;
     margin: 0 auto;
     overflow: hidden;
-    border-radius: 10px; /* 둥근 모서리 */
-    background: #fff; /* 흰색 배경 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
 }
 
+/* 이미지 */
 .style-detail-image {
+    margin-top: 20px;
+    margin-bottom: 20px;
     width: 100%;
     height: auto;
     display: block;
-    transition: transform 0.3s ease; /* 이미지 전환 효과 */
+    object-fit: cover;
 }
 
-.prev-button,
-.next-button {
+/* 이미지 슬라이더 */
+.image-slider {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+/* 슬라이더 버튼 */
+.image-slider button {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.82); /* 반투명 배경 */
-    color: #888888; /* 화살표 색상 */
+    transform: translateY(-50%); /* 수직 중앙 정렬 */
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #888;
     border: none;
     border-radius: 50%;
     width: 40px;
@@ -37,68 +78,142 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    z-index: 10;
-    transition: background 0.3s ease; /* 호버 효과 */
+    z-index: 10; /* 다른 요소보다 위로 배치 */
+    transition: background-color 0.3s ease;
 }
 
-.prev-button {
-    left: 10px; /* 왼쪽 화살표 배치 */
+.image-slider button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
-.next-button {
-    right: 10px; /* 오른쪽 화살표 배치 */
+/* 왼쪽 버튼 */
+.image-slider-left {
+    left: 10px; /* 왼쪽에 배치 */
+    right: auto; /* 오른쪽 버튼 위치를 초기화 */
 }
 
-.image-indicator {
-    position: absolute;
-    bottom: 0px; /* 이미지 아래쪽에 배치 */
-    left: 50%;
-    transform: translateX(-50%);
+/* 오른쪽 버튼 */
+.image-slider-right {
+    right: 10px; /* 오른쪽에 배치 */
+    left: auto; /* 왼쪽 버튼 위치를 초기화 */
+}
+
+
+/* 좋아요 아이콘 */
+.heart-icon {
+    font-size: 18px;
+    color: red;
+    cursor: pointer;
+}
+
+.heart-icon:hover {
+    color: #ff4d4d;
+}
+
+/* 댓글 섹션 */
+.comments-section {
+    margin-top: 30px;
+}
+
+.comments-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.comments-list li {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.comment-form {
     display: flex;
-    gap: 5px; /* 점 사이 간격 */
-}
-
-.indicator-dot {
-    width: 10px;
-    height: 10px;
-    background: rgba(0, 0, 0, 0.3); /* 비활성화 점 색상 */
-    border-radius: 50%;
-    transition: background 0.3s ease;
-}
-
-.indicator-dot.active {
-    background: rgba(0, 0, 0, 0.8); /* 활성화된 점 색상 */
-}
-.style-detail-buttons {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center; /* 버튼들을 가운데 정렬 */
+    flex-direction: column;
     gap: 10px;
-    margin-bottom: 30px;
 }
 
-.edit-button, .delete-button {
-    padding: 10px 15px;
+.comment-form textarea {
+    width: 100%;
+    max-width: 800px;
+    height: 100px;
+    padding: 10px;
     font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    resize: vertical;
+}
+
+.comment-form button {
+    width: 100%;
+    max-width: 100px;
+    padding: 10px 15px;
+    background-color: #000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    align-self: flex-end; /* 오른쪽에 붙게 설정 */
+}
+
+.comment-form button:hover {
+    background-color: #444;
+}
+
+/* 스타일 세부 내용 */
+.style-detail p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+/* 해시태그 */
+.style-detail p:last-child {
+    font-size: 14px;
+    color: #000000;
+}
+
+.style-detail-hashtag a{
+    color: blue;
+    text-decoration: none;
+}
+/* 수정과 삭제 버튼을 포함하는 div 스타일 */
+button {
+    margin-top: 10px;
+    font-size: 16px;
+    padding: 8px 16px;
+    border-radius: 5px;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.edit-button {
-    background-color: #000000;
+/* 수정 버튼 스타일 */
+button.edit {
+    background-color: #4CAF50; /* 초록색 */
     color: white;
 }
 
-.delete-button {
-    background-color: #f44336;
+
+button.edit:focus {
+    outline: none; /* 포커스 시 외곽선 제거 */
+}
+
+/* 삭제 버튼 스타일 */
+button.delete {
+    background-color: #f44336; /* 빨간색 */
     color: white;
+    margin-left: 10px; /* 삭제 버튼과 수정 버튼 사이 간격 */
 }
 
-.edit-button:hover {
-    background-color: #888888;
+
+
+button.delete:focus {
+    outline: none; /* 포커스 시 외곽선 제거 */
 }
 
-.delete-button:hover {
-    background-color: #d32f2f;
+/* 버튼들이 같은 줄에 표시되도록 */
+button + button {
+    margin-left: 10px; /* 버튼 사이 간격 */
 }
