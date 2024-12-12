@@ -28,4 +28,5 @@ public class HeartEntity {
 
     @Column (length = 1, nullable = false)
     private byte hr_state;
+  
 }

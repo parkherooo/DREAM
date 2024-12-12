@@ -18,7 +18,6 @@ public class InterestEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto Increment
     private Long int_num;
 
-
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     @ToString.Exclude // 순환 참조 방지

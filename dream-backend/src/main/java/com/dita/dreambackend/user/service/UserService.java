@@ -33,8 +33,8 @@ public class UserService {
         return true;
     }
 
-    public boolean Login(String UserId, String pwd) {
-        UserEntity userEntity = userRepository.findById(UserId).orElseThrow(()->new RuntimeException("아이디가 존재하지 않습니다."));
+    public boolean Login(String User_id, String pwd) {
+        UserEntity userEntity = userRepository.findById(User_id).orElseThrow(()->new RuntimeException("아이디가 존재하지 않습니다."));
 
         return userEntity.getPwd().equals(pwd);
     }
@@ -76,5 +76,13 @@ public class UserService {
     public void deleteUser(UserDTO userDTO){
         // 사용자 ID로 삭제
         userRepository.deleteById(userDTO.getUser_id());
+    }
+  
+    public UserEntity saveUser(UserEntity user) {
+        return userRepository.save(user);
+    }
+
+    public boolean isUserExists(String user_id) {
+        return userRepository.existsByUser_id(user_id);
     }
 }

@@ -1,0 +1,158 @@
+/* 전체 오버레이 컨테이너 */
+.overlay-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+/* 어두운 배경 */
+.overlay-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* 필터 창 */
+.filter-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* 필터 창 내부 콘텐츠 */
+.filter-overlay-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 닫기 버튼 */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* 필터 제목 */
+.filter-overlay-content h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* 카테고리 제목 */
+.filter-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.filter-section-header h3 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.toggle-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* 카테고리 그룹 */
+.filter-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.category-group {
+    margin-bottom: 15px;
+}
+
+.category-group h4 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* 필터 옵션 */
+.filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* 선택된 필터 옵션 */
+.filter-item.selected {
+    background: black;
+    color: white;
+    border-color: black;
+}
+
+.filter-item {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: 14px;
+    min-width: 60px;
+    text-align: center;
+}
+
+.filter-item:hover {
+    background: #f0f0f0;
+    border-color: #aaa;
+}
+
+/* 초기화와 확인 버튼 */
+.filter-actions {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.reset-button {
+    background: #ddd;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.apply-button {
+    background: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    flex: 2;
+    text-align: center;
+    border-radius: 5px;
+}

@@ -1,4 +1,4 @@
-.category-list {
+.category-list2 {
     margin-left: 18%;
     margin-right: 18%;
     display: flex;
@@ -7,62 +7,27 @@
     margin-top: 20px;
 }
 
-.category-item {
+.category-item2 {
     text-align: center;
-    width: 150px;
-    margin: 10px;
+    width: 500px;
+    height: 180px;
+    margin-right: 20px;
+    margin-top: 60px;
 }
 
-.category-item img {
+.category-item2 img {
     width: 100%;
+    height: 180px;
     border-radius: 10px;
 }
 
-.category-item span {
+.category-item2 span {
     display: block;
     margin-top: 10px;
 }
-.category-list {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-top: 20px;
-}
 
-.category-item {
-    text-align: center;
-    width: 150px;
-    margin: 10px;
-}
-
-.category-item img {
-    width: 100%;
-    border-radius: 10px;
-}
-
-.category-item span {
-    display: block;
-    margin-top: 10px;
-}
-.category-list {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-top: 20px;
-}
-
-.category-item {
-    text-align: center;
-    width: 150px;
-    margin: 10px;
-}
-
-.category-item img {
-    width: 100%;
-    border-radius: 10px;
-}
-
-.category-item span {
-    display: block;
-    margin-top: 10px;
+.category-item2 a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: black; /* 텍스트 색상 검정 */
+    font-weight: bold; /* 글자를 두껍게 */
 }
