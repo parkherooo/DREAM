@@ -59,6 +59,12 @@ public class UserService {
         );
     }
 
+    // 사용자 정보 조회 (Entity 반환)
+    public UserEntity getUserEntityById(String userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + userId));
+    }
+
     public void updateUser(UserDTO userDTO) {
         // 1. 기존 사용자 조회
         UserEntity existingUser = userRepository.findById(userDTO.getUser_id())
@@ -85,4 +91,6 @@ public class UserService {
     public boolean isUserExists(String user_id) {
         return userRepository.existsByUser_id(user_id);
     }
+
+
 }

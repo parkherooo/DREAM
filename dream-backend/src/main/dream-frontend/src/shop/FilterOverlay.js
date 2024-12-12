@@ -13,7 +13,8 @@ const FilterOverlay = ({ closeFilter, selectedFilters = {}, onApplyFilters }) =>
     const brands = [
         "IAB Studio", "Stussy", "Nike", "Suade", "Supreme", "Carhartt", "OY", "BAPE",
         "Adidas", "AMI", "A.P.C", "Matin Kim", "Play Comme des Garcons", "Dunst", "Zara",
-        "Polyteru", "Needles", "Gonak", "Undermycar", "Thug Club", "HDEX", "Dickies", "Jordan"
+        "Polyteru", "Needles", "Gonak", "Undermycar", "Thug Club", "HDEX", "Dickies", "Jordan",
+        "Asics", "Hoka"
     ];
 
     const [temporaryFilters, setTemporaryFilters] = useState({
