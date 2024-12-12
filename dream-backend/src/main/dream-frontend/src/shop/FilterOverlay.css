@@ -70,6 +70,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .filter-section-header h3 {
@@ -88,7 +89,7 @@
 .filter-categories {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 15px;
 }
 
 .category-group h4 {

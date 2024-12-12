@@ -15,7 +15,7 @@ const FilterMenu = ({ onApplyFilters }) => { // 필터 적용 콜백 추가
         closeFilter(); // 필터 오버레이 닫기
     };
 
-    const filters = ["카테고리", "성별", "브랜드", "사이즈", "가격대"];
+    const filters = ["카테고리", "브랜드"];
 
     return (
         <div className="filter-menu">

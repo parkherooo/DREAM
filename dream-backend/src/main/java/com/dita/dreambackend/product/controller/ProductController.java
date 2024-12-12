@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RequiredArgsConstructor
 public class ProductController {
     @Autowired
@@ -43,5 +43,4 @@ public class ProductController {
     ) {
         return productService.filterProducts(category, subcategories, brands);
     }
-
 }

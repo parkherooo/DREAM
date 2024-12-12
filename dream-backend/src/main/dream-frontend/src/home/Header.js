@@ -111,9 +111,6 @@ const Header = () => {
                             </Link>
 
                             {/* 검색 및 장바구니 아이콘 추가 */}
-                            <Link to="/search" className="icon-link">
-                                <IoSearchOutline className="icon" />
-                            </Link>
                             <Link to="/cart" className="icon-link">
                                 <HiOutlineShoppingBag className="icon" />
                             </Link>

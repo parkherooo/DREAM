@@ -143,11 +143,11 @@ const Cart = () => {
                                     className="cart-item-image"
                                 />
                                 <div className="cart-item-details">
-                                    <h2>{item.p_name}</h2>
-                                    <p>{item.p_details}</p>
-                                    <p>사이즈: {item.size}</p>
-                                    <p>가격: {item.price.toLocaleString()}원</p>
-                                    <p>수량: {item.p_count}</p>
+                                    <h2 className="cart-item-title">{item.p_name}</h2>
+                                    <p className="cart-item-text">{item.p_details}</p>
+                                    <p className="cart-item-text">사이즈: {item.size}</p>
+                                    <p className="cart-item-text">가격: {item.price.toLocaleString()}원</p>
+                                    <p className="cart-item-text">수량: {item.p_count}</p>
                                 </div>
                                 <button
                                     onClick={() => handleRemoveClick(item.p_num)}
@@ -193,7 +193,7 @@ const Cart = () => {
 
             {showModal && (
                 <div className="modal-overlay">
-                    <div className="modal">
+                    <div className="cart-modal">
                         <h2>상품 삭제</h2>
                         <p>
                             {modalType === "single"
