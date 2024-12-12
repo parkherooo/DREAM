@@ -1,9 +1,11 @@
 package com.dita.dreambackend.style.controller;
 
+import com.dita.dreambackend.style.dto.CommentDTO;
 import com.dita.dreambackend.style.dto.HeartDTO;
 import com.dita.dreambackend.style.dto.StyleDTO;
 import com.dita.dreambackend.style.service.StyleService;
 
+import com.dita.dreambackend.user.dto.InterestDTO;
 import jakarta.servlet.http.HttpSession;
 
 import lombok.RequiredArgsConstructor;
@@ -51,8 +53,11 @@ public class StyleController {
     }
 
     @GetMapping("/StyleList")
-    public List<StyleDTO> styleList() {
-        return styleService.findAll();
+    public List<StyleDTO> styleListByHashtag(@RequestParam(value = "hashtag", required = false) String hashtag) {
+        if(hashtag == null || hashtag.isEmpty()){
+            return styleService.findAll();
+        }
+        return styleService.findHashTag(hashtag);
     }
 
     @GetMapping("/StyleDetail/{id}")
@@ -150,6 +155,7 @@ public class StyleController {
         boolean isHearted = styleService.checkHeartExists(user_id, st_num);
         return ResponseEntity.ok(isHearted);
     }
+
     @PostMapping("/StyleHeartDown")
     public ResponseEntity<String> styleHeartdown(
             @RequestParam("st_num") long st_num,
@@ -170,5 +176,52 @@ public class StyleController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/StyleComment")
+    public ResponseEntity<String> styleComment(
+            @RequestBody CommentDTO commentDTO, // RequestBody를 사용하여 CommentDTO 객체를 받음
+            HttpSession session
+    ) {
+        String user_id = (String) session.getAttribute("user_id");
+
+        // 세션에서 user_id를 가져오고, 댓글 정보를 DTO에 세팅
+        commentDTO.setUser_id(user_id);
+
+        boolean result = styleService.StyleComment(commentDTO);
+
+        if (!result) {
+            return ResponseEntity.badRequest().body("댓글 작성 실패");
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/StyleComment/{st_num}")
+    public List<CommentDTO> styleComment(@PathVariable long st_num ){ return  styleService.findCommentAll(st_num);}
+
+    @PostMapping("/StyleMark")
+    public ResponseEntity<String> styleMark(
+            @RequestParam("st_num") long st_num,
+            HttpSession session
+    ) {
+        String user_id = (String) session.getAttribute("user_id");
+
+        InterestDTO interestDTO = new InterestDTO();
+        interestDTO.setUser_id(user_id);
+        interestDTO.setSt_num((int) st_num);
+        styleService.StyleMark(interestDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/MarkCheck")
+    public ResponseEntity<Boolean> checkStyleMark(
+            @RequestParam("st_num") long st_num,
+            HttpSession session
+    ) {
+        String user_id = (String) session.getAttribute("user_id");
+        if (user_id == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean isMark = styleService.markCheck(user_id,st_num);
+        return ResponseEntity.ok(isMark);
+    }
 
 }

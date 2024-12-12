@@ -4,6 +4,10 @@ import com.dita.dreambackend.user.dto.UserDTO;
 import com.dita.dreambackend.user.entity.UserEntity;
 import com.dita.dreambackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 //DTO->Entity 나
@@ -83,7 +87,7 @@ public class UserService {
         // 사용자 ID로 삭제
         userRepository.deleteById(userDTO.getUser_id());
     }
-  
+
     public UserEntity saveUser(UserEntity user) {
         return userRepository.save(user);
     }
@@ -92,5 +96,18 @@ public class UserService {
         return userRepository.existsByUser_id(user_id);
     }
 
+    public String findEmail(String name, String phone) {
+        return userRepository.findEmail(name,phone);
+    }
 
+    public boolean updatePassword(String email, String newPassword) {
+        // 비밀번호 업데이트
+        userRepository.updatePasswordByEmail(email, newPassword);
+
+        return true;
+    }
+
+    public String findPwdCheck(String userId, String phone) {
+        return userRepository.findPwdCheck(userId,phone);
+    }
 }

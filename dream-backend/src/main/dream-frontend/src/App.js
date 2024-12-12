@@ -13,6 +13,8 @@ import StyleDetail from "./style/StyleDetail";
 import StyleUpdate from "./style/StyleUpdate";
 import "./App.css";
 import axios from "axios";
+import FindEmail from "./user/Find-email";
+import FindPassword from "./user/Find-password";
 
 axios.defaults.withCredentials = true;
 
@@ -47,7 +49,8 @@ function App() {
                         <Route path="/my-page" element={<div>My Page</div>} />
                         <Route path="/interests" element={<div>관심 페이지</div>} />
                         <Route path="/notifications" element={<div>알림 페이지</div>} />
-
+                        <Route path="/Find-email" element={<FindEmail />} />
+                        <Route path="/Find-password" element={<FindPassword />} />
                         {/* SHOP 페이지 */}
                         <Route
                             path="/shop/*"

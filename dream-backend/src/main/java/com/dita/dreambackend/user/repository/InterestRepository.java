@@ -28,4 +28,8 @@ public interface InterestRepository extends JpaRepository<InterestEntity, String
     @Query("SELECT i FROM InterestEntity i " +
             "WHERE i.user.user_id = :userId AND i.product.p_num = :productId")
     Optional<InterestEntity> findByUserAndProduct(@Param("userId") String userId, @Param("productId") int productId);
+
+    @Query("SELECT CASE WHEN COUNT(I) > 0 THEN true ELSE false END FROM InterestEntity I WHERE I.user.user_id = :user_id AND I.style.st_num = :st_num")
+    boolean existsByUserUserIdAndStyleStNum(@Param("user_id") String userId, @Param("st_num") long styleNum);
+
 }

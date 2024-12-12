@@ -1,10 +1,8 @@
 package com.dita.dreambackend.user.controller;
 
-import com.dita.dreambackend.transaction.dto.SaleDTO;
 import com.dita.dreambackend.transaction.service.BuyService;
 import com.dita.dreambackend.transaction.service.SaleService;
 import com.dita.dreambackend.user.dto.UserDTO;
-import com.dita.dreambackend.user.repository.InterestRepository;
 import com.dita.dreambackend.user.service.InterestService;
 import com.dita.dreambackend.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,13 +11,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import static com.dita.dreambackend.user.service.UserService.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +30,8 @@ public class UserController {
     private final SaleService saleService;
     private final BuyService buyService;
     private final InterestService interestService;
+    private final com.dita.dreambackend.user.service.emailService emailService;
+    private String Code = "";
 
     @Operation(summary = "User Sign Up", description = "Registers a new user.")
     @ApiResponses(value = {
@@ -60,7 +59,6 @@ public class UserController {
             return ResponseEntity.badRequest().body("로그인 실패");
         }
         session.setAttribute("user_id", userDTO.getUser_id());
-        System.out.println("sessionLogin"+session.getAttribute("user_id"));
         return ResponseEntity.ok("로그인 성공");
     }
 
@@ -71,10 +69,8 @@ public class UserController {
         if (user_id != null) {
             response.put("isLoggedIn", true);
             response.put("user_id", user_id);
-            System.out.println("session_check"+user_id);
             return ResponseEntity.ok(response);
         }
-        System.out.println("session_not_check"+user_id);
         response.put("isLoggedIn", false);
         return ResponseEntity.ok(response);
     }
@@ -126,6 +122,69 @@ public class UserController {
         session.invalidate(); // 세션 무효화
         return ResponseEntity.ok("로그아웃 성공");
     }
+
+    @GetMapping("/Find-email")
+    public ResponseEntity<String> findEmail(@RequestParam String name, @RequestParam String phone) {
+        String user_id = userService.findEmail(name,phone);
+
+        if (user_id == null) {
+            return ResponseEntity.badRequest().body("아이디 찾기 실패");
+        }
+        return ResponseEntity.ok("아이디 : "+ user_id);
+    }
+
+    @GetMapping("/Find-password")
+    public ResponseEntity<String> findPassword(@RequestParam String user_id, @RequestParam String phone, HttpSession session) {
+        // 1. 이메일에 해당하는 사용자가 존재하는지 확인
+        String userId = userService.findPwdCheck(user_id,phone);
+
+        if (userId == null) {
+            return ResponseEntity.badRequest().body("해당 이메일에 해당하는 사용자가 없습니다.");
+        }
+
+        // 2. 랜덤 숫자 생성
+        String randomCode = generateRandomCode();
+
+        // 3. 랜덤 숫자를 이메일로 발송
+        boolean emailSent = emailService.sendPasswordResetEmail(userId, randomCode);
+
+        if (emailSent) {
+            Code = randomCode;
+            System.out.println("Code : " + Code);
+            return ResponseEntity.ok("이메일로 비밀번호 재설정 코드를 발송했습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이메일 발송 실패.");
+        }
+    }
+
+    private String generateRandomCode() {
+        // 랜덤 숫자 6자리 생성 예시
+        return String.valueOf((int) (Math.random() * 1000000));
+    }
+
+    @PostMapping("/Reset-password")
+    public ResponseEntity<String> resetPassword(@RequestParam String email, @RequestParam String inputCode, @RequestParam String newPassword , HttpSession session) {
+        // 1. 세션에 저장된 랜덤 숫자 가져오기
+        if (Code == null) {
+
+            return ResponseEntity.badRequest().body("유효한 비밀번호 재설정 요청이 아닙니다.");
+        }
+
+        // 2. 입력한 코드가 세션의 코드와 일치하는지 확인
+        if (!Code.equals(inputCode)) {
+            return ResponseEntity.badRequest().body("잘못된 재설정 코드입니다.");
+        }
+
+        // 3. 새로운 비밀번호로 업데이트
+        boolean passwordUpdated = userService.updatePassword(email, newPassword);
+
+        if (passwordUpdated) {
+            return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("비밀번호 변경 실패.");
+        }
+    }
+
 
 }
 
