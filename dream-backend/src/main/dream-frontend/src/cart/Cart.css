@@ -1,54 +1,249 @@
-.cart-summary {
+.cart-container {
+    padding: 20px 550px;
+}
+
+.cart-h1 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 25px;
+}
+
+.cart-items {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #f5f5f5;
-    padding: 50px 20px;
+    gap: 10px;
+}
+
+.cart-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* 아이템 정렬을 상단으로 */
+    height: 180px;
+}
+
+.cart-item-image {
+    width: 100px; /* 이미지 너비 */
+    height: 100px; /* 이미지 높이 */
+    object-fit: cover; /* 비율 유지하며 크기 조정 */
+    border-radius: 5px; /* 모서리를 둥글게 */
+}
+
+.cart-item-details {
+    flex: 1;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* 내용물을 위쪽으로 정렬 */
+    margin-top: -20px; /* 상품명을 위로 살짝 이동 */
+}
+
+.cart-item-details h2 {
+    margin-bottom: 5px; /* 상품명과 아래 내용 간격 */
+    font-size: 18px; /* 상품명 크기 */
+}
+
+.cart-item-details p {
+    margin-bottom: 3px; /* 글자들 사이 간격 */
+    font-size: 14px; /* 글자 크기 */
+    line-height: 0.8; /* 줄 간격 */
+}
+
+.empty-cart {
     text-align: center;
-    border-bottom: 1px solid #ddd;
+    padding: 20px;
 }
 
-.summary-item {
-    display: inline-block;
-    margin: 10px 20px;
-    text-align: center;
-}
-
-.summary-item h2 {
-    font-size: 2.5rem;
-    color: #333;
-    margin: 0;
-}
-
-.summary-item p {
-    font-size: 1rem;
-    color: #777;
-    margin: 5px 0;
-}
-
-.empty-cart-message {
+.shop-button {
     margin-top: 20px;
-    text-align: center;
-}
-
-.empty-cart-message p {
-    font-size: 1.2rem;
-    color: #777;
-    margin-bottom: 20px;
-}
-
-.shop-now-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
     padding: 10px 20px;
-    font-size: 1rem;
+    font-size: 16px;
+    color: #fff;
+    background-color: #000;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.shop-now-button:hover {
-    background-color: #0056b3;
+.shop-button:hover {
+    background-color: #555;
+}
+
+/* 삭제 버튼 스타일 (테두리만 표시) */
+.delete-button {
+    background-color: transparent !important; /* 배경 투명 */
+    color: black !important; /* 텍스트 색상 검정 */
+    border: 1px solid black !important; /* 검정 테두리 */
+    border-radius: 10px; /* 둥근 테두리 */
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: black !important; /* 호버 시 배경 검정 */
+    color: white !important; /* 호버 시 텍스트 흰색 */
+}
+
+/* 모달 스타일 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal h2 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.modal p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #555;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.cancel-button,
+.confirm-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 130px;
+}
+
+.cancel-button {
+    background: #ddd;
+    color: #333;
+}
+
+.confirm-button {
+    background: black;
+    color: white;
+}
+
+/* 전체 선택 영역 스타일 */
+.select-all {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.select-all-actions {
+    display: flex;
+    align-items: center;
+}
+
+/* 체크박스 크기 조정 및 스타일 변경 */
+.select-all input,
+.cart-item input[type="checkbox"] {
+    width: 20px; /* 체크박스 너비 */
+    height: 20px; /* 체크박스 높이 */
+    accent-color: black; /* 체크된 상태 색상을 검정으로 설정 */
+    cursor: pointer; /* 마우스 오버 시 포인터 표시 */
+}
+
+/* 선택 삭제 버튼 스타일 (테두리만 표시) */
+.remove-selected-button {
+    padding: 5px 10px;
+    font-size: 14px;
+    color: black; /* 텍스트 색상 */
+    background-color: transparent; /* 배경 제거 */
+    border: 1px solid black; /* 테두리 추가 */
+    border-radius: 5px; /* 둥근 테두리 */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.remove-selected-button:hover {
+    background-color: black; /* 호버 시 배경색 */
+    color: white; /* 호버 시 텍스트 색상 변경 */
+}
+
+.remove-selected-button:disabled {
+    background-color: transparent;
+    color: #aaa;
+    border: 1px solid #aaa; /* 비활성화 상태 테두리 색상 */
+}
+
+/* 하단 결제 요약 섹션 */
+.cart-summary {
+    border-top: 1px solid #ddd;
+    padding: 20px;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.summary-divider {
+    border-top: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+.summary-row.total {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.summary-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.change-options-button,
+.order-now-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: transparent;
+    width: 380px;
+}
+
+.order-now-button {
+    background-color: black;
+    color: white;
+    border: none;
+}
+
+.order-now-button:hover {
+    background-color: #333;
+}
+
+.change-options-button:hover {
+    background-color: #f0f0f0;
 }
