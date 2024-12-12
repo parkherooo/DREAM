@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./StyleDetail.css";
+import { CiBookmark } from "react-icons/ci";
+import { FaBookmark } from "react-icons/fa";
 
 const StyleDetail = () => {
     const { st_num } = useParams();
@@ -12,6 +14,8 @@ const StyleDetail = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user_id, setUser_id] = useState(null);
+    const [isMarked, setIsMarked] = useState(false);  // 마킹 상태 관리
+    const [isLiked, setIsLiked] = useState(false);  // 좋아요 상태 관리
 
     // 세션 확인 함수
     const checkSession = async () => {
@@ -76,6 +80,8 @@ const StyleDetail = () => {
             try {
                 const response = await axios.get(`http://localhost:8080/StyleDetail/${st_num}`);
                 setStyle(response.data);
+
+
             } catch (error) {
                 console.error("Error fetching style detail:", error);
             }
@@ -83,6 +89,35 @@ const StyleDetail = () => {
 
         fetchStyleDetail();
         fetchComments();
+
+        // 스타일 마킹 상태 확인
+        const checkMarkStatus = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/MarkCheck", {
+                    params: { st_num },
+                    withCredentials: true,
+                });
+                setIsMarked(response.data); // 마킹 상태 업데이트
+            } catch (error) {
+                console.error("스타일 마킹 상태 확인 오류:", error);
+            }
+        };
+
+        // 좋아요 상태 확인
+        const checkHeartStatus = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/StyleHeartCheck", {
+                    params: { st_num },
+                    withCredentials: true,
+                });
+                setIsLiked(response.data); // 좋아요 상태 업데이트
+            } catch (error) {
+                console.error("좋아요 상태 확인 오류:", error);
+            }
+        };
+
+        checkMarkStatus();
+        checkHeartStatus();
     }, [st_num]);
 
     const handleStyleUpdate = () => {
@@ -107,11 +142,94 @@ const StyleDetail = () => {
         }
     };
 
+    //스타일 마킹
+    const handleMarkClick = async () => {
+        if (!isLoggedIn) {
+            alert("로그인이 필요합니다.");
+            navigate("/login");
+            return;
+        }
+
+        try {
+            // 마킹된 상태 확인
+            const markCheckResponse = await axios.get("http://localhost:8080/MarkCheck", {
+                params: { st_num },
+                withCredentials: true,
+            });
+
+            if (markCheckResponse.data) {
+                alert("이미 마킹된 스타일입니다.");
+                setIsMarked(true); // 마킹된 상태로 설정
+            } else {
+                // 마킹되지 않은 상태라면 마킹 진행
+                const response = await axios.post(
+                    `http://localhost:8080/StyleMark?st_num=${st_num}`,
+                    { withCredentials: true }
+                );
+
+                if (response.status === 200) {
+                    alert("스타일 마킹이 완료되었습니다.");
+                    setIsMarked(true); // 마킹된 상태로 설정
+                }
+            }
+        } catch (error) {
+            console.error("스타일 마킹 중 오류 발생:", error);
+            alert("스타일 마킹 중 오류가 발생했습니다.");
+        }
+    };
+
     if (!style) {
         return <p>Loading...</p>;
     }
 
     const imageList = style.image ? style.image.split(",").map((img) => img.trim()) : [];
+    // 하트 클릭 이벤트 처리
+    const handleHeartClick = async () => {
+        try {
+            const checkResponse = await axios.get("http://localhost:8080/StyleHeartCheck", {
+                params: { st_num },
+                withCredentials: true,
+            });
+
+            if (checkResponse.data) {
+                // 좋아요가 이미 눌린 상태라면 취소
+                const response = await axios.post("http://localhost:8080/StyleHeartDown", null, {
+                    params: { st_num },
+                    withCredentials: true,
+
+                });
+
+                if (response.status === 200) {
+                    alert("좋아요가 취소되었습니다.");
+                    window.location.reload();
+                    setStyle((prevStyle) => ({
+                        ...prevStyle,
+                        isLiked: false,
+                        ht_count: prevStyle.ht_count - 1,
+                    }));
+                }
+            } else {
+                // 좋아요가 눌리지 않은 상태라면 좋아요 추가
+                const response = await axios.post("http://localhost:8080/StyleHeart", null, {
+                    params: { st_num },
+                    withCredentials: true,
+                });
+
+                if (response.status === 200) {
+                    alert("좋아요가 반영되었습니다.");
+                    window.location.reload();
+                    setStyle((prevStyle) => ({
+                        ...prevStyle,
+                        isLiked: true,
+                        ht_count: prevStyle.ht_count + 1,
+                    }));
+                }
+            }
+        } catch (error) {
+            console.error("Error processing heart click:", error);
+            alert("좋아요를 처리할 수 없습니다.");
+        }
+    };
 
     return (
         <div className="style-detail">
@@ -121,7 +239,13 @@ const StyleDetail = () => {
                 <div className="style-detail-header">
                     <p>{style.user_id}</p>
                 </div>
-
+                <div>
+                    {isMarked ? (
+                        <FaBookmark className="mark-icon" onClick={handleMarkClick} />
+                    ) : (
+                        <CiBookmark className="mark-icon" onClick={handleMarkClick} />
+                    )}
+                </div>
                 <div className="image-slider">
                     {imageList.length > 1 && (
                         <button className="image-slider-left"
@@ -148,13 +272,12 @@ const StyleDetail = () => {
                     <p>
                     <span
                         className="heart-icon"
-                        onClick={async () => {
-                            // 좋아요 로직
-                        }}
+                        onClick={handleHeartClick}
                         style={{cursor: "pointer"}}
                     >
-                        {style.isLiked ? "♥" : "♡"} {style.ht_count}
+                        {isLiked ? "♥" : "♡"} {style.ht_count}
                     </span>
+
                     </p>
                 </div>
                 <div className="style-detail-hashtag">

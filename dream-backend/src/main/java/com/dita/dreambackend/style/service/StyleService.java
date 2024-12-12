@@ -9,7 +9,10 @@ import com.dita.dreambackend.style.entity.StyleEntity;
 import com.dita.dreambackend.style.repository.CommentRepository;
 import com.dita.dreambackend.style.repository.HeartRepository;
 import com.dita.dreambackend.style.repository.StyleRepository;
+import com.dita.dreambackend.user.dto.InterestDTO;
+import com.dita.dreambackend.user.entity.InterestEntity;
 import com.dita.dreambackend.user.entity.UserEntity;
+import com.dita.dreambackend.user.repository.InterestRepository;
 import com.dita.dreambackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,7 @@ public class StyleService {
     private final StyleRepository styleRepository;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
+    private final InterestRepository interestRepository;
 
     private final String uploadDir = "C:\\DREAM\\dream-backend\\src\\main\\resources\\static\\images\\style";
     private final HeartRepository heartRepository;
@@ -237,5 +241,24 @@ public class StyleService {
             commentDTOList.add(CommentDTO.toCommentDTO(commentEntity));
         }
        return commentDTOList;
+    }
+
+    public boolean StyleMark(InterestDTO interestDTO) {
+        InterestEntity interestEntity = new InterestEntity();
+
+        UserEntity userEntity = userRepository.findById(interestDTO.getUser_id())
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 ID입니다."));
+        Optional<StyleEntity> styleEntity = styleRepository.findById(Long.valueOf(interestDTO.getSt_num()));
+
+
+        interestEntity.setUser(userEntity);
+        interestEntity.setStyle(styleEntity.get());
+
+        interestRepository.save(interestEntity);
+        return true;
+    }
+
+    public boolean markCheck(String user_id, long st_num){
+        return interestRepository.existsByUserUserIdAndStyleStNum(user_id,st_num);
     }
 }
