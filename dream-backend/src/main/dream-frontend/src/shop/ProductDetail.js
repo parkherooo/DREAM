@@ -15,8 +15,6 @@ const ProductDetail = () => {
     const [selectedPrice, setSelectedPrice] = useState(0);
     const [selectedStock, setSelectedStock] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태
-    const [showMessage, setShowMessage] = useState(""); // 알림 메시지
 
     const parseSizes = (sizeString) => {
         return sizeString
@@ -43,9 +41,6 @@ const ProductDetail = () => {
                 }
 
                 setLoading(false);
-                // 로그인 여부 확인 (백엔드 로그인 세션 확인 API 호출)
-                const loginResponse = await axios.get("http://localhost:8080/auth/isLoggedIn");
-                setIsLoggedIn(loginResponse.data.loggedIn);
             } catch (err) {
                 setError(err.message);
                 setLoading(false);
@@ -55,30 +50,6 @@ const ProductDetail = () => {
         fetchProduct();
     }, [productId]);
 
-    // 관심상품
-    const handleFavorite = async () => {
-        if (!isLoggedIn) {
-            setShowMessage("로그인이 필요합니다.");
-            return;
-        }
-
-        try {
-            const response = await axios.post("http://localhost:8080/interest/add", {
-                user_id: "현재로그인된유저ID", // 로그인된 유저 ID를 서버에서 받아오도록 설정
-                p_num: productId,
-            });
-            if (response.status === 200) {
-                setShowMessage("관심상품에 추가되었습니다!");
-            }
-        } catch (err) {
-            setShowMessage("관심상품 추가에 실패했습니다.");
-        }
-
-        // 메시지를 몇 초 후에 사라지게 설정
-        setTimeout(() => setShowMessage(""), 3000);
-    };
-
-    // 사이즈 변경
     const handleSizeChange = (e) => {
         const newSize = e.target.value;
         setSelectedSize(newSize);
@@ -95,7 +66,7 @@ const ProductDetail = () => {
     };
 
     const handleBuyNow = () => {
-        alert(`즉시 구매되었습니다: 사이즈 ${selectedSize}, 가격 ${selectedPrice}원`);
+        alert(`즉시 구매되었습니다.`);
         setIsModalOpen(false);
     };
 
@@ -184,7 +155,6 @@ const ProductDetail = () => {
                                     관심상품
                                 </button>
                             </div>
-                            {showMessage && <div className="message-box">{showMessage}</div>}
 
                             <div className="product-detail-warning">
                                 <p>※ 거래 주의사항 안내</p>
