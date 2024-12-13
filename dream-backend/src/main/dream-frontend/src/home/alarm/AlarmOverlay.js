@@ -77,7 +77,7 @@ const AlarmOverlay = ({ onClose }) => {
                 </div>
                 {alarms.length > 0 ? (
                     <ul className="alarm-list">
-                        {alarms.slice().reverse().map((alarm, index) => (
+                        {alarms.map((alarm, index) => (
                             <li
                                 key={index}
                                 className={`alarm-item ${alarm[3] === 1 ? "read" : "unread"}`}
