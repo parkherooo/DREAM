@@ -78,10 +78,12 @@ const ResetPasswordForm = ({ userId }) => {
         }
 
         try {
-            const response = await axios.post("http://localhost:8080/Reset-password", {
-                email: userId,
-                inputCode,
-                newPassword,
+            const response = await axios.post("http://localhost:8080/Reset-password", null, {
+                params: {
+                    email: userId,
+                    inputCode,
+                    newPassword
+                }
             });
 
             if (response.status === 200) {

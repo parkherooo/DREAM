@@ -176,7 +176,10 @@ public class UserController {
     }
 
     @PostMapping("/Reset-password")
-    public ResponseEntity<String> resetPassword(@RequestParam String email, @RequestParam String inputCode, @RequestParam String newPassword , HttpSession session) {
+    public ResponseEntity<String> resetPassword(
+            @RequestParam("email") String email,
+            @RequestParam("inputCode") String inputCode,
+            @RequestParam("newPassword") String newPassword) {
         // 1. 세션에 저장된 랜덤 숫자 가져오기
         if (Code == null) {
 
