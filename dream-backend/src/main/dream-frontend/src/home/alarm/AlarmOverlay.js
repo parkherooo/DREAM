@@ -60,7 +60,7 @@ const AlarmOverlay = ({ onClose }) => {
             } else if (content.includes("구매")) {
                 window.location.href = "/my-page/buys-history"; // 구매 내역 페이지로 이동
             } else if (content.includes("댓글")) {
-                window.location.href = "/style"; // 댓글 관련 페이지로 이동
+                window.location.href = "/StyleList"; // 댓글 관련 페이지로 이동
             }
         } catch (error) {
             console.error("알림 확인 상태 업데이트에 실패했습니다:", error);
@@ -77,7 +77,7 @@ const AlarmOverlay = ({ onClose }) => {
                 </div>
                 {alarms.length > 0 ? (
                     <ul className="alarm-list">
-                        {alarms.slice().reverse().map((alarm, index) => (
+                        {alarms.map((alarm, index) => (
                             <li
                                 key={index}
                                 className={`alarm-item ${alarm[3] === 1 ? "read" : "unread"}`}
