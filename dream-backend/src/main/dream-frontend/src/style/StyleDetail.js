@@ -339,9 +339,13 @@ const StyleDetail = () => {
                                     src={`http://localhost:8080/product_img/${tag.p_img.split(',')[0].trim()}`}
                                     alt={tag.p_img.split(',')[0].trim()}
                                     className="search-result-img"
+                                    onClick={() => (window.location.href = `/shop/product/${tag.p_num}`)}
+                                    style={{ cursor: "pointer" }}
                                 />
                                 <br/>
                                 {tag.p_details}
+                                <br/>
+                                {tag.size}
                             </div>
 
                         ))
