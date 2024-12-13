@@ -5,25 +5,49 @@ import "./Cart.css";
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
-    const [selectedItems, setSelectedItems] = useState([]); // 선택된 항목 상태
+    const [selectedItems, setSelectedItems] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [modalType, setModalType] = useState(""); // 모달 타입 ('single' or 'multiple')
+    const [modalType, setModalType] = useState("");
     const [selectedProductId, setSelectedProductId] = useState(null);
+    const [userInfo, setUserInfo] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchCartItems = async () => {
+        const checkSessionAndFetchData = async () => {
             try {
-                const response = await axios.get("http://localhost:8080/cart", {
+                // 세션 체크
+                const sessionResponse = await axios.get("http://localhost:8080/check-session", {
                     withCredentials: true,
                 });
-                setCartItems(response.data);
+
+                const { isLoggedIn, user_id } = sessionResponse.data;
+
+                if (!isLoggedIn) {
+                    alert("로그인이 필요합니다.");
+                    navigate("/login"); // 로그인 페이지로 리다이렉트
+                    return;
+                }
+
+                // 사용자 정보 가져오기
+                const userResponse = await axios.get("http://localhost:8080/my-page", {
+                    params: { user_id },
+                    withCredentials: true,
+                });
+                setUserInfo(userResponse.data);
+
+                // 장바구니 데이터 가져오기
+                const cartResponse = await axios.get("http://localhost:8080/cart", {
+                    withCredentials: true,
+                });
+                setCartItems(cartResponse.data);
+                setSelectedItems(cartResponse.data.map((item) => item.p_num)); // 모든 항목 기본 선택
             } catch (error) {
-                console.error("Error fetching cart items:", error);
+                console.error("Error fetching session or data:", error);
+                alert("데이터를 불러오는 중 오류가 발생했습니다.");
             }
         };
 
-        fetchCartItems();
+        checkSessionAndFetchData();
     }, []);
 
     const handleRemoveClick = (productId) => {
@@ -85,15 +109,28 @@ const Cart = () => {
         }
     };
 
-    const calculateTotalAmount = () => {
-        return cartItems.reduce(
-            (total, item) => total + item.price * item.p_count,
-            0
-        );
+    const calculateSelectedTotalAmount = () => {
+        return cartItems
+            .filter((item) => selectedItems.includes(item.p_num))
+            .reduce((total, item) => total + item.price * item.p_count, 0);
+    };
+
+    const calculateShippingCost = () => {
+        return selectedItems.length > 0 ? 5000 : 0;
     };
 
     const handleOrderNow = () => {
-        alert("주문이 완료되었습니다.");
+        const orderDetails = {
+            recipientName: userInfo.name || "정보 없음",
+            contact: userInfo.phone || "정보 없음",
+            address: userInfo.address || "정보 없음",
+            items: cartItems.filter((item) => selectedItems.includes(item.p_num)),
+            totalPrice: calculateSelectedTotalAmount(),
+            request: "요청사항 없음",
+        };
+
+        console.log("주문 정보:", orderDetails); // 확인용 로그
+        navigate("/payment", { state: { orderDetails } });
     };
 
     return (
@@ -102,7 +139,6 @@ const Cart = () => {
             {cartItems.length === 0 ? (
                 <div className="empty-cart">
                     <p>장바구니에 담긴 상품이 없습니다.</p>
-                    <p>원하는 상품을 장바구니에 담아보세요!</p>
                     <button
                         className="shop-button"
                         onClick={() => navigate("/shop/all")}
@@ -159,21 +195,22 @@ const Cart = () => {
                         ))}
                     </div>
 
-                    {/* 하단 결제 요약 섹션 */}
                     <div className="cart-summary">
                         <div className="summary-row">
                             <span>상품금액</span>
-                            <span>{calculateTotalAmount().toLocaleString()}원</span>
+                            <span>{calculateSelectedTotalAmount().toLocaleString()}원</span>
                         </div>
                         <div className="summary-row">
                             <span>배송비</span>
-                            <span>5,000원</span>
+                            <span>{calculateShippingCost().toLocaleString()}원</span>
                         </div>
                         <div className="summary-divider"></div>
                         <div className="summary-row total">
                             <span>예상 결제금액</span>
                             <span>
-                                {(calculateTotalAmount() + 5000).toLocaleString()}원
+                                {(
+                                    calculateSelectedTotalAmount() + calculateShippingCost()
+                                ).toLocaleString()}원
                             </span>
                         </div>
                         <div className="summary-actions">

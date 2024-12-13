@@ -266,8 +266,8 @@ const ProductDetail = () => {
 
             {/* 구매 모달 */}
             {isModalOpen && (
-                <div className="modal-overlay">
-                    <div className="modal-container">
+                <div className="buy-modal-overlay">
+                    <div className="buy-modal-container">
                         <button className="modal-close-button" onClick={() => setIsModalOpen(false)}>
                             ✕
                         </button>
