@@ -60,10 +60,10 @@ function Interests() {
     };
 
     const handleStyle = () => {
-        navigate('/style'); // 스타일 페이지로 이동
+        navigate('/StyleList'); // 스타일 페이지로 이동
     };
     const handleShop = () => {
-        navigate('/shop'); // 스타일 페이지로 이동
+        navigate('/shop/all'); // 스타일 페이지로 이동
     };
 
     if (loading) {
