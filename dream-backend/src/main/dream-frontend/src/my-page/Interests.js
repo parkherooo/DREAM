@@ -140,7 +140,7 @@ function Interests() {
                                     return (
                                         <div className="int-item" key={index} onClick={handleStyle}>
                                             <div className="int-item-image">
-                                                <img src={`http://localhost:8080/images/style/${styleImage}`}
+                                                <img src={`http://localhost:8080/images/style/${styleImage.split(',')[0].trim()}`}
                                                      alt={styleImage}/>
                                             </div>
                                         </div>
