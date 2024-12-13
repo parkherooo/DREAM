@@ -187,6 +187,7 @@ function StylePost() {
                                     className="search-result-img"
                                 />
                                 <div>{product.p_details}</div>
+                                <div>{product.size}</div>
                                 <button type="button" onClick={() => addTag(product.p_num, product.p_details)}>
                                     추가
                                 </button>
